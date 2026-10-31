@@ -110,7 +110,7 @@ async function route() {
 }
 
 function renderChrome(page, id) {
-  document.getElementById("brand").innerHTML = `<a href="${href()}"><span class="logo">✝</span>${esc(t.church)}</a>`;
+  document.getElementById("brand").innerHTML = `<a href="${href()}"><img class="logo" src="assets/logo-mark.svg" alt="">${esc(t.church)}</a>`;
   const items = [
     ["pulpit", t.nav_pulpit],
     ["hq", t.nav_hq],
@@ -138,7 +138,7 @@ function renderChrome(page, id) {
   langBar.innerHTML = `${primary}${second}<span class="soon">${LANGS.filter((l) => !l.ready)
     .map((l) => l.name)
     .join(" · ")} — ${esc(t.soon)}</span>`;
-  footer.innerHTML = `<p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
+  footer.innerHTML = `<div class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(t.denomination)} ${esc(t.church)}</div><p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
     .map(([, b]) => `${esc(b.name)} (${esc(b.license)})`)
     .join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
 }
@@ -165,15 +165,22 @@ async function home() {
   };
   return `
   <section class="hero">
-    <h1>${esc(t.church)}</h1>
-    <p>${esc(t.tagline)}</p>
+    <div class="hero-in">
+      <img class="hero-mark" src="assets/logo-mark.svg" alt="">
+      <div>
+        <small>${esc(t.denomination)}</small>
+        <h1>${esc(t.church)}</h1>
+        <p>${esc(t.tagline)}</p>
+      </div>
+    </div>
+    <div class="split-bar"></div>
   </section>
   ${homeSection("pulpit", t.nav_pulpit, t.pulpit_desc, cards("pulpit"))}
   ${homeSection("hq", t.nav_hq, t.hq_desc, cards("hq"))}
   <section class="block">
     <div class="block-head"><div><h2>${esc(t.nav_tools)}</h2><p class="muted">${esc(t.tools_desc)}</p></div></div>
     <div class="tools">
-      <a class="tool gospel" href="${href("gospel")}"><span class="tool-icon">✝</span><strong>${esc(t.gospel)}</strong><span>${esc(t.gospel_desc)}</span></a>
+      <a class="tool gospel" href="${href("gospel")}"><span class="tool-icon"><img src="assets/logo-mark.svg" alt=""></span><strong>${esc(t.gospel)}</strong><span>${esc(t.gospel_desc)}</span></a>
       <a class="tool prayer" href="${href("prayer777")}"><span class="tool-icon">🙏</span><strong>${esc(t.prayer777)}</strong><span>${esc(t.prayer777_desc)}</span></a>
     </div>
   </section>`;
@@ -258,8 +265,11 @@ async function gospel() {
   const listView = store.get("glist") === "1";
 
   const head = `<header class="g-hero">
-      <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
-      <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
+      <img class="g-mark" src="assets/logo-mark.svg" alt="">
+      <div>
+        <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
+        <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
+      </div>
     </header>
     <div class="toolbar">
       <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
