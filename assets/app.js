@@ -22,7 +22,8 @@ const store = {
   },
 };
 
-let lang = "ko";
+let lang = "ko"; // 주 언어 (화면 문구도 이 언어)
+let lang2 = null; // 함께 볼 언어 (전도 대상자 또는 전도자용)
 let t = {};
 
 // ---------- 데이터 로딩 ----------
@@ -44,8 +45,12 @@ function load(path, type = "json") {
   });
 }
 
-const pick = (obj) => (obj ? obj[lang] ?? obj.ko ?? Object.values(obj)[0] : "");
-const inline = (s) => renderInline(s || "", lang);
+const dirOf = (l) => LANGS.find((x) => x.code === l)?.dir || "ltr";
+const nameOf = (l) => LANGS.find((x) => x.code === l)?.name || l;
+const pick = (obj, l = lang) => (obj ? obj[l] ?? obj.ko ?? Object.values(obj)[0] : "");
+const inline = (s, l = lang) => renderInline(s || "", l);
+/** 두 번째 언어로 된 보조 줄 */
+const sub2 = (s, tag = "span") => (s && lang2 ? `<${tag} class="sub2" lang="${lang2}" dir="${dirOf(lang2)}">${esc(s)}</${tag}>` : "");
 
 function formatDate(d) {
   const locale = { ko: "ko-KR", en: "en-US", ur: "ur-PK" }[lang] || "en-US";
@@ -56,10 +61,11 @@ function formatDate(d) {
   }
 }
 
-// ---------- 라우팅: #/<lang>/<page>/<id> ----------
+// ---------- 라우팅: #/<lang>[+<lang2>]/<page>/<id>  예) #/en+ur/gospel ----------
 function parseHash() {
-  const [l, page = "", id = ""] = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
-  return { l, page, id };
+  const [l = "", page = "", id = ""] = location.hash.replace(/^#\/?/, "").split("/").map(decodeURIComponent);
+  const [l1, l2] = l.split("+");
+  return { l1, l2: READY.includes(l2) && l2 !== l1 ? l2 : null, page, id };
 }
 
 function detectLang() {
@@ -69,23 +75,27 @@ function detectLang() {
   return READY.includes(nav) ? nav : "ko";
 }
 
-const href = (page = "", id = "", l = lang) => `#/${l}${page ? "/" + page : ""}${id ? "/" + encodeURIComponent(id) : ""}`;
+const href = (page = "", id = "", l = lang, l2 = lang2) =>
+  `#/${l}${l2 && l2 !== l ? "+" + l2 : ""}${page ? "/" + page : ""}${id ? "/" + encodeURIComponent(id) : ""}`;
 
 async function route() {
-  const { l, page, id } = parseHash();
-  if (!READY.includes(l)) {
-    location.replace(href(page, id, detectLang()));
+  const { l1, l2, page, id } = parseHash();
+  if (!READY.includes(l1)) {
+    const saved2 = store.get("lang2");
+    location.replace(href(page, id, detectLang(), READY.includes(saved2) ? saved2 : null));
     return;
   }
-  if (l !== lang || !t.church) {
-    lang = l;
+  lang2 = l2;
+  store.set("lang2", lang2 || "");
+  if (l1 !== lang || !t.church) {
+    lang = l1;
     store.set("lang", lang);
     t = await load(`content/i18n/${lang}.json`);
   }
-  const meta = LANGS.find((x) => x.code === lang);
   document.documentElement.lang = lang;
-  document.documentElement.dir = meta.dir;
-  renderChrome(page);
+  document.documentElement.dir = dirOf(lang);
+  document.body.classList.toggle("dual", !!lang2);
+  renderChrome(page, id);
   app.innerHTML = `<p class="muted pad">${esc(t.loading)}</p>`;
   try {
     const view = { "": home, pulpit: list, hq: list, gospel, prayer777 }[page];
@@ -99,7 +109,7 @@ async function route() {
   document.title = `${t.church}`;
 }
 
-function renderChrome(page) {
+function renderChrome(page, id) {
   document.getElementById("brand").innerHTML = `<a href="${href()}"><span class="logo">✝</span>${esc(t.church)}</a>`;
   const items = [
     ["pulpit", t.nav_pulpit],
@@ -110,18 +120,40 @@ function renderChrome(page) {
   nav.innerHTML = items
     .map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`)
     .join("");
-  const { page: p, id } = parseHash();
-  langBar.innerHTML =
-    LANGS.filter((l) => l.ready)
-      .map((l) => `<a href="${href(p, id, l.code)}" class="${l.code === lang ? "active" : ""}" lang="${l.code}">${l.name}</a>`)
-      .join("") +
-    `<span class="soon" title="${esc(t.soon)}">${LANGS.filter((l) => !l.ready)
-      .map((l) => l.name)
-      .join(" · ")} — ${esc(t.soon)}</span>`;
+  // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
+  const primary = READY.map(
+    (c) =>
+      `<a href="${href(page, id, c, c === lang2 ? lang : lang2)}" class="${c === lang ? "active" : ""}" lang="${c}">${nameOf(c)}</a>`,
+  ).join("");
+  const second = `<label class="lang2">
+      <span>+ ${esc(t.second_lang)}</span>
+      <select data-lang2>
+        <option value="">${esc(t.none)}</option>
+        ${READY.filter((c) => c !== lang)
+          .map((c) => `<option value="${c}" ${c === lang2 ? "selected" : ""}>${nameOf(c)}</option>`)
+          .join("")}
+      </select>
+    </label>
+    ${lang2 ? `<a class="swap" href="${href(page, id, lang2, lang)}" title="${esc(t.swap)}" aria-label="${esc(t.swap)}">⇄</a>` : ""}`;
+  langBar.innerHTML = `${primary}${second}<span class="soon">${LANGS.filter((l) => !l.ready)
+    .map((l) => l.name)
+    .join(" · ")} — ${esc(t.soon)}</span>`;
   footer.innerHTML = `<p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
     .map(([, b]) => `${esc(b.name)} (${esc(b.license)})`)
     .join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
 }
+
+/** 두 언어 본문: 넓은 화면은 좌우 2단, 좁은 화면은 탭으로 전환 */
+const duo = (a, la, b, lb) => `<div class="duo">
+    <div class="duo-tabs">
+      <button type="button" data-duo="0" class="active">${nameOf(la)}</button>
+      <button type="button" data-duo="1">${nameOf(lb)}</button>
+    </div>
+    <div class="duo-cols">
+      <div class="prose duo-col active" lang="${la}" dir="${dirOf(la)}">${a}</div>
+      <div class="prose duo-col" lang="${lb}" dir="${dirOf(lb)}">${b}</div>
+    </div>
+  </div>`;
 
 // ---------- 화면들 ----------
 async function home() {
@@ -160,8 +192,9 @@ const msgCard = (type, m) => `
   <a class="card" href="${href(type, m.id)}">
     <time>${esc(formatDate(m.date))}</time>
     <strong>${esc(pick(m.title))}</strong>
+    ${lang2 && m.title[lang2] && m.title[lang2] !== pick(m.title) ? sub2(m.title[lang2]) : ""}
     ${m.preacher ? `<span class="muted">${esc(pick(m.preacher))}</span>` : ""}
-    ${m.langs.includes(lang) ? "" : `<span class="badge">한국어</span>`}
+    ${m.langs.includes(lang) ? "" : `<span class="badge">${nameOf(m.langs[0])}</span>`}
   </a>`;
 
 async function list(type) {
@@ -181,119 +214,127 @@ async function message(type, id) {
   if (!m) return `<p class="pad">404</p>`;
   const src = m.langs.includes(lang) ? lang : m.langs[0];
   const md = await load(`content/messages/${type}/${id}/${src}.md`, "text");
+  const has2 = lang2 && lang2 !== src && m.langs.includes(lang2);
+  const md2 = has2 ? await load(`content/messages/${type}/${id}/${lang2}.md`, "text") : null;
+  const body = has2
+    ? duo(renderMarkdown(md, src), src, renderMarkdown(md2, lang2), lang2)
+    : `<div class="prose" lang="${src}" dir="${dirOf(src)}">${renderMarkdown(md, src)}</div>`;
   return `<article class="article">
     <a class="back" href="${href(type)}">‹ ${esc(type === "pulpit" ? t.nav_pulpit : t.nav_hq)}</a>
     <time>${esc(formatDate(m.date))}</time>
-    <h1>${esc(pick(m.title))}</h1>
+    <h1>${esc(pick(m.title))}${has2 ? sub2(m.title[lang2]) : ""}</h1>
     ${m.preacher ? `<p class="muted">${esc(t.preacher)}: ${esc(pick(m.preacher))}</p>` : ""}
     ${src !== lang ? `<p class="notice">${esc(t.not_translated)}</p>` : ""}
     <p class="hint">👆 ${esc(t.tap_hint)}</p>
-    <div class="prose" ${src !== lang ? `lang="${src}" dir="${LANGS.find((l) => l.code === src).dir}"` : ""}>${renderMarkdown(md, lang)}</div>
+    ${body}
   </article>`;
 }
 
 async function prayer777() {
   const md = await load(`content/prayer777/${lang}.md`, "text").catch(() => load("content/prayer777/ko.md", "text"));
+  const md2 = lang2 ? await load(`content/prayer777/${lang2}.md`, "text").catch(() => null) : null;
   return `<article class="article">
     <h1>${esc(t.prayer777)}</h1>
     <p class="muted">${esc(t.prayer777_desc)}</p>
-    <div class="prose">${renderMarkdown(md, lang)}</div>
+    ${md2 ? duo(renderMarkdown(md, lang), lang, renderMarkdown(md2, lang2), lang2) : `<div class="prose">${renderMarkdown(md, lang)}</div>`}
   </article>`;
 }
 
+// ---------- 복음 메시지 ----------
+let gospelData = null;
+const shortTitle = (s) => (s || "").split(" — ")[0];
+const stripRefs = (s) => (s || "").replace(/\[\[[^\]]+\]\]/g, "").replace(/[→←]/g, "").trim();
+const itemAt = (doc, si, gi, ii) => {
+  const sec = doc?.sections[si];
+  return gi === null || gi === "" ? sec?.items?.[ii] : sec?.groups?.[gi]?.items?.[ii];
+};
+
 async function gospel() {
   const g = await load(`content/gospel/${lang}.json`);
-  const bilingual = lang !== "ko" && store.get("bilingual") === "1";
-  const ko = bilingual ? await load("content/gospel/ko.json") : null;
+  const g2 = lang2 ? await load(`content/gospel/${lang2}.json`).catch(() => null) : null;
+  gospelData = { g, g2 };
   const big = store.get("big") === "1";
   document.body.classList.toggle("big", big);
+  const listView = store.get("glist") === "1";
 
-  const sub = (s) => (s ? `<span class="ko-sub" lang="ko" dir="ltr">${esc(s)}</span>` : "");
-  const stripRefs = (s) => (s || "").replace(/\[\[[^\]]+\]\]/g, "").replace(/→/g, "").trim();
+  const head = `<header class="g-hero">
+      <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
+      <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
+    </header>
+    <div class="toolbar">
+      <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
+      <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
+    </div>`;
+  const intro = `<p>${esc(g.intro)}</p>${g2 ? sub2(g2.intro, "p") : ""}`;
 
-  const itemHtml = (it, koIt, n) => {
+  if (!listView) {
+    return `<article class="gospel-page">${head}
+      <p class="hint">👆 ${esc(t.tap_item)}</p>
+      ${crossMap(g, g2)}
+      <details class="x-intro"><summary>${esc(t.intro)}</summary>${intro}</details>
+    </article>`;
+  }
+
+  const itemHtml = (it, it2, n) => {
     const [refs, ...rest] = (it.body || "").split("\n");
-    const koText = koIt ? koIt.body.split("\n").slice(1).join(" ") : "";
+    const text2 = it2 ? stripRefs(it2.body.split("\n").slice(1).join(" ")) : "";
     return `<li class="item">
       ${n ? `<span class="num">${n}</span>` : ""}
       <div>
-        ${it.title ? `<h4>${esc(it.title)}${sub(koIt?.title)}</h4>` : ""}
+        ${it.title ? `<h4>${esc(it.title)}${sub2(it2?.title)}</h4>` : ""}
         ${refs ? `<div class="refs">${inline(refs)}</div>` : ""}
-        ${rest.length ? `<p>${inline(rest.join(" "))}</p>${koText ? `<p class="ko-sub" lang="ko" dir="ltr">${esc(stripRefs(koText))}</p>` : ""}` : ""}
+        ${rest.length ? `<p>${inline(rest.join(" "))}</p>${sub2(text2, "p")}` : ""}
       </div>
     </li>`;
   };
 
   const sections = g.sections
     .map((s, si) => {
-      const ks = ko?.sections[si];
+      const s2 = g2?.sections[si];
       const groups = s.groups || [{ items: s.items, numbered: true }];
       const body = groups
         .map(
           (gr, gi) =>
             `<ol class="items ${gr.numbered ? "" : "plain"}">${gr.items
-              .map((it, ii) => itemHtml(it, (ks?.groups?.[gi]?.items || ks?.items)?.[ii], gr.numbered && it.title ? ii + 1 : ""))
+              .map((it, ii) => itemHtml(it, itemAt(g2, si, s.groups ? gi : null, ii), gr.numbered && it.title ? ii + 1 : ""))
               .join("")}</ol>`,
         )
         .join("");
       const prayer = s.prayer
-        ? `<div class="prayer"><h4>🙏 ${esc(s.prayer.title)}</h4><p>${esc(s.prayer.body)}</p>${
-            ks?.prayer ? `<p class="ko-sub" lang="ko" dir="ltr">${esc(ks.prayer.body)}</p>` : ""
-          }</div>`
+        ? `<div class="prayer"><h4>🙏 ${esc(s.prayer.title)}</h4><p>${esc(s.prayer.body)}</p>${sub2(s2?.prayer?.body, "p")}</div>`
         : "";
       return `<section class="g-section ${s.highlight ? "highlight" : ""}" id="g${si}">
-        <h3>${s.no ? `<span class="sec-no">${esc(s.no)}</span>` : ""}${esc(s.title)}${sub(ks?.title)}</h3>
+        <h3>${s.no ? `<span class="sec-no">${esc(s.no)}</span>` : ""}${esc(s.title)}${sub2(s2?.title)}</h3>
         ${s.lead ? `<div class="refs lead">${inline(s.lead)}</div>` : ""}
         ${body}
-        ${s.note ? `<p class="note">${esc(s.note)}</p>` : ""}
+        ${s.note ? `<p class="note">${esc(s.note)}${sub2(s2?.note, "span")}</p>` : ""}
         ${prayer}
       </section>`;
     })
     .join("");
 
-  gospelData = { g, ko };
-  const listView = store.get("glist") === "1";
-  const head = `<header class="g-hero">
-      <h1>${esc(g.title)}</h1>
-      <p class="g-sub">${esc(g.subtitle)}</p>
-    </header>
-    <div class="toolbar">
-      <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
-      <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
-      ${lang !== "ko" ? `<button type="button" class="toggle ${bilingual ? "on" : ""}" data-toggle="bilingual">가 ${esc(t.bilingual)}</button>` : ""}
-    </div>`;
-
-  if (!listView) {
-    return `<article class="gospel-page">${head}
-      <p class="hint">👆 ${esc(t.tap_item)}</p>
-      ${crossMap(g)}
-      <details class="x-intro"><summary>${esc(t.intro)}</summary><p>${esc(g.intro)}</p></details>
-    </article>`;
-  }
-
   return `<article class="gospel-page">${head}
     <nav class="toc" aria-label="${esc(t.contents)}">${g.sections
-      .map((s, i) => `<a href="#g${i}" data-jump="g${i}">${s.no ? esc(s.no) + ". " : ""}${esc(s.title.split(/[—“"(:]/)[0].trim())}</a>`)
+      .map((s, i) => `<a href="#g${i}" data-jump="g${i}">${s.no ? esc(s.no) + ". " : ""}${esc(s.short || s.title)}</a>`)
       .join("")}</nav>
     <p class="hint">👆 ${esc(t.tap_hint)}</p>
-    <p class="intro">${esc(g.intro)}</p>
+    <div class="intro">${intro}</div>
     ${sections}
   </article>`;
 }
-
-// ---------- 복음 메시지: 십자가 도식 ----------
-let gospelData = null;
-const shortTitle = (s) => s.split(" — ")[0];
 
 /**
  * 책받침과 같은 배치. 가운데 십자가(5), 가로대 띠에 6(왼쪽)·3(오른쪽),
  * 위쪽 1·2, 오른쪽 아래 4(십자가를 향한 화살표), 맨 아래 7과 결론.
  * RTL(우르드어)에서는 grid가 자동으로 좌우 반전됩니다.
  */
-function crossMap(g) {
+function crossMap(g, g2) {
   const S = g.sections;
+  const S2 = g2?.sections;
   const head = (si, cls = "") =>
-    `<button type="button" class="x-head ${cls}" data-sec="${si}">${S[si].no ? `<span class="xn">${esc(S[si].no)}</span>` : ""}${esc(S[si].short || S[si].title)}</button>`;
+    `<button type="button" class="x-head ${cls}" data-sec="${si}">${S[si].no ? `<span class="xn">${esc(S[si].no)}</span>` : ""}<span>${esc(
+      S[si].short || S[si].title,
+    )}${sub2(S2?.[si]?.short)}</span></button>`;
   const items = (si, gi = null, { numbered = true, cls = "" } = {}) => {
     const list = gi === null ? S[si].items : S[si].groups[gi].items;
     return `<ol class="x-items ${cls}">${list
@@ -301,12 +342,12 @@ function crossMap(g) {
         (it, ii) =>
           `<li><button type="button" class="xi" data-item="${si}.${gi ?? ""}.${ii}">${
             numbered ? `<span class="xi-no">${ii + 1}</span>` : ""
-          }<span>${esc(shortTitle(it.title))}</span></button></li>`,
+          }<span>${esc(shortTitle(it.title))}${sub2(shortTitle(itemAt(g2, si, gi, ii)?.title))}</span></button></li>`,
       )
       .join("")}</ol>`;
   };
   const five = S[4];
-  const fiveLabel = five.title.replace(/[“"”«].*$/, "").replace(/[:：]\s*$/, "").trim();
+  const fiveLabel = (s) => s.title.replace(/[“"”«].*$/, "").replace(/[:：]\s*$/, "").trim();
   const end = S[7];
 
   return `<div class="xmap">
@@ -316,8 +357,9 @@ function crossMap(g) {
     <div class="x-top">
       <button type="button" class="x-five" data-sec="4">
         <span class="xn">5</span>
-        <small>${esc(fiveLabel)}</small>
+        <small>${esc(fiveLabel(five))}</small>
         <strong>${esc(five.short)}</strong>
+        ${S2 ? sub2(S2[4].short) : ""}
       </button>
       <div class="x-lead">${inline(five.lead)}</div>
     </div>
@@ -339,46 +381,51 @@ function crossMap(g) {
   </div>`;
 }
 
-/** 십자가 도식에서 누른 항목/섹션/영접기도를 팝업으로 보여 줍니다. */
-function openDetail(kind, key) {
-  const { g, ko } = gospelData;
-  let html = "";
+/** 한 언어 분량의 상세 내용 (항목 / 섹션 / 영접기도) */
+function detailHtml(doc, l, kind, key) {
+  const il = (s) => inline(s, l);
   if (kind === "item") {
     const [si, gi, ii] = key.split(".");
-    const sec = g.sections[+si];
-    const it = gi === "" ? sec.items[+ii] : sec.groups[+gi].items[+ii];
+    const sec = doc.sections[+si];
+    const it = itemAt(doc, +si, gi === "" ? null : +gi, +ii);
     const [refs, ...rest] = (it.body || "").split("\n");
-    html = `<p class="d-sec">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</p>
+    return `<p class="d-sec">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</p>
       <h3 class="d-title">${esc(it.title)}</h3>
-      ${refs ? `<div class="refs">${inline(refs)}</div>` : ""}
-      ${rest.length ? `<p>${inline(rest.join(" "))}</p>` : ""}`;
-  } else if (kind === "sec") {
-    const sec = g.sections[+key];
+      ${refs ? `<div class="refs">${il(refs)}</div>` : ""}
+      ${rest.length ? `<p>${il(rest.join(" "))}</p>` : ""}`;
+  }
+  if (kind === "sec") {
+    const sec = doc.sections[+key];
     const groups = sec.groups || [{ items: sec.items }];
-    html = `<h3 class="d-title">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</h3>
-      ${sec.lead ? `<div class="refs">${inline(sec.lead)}</div>` : ""}
+    return `<h3 class="d-title">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</h3>
+      ${sec.lead ? `<div class="refs">${il(sec.lead)}</div>` : ""}
       ${groups
         .map(
           (gr) =>
             `<ul class="d-list">${gr.items
               .map((it) => {
                 const [refs, ...rest] = (it.body || "").split("\n");
-                return `<li>${it.title ? `<strong>${esc(it.title)}</strong>` : ""}${refs ? `<div class="refs">${inline(refs)}</div>` : ""}${
-                  rest.length ? `<p>${inline(rest.join(" "))}</p>` : ""
+                return `<li>${it.title ? `<strong>${esc(it.title)}</strong>` : ""}${refs ? `<div class="refs">${il(refs)}</div>` : ""}${
+                  rest.length ? `<p>${il(rest.join(" "))}</p>` : ""
                 }</li>`;
               })
               .join("")}</ul>`,
         )
         .join("")}
       ${sec.note ? `<p class="note">${esc(sec.note)}</p>` : ""}`;
-  } else {
-    const p = g.sections[4].prayer;
-    html = `<h3 class="d-title">🙏 ${esc(p.title)}</h3><p class="d-prayer">${esc(p.body)}</p>`;
   }
+  const p = doc.sections[4].prayer;
+  return `<h3 class="d-title">🙏 ${esc(p.title)}</h3><p class="d-prayer">${esc(p.body)}</p>`;
+}
+
+/** 십자가 도식에서 누른 항목/섹션/영접기도를 팝업으로 보여 줍니다. 두 언어면 위아래로. */
+function openDetail(kind, key) {
+  const { g, g2 } = gospelData;
+  const block = (doc, l) => `<div class="d-lang" lang="${l}" dir="${dirOf(l)}">${detailHtml(doc, l, kind, key)}</div>`;
   detailBack = { kind, key };
   dlg.innerHTML = `<div class="v-wrap">
     <div class="v-head"><span></span><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
-    <div class="v-body d-body">${html}</div>
+    <div class="v-body d-body">${block(g, lang)}${g2 ? `<hr class="d-split">${block(g2, lang2)}` : ""}</div>
   </div>`;
   if (!dlg.open) dlg.showModal();
 }
@@ -392,6 +439,14 @@ document.addEventListener("click", (e) => {
   const sec = e.target.closest("[data-sec]");
   if (sec) return openDetail("sec", sec.dataset.sec);
   if (e.target.closest("[data-prayer]")) return openDetail("prayer");
+  const tab = e.target.closest("[data-duo]");
+  if (tab) {
+    const box = tab.closest(".duo");
+    const n = +tab.dataset.duo;
+    box.querySelectorAll("[data-duo]").forEach((b, i) => b.classList.toggle("active", i === n));
+    box.querySelectorAll(".duo-col").forEach((c, i) => c.classList.toggle("active", i === n));
+    return;
+  }
   const jump = e.target.closest("[data-jump]");
   if (jump) {
     e.preventDefault();
@@ -409,6 +464,12 @@ document.addEventListener("click", (e) => {
       window.scrollTo(0, y);
     });
   }
+});
+
+document.addEventListener("change", (e) => {
+  if (!e.target.matches("[data-lang2]")) return;
+  const { page, id } = parseHash();
+  location.hash = href(page, id, lang, e.target.value || null);
 });
 
 window.addEventListener("hashchange", route);
@@ -429,37 +490,53 @@ async function openVerse(key, fromDetail = false) {
   await paintVerse();
 }
 
+/** 두 언어 모드면 두 번역본을 위아래로, 아니면 탭으로 번역본 전환 */
 async function paintVerse() {
   const r = current;
   const l = shownLang;
-  const dir = LANGS.find((x) => x.code === l)?.dir || "ltr";
-  const tabs = Object.keys(BIBLES)
-    .map((c) => `<button type="button" data-vlang="${c}" class="${c === l ? "active" : ""}">${LANGS.find((x) => x.code === c).name}</button>`)
-    .join("");
+  const dual = lang2 && BIBLES[lang2] ? [l, lang2] : null;
+  const langs = dual || [l];
+  const tabs = dual
+    ? ""
+    : `<div class="v-tabs">${Object.keys(BIBLES)
+        .map((c) => `<button type="button" data-vlang="${c}" class="${c === l ? "active" : ""}">${nameOf(c)}</button>`)
+        .join("")}</div>`;
   dlg.innerHTML = `<div class="v-wrap">
     <div class="v-head">
       ${detailBack ? `<button type="button" class="v-back" data-back aria-label="${esc(t.back)}">‹</button>` : ""}
       <h3>${refLabelHtml(r, l)}</h3>
       <button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button>
     </div>
-    <div class="v-tabs">${tabs}</div>
-    <div class="v-body" lang="${l}" dir="${dir}"><p class="muted">${esc(t.loading)}</p></div>
+    ${tabs}
+    <div class="v-scroll">${langs
+      .map(
+        (c) => `<div class="v-body" lang="${c}" dir="${dirOf(c)}">
+          ${dual ? `<p class="v-label">${refLabelHtml(r, c)} · ${esc(BIBLES[c].name)}</p>` : ""}
+          <div class="v-text"><p class="muted">${esc(t.loading)}</p></div>
+        </div>`,
+      )
+      .join("")}</div>
     <div class="v-foot">
-      <small class="muted">${esc(BIBLES[l].name)}</small>
+      <small class="muted">${dual ? "" : esc(BIBLES[l].name)}</small>
       <button type="button" class="v-copy" data-copy>${esc(t.copy)}</button>
     </div>
   </div>`;
-  const body = dlg.querySelector(".v-body");
-  try {
-    const verses = await getVerses(r, l);
-    if (current !== r || shownLang !== l) return;
-    body.innerHTML = verses.length
-      ? verses.map((v) => `<p><sup>${v.v}</sup>${esc(v.text)}</p>`).join("")
-      : `<p class="muted">—</p>`;
-    body.dataset.copy = `${refLabel(r, l)}\n${verses.map((v) => (verses.length > 1 ? `${v.v} ` : "") + v.text).join("\n")}`;
-  } catch {
-    body.innerHTML = `<p class="muted">${esc(t.verse_error)}</p>`;
-  }
+  const copies = [];
+  await Promise.all(
+    langs.map(async (c, i) => {
+      const box = dlg.querySelectorAll(".v-text")[i];
+      try {
+        const verses = await getVerses(r, c);
+        if (current !== r || shownLang !== l || !box.isConnected) return;
+        box.innerHTML = verses.length ? verses.map((v) => `<p><sup>${v.v}</sup>${esc(v.text)}</p>`).join("") : `<p class="muted">—</p>`;
+        copies[i] = `${refLabel(r, c)}\n${verses.map((v) => (verses.length > 1 ? `${v.v} ` : "") + v.text).join("\n")}`;
+      } catch {
+        box.innerHTML = `<p class="muted">${esc(t.verse_error)}</p>`;
+      }
+    }),
+  );
+  const foot = dlg.querySelector(".v-foot");
+  if (foot) foot.dataset.copy = copies.filter(Boolean).join("\n\n");
 }
 
 dlg.addEventListener("click", async (e) => {
@@ -473,7 +550,7 @@ dlg.addEventListener("click", async (e) => {
   const copy = e.target.closest("[data-copy]");
   if (copy) {
     try {
-      await navigator.clipboard.writeText(dlg.querySelector(".v-body").dataset.copy || "");
+      await navigator.clipboard.writeText(dlg.querySelector(".v-foot").dataset.copy || "");
       copy.textContent = t.copied;
     } catch {}
   }

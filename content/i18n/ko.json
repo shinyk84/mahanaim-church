@@ -21,7 +21,6 @@
   "copied": "복사됨",
   "close": "닫기",
   "big_text": "큰 글씨",
-  "bilingual": "한국어 함께",
   "soon": "준비 중",
   "tap_hint": "성구를 누르면 말씀이 바로 열립니다",
   "contents": "목차",
@@ -32,5 +31,8 @@
   "view_list": "☰ 목록으로 보기",
   "intro": "들어가며 — 왜 이런 문제가 올까요?",
   "tap_item": "항목을 누르면 설명과 성구가 열립니다",
-  "prayer_btn": "영접 기도"
+  "prayer_btn": "영접 기도",
+  "second_lang": "함께 볼 언어",
+  "none": "없음",
+  "swap": "두 언어 순서 바꾸기"
 }

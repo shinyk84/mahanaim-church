@@ -21,7 +21,6 @@
   "copied": "Copied",
   "close": "Close",
   "big_text": "Large text",
-  "bilingual": "Show Korean",
   "soon": "Coming soon",
   "tap_hint": "Tap any verse to open it instantly",
   "contents": "Contents",
@@ -32,5 +31,8 @@
   "view_list": "☰ List view",
   "intro": "Introduction — why do these problems come?",
   "tap_item": "Tap any item to see its explanation and verses",
-  "prayer_btn": "Prayer to receive Christ"
+  "prayer_btn": "Prayer to receive Christ",
+  "second_lang": "Second language",
+  "none": "None",
+  "swap": "Swap the two languages"
 }

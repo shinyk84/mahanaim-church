@@ -157,8 +157,8 @@ a { color: inherit; }
 .prayer { margin-top: 16px; padding: 16px; border-radius: 12px; background: var(--cream); border: 1px solid var(--line); }
 .prayer h4 { margin: 0 0 6px; }
 .prayer p { margin: 0; }
-.ko-sub { display: block; font-size: 0.8em; font-weight: 400; color: var(--muted); line-height: 1.6; margin-top: 2px; }
-h3 .ko-sub, h4 .ko-sub { flex-basis: 100%; }
+.sub2 { display: block; font-size: 0.8em; font-weight: 400; color: var(--muted); line-height: 1.6; margin-top: 2px; }
+h3 .sub2, h4 .sub2 { flex-basis: 100%; }
 
 /* ---------- 성구 팝업 ---------- */
 .verse {
@@ -294,3 +294,49 @@ h3 .ko-sub, h4 .ko-sub { flex-basis: 100%; }
 :lang(ur) .x-five small { line-height: 2; }
 :lang(ur) .x-five strong { line-height: 2.1; }
 :lang(ur) .x-five small { display: block; line-height: 2.2; }
+
+/* ---------- 두 언어 함께 보기 ---------- */
+.lang2 { display: inline-flex; align-items: center; gap: 4px; margin-inline-start: 6px; font-size: 0.8rem; color: var(--muted); white-space: nowrap; font-family: var(--font); }
+.lang2 select {
+  font: inherit; font-size: 0.85rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); cursor: pointer;
+}
+body.dual .lang2 select { background: var(--cream); border-color: var(--green-2); color: var(--green); font-weight: 700; }
+.swap { text-decoration: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); font-size: 0.95rem; flex: 0 0 auto; }
+.sub2 { display: block; font-size: 0.8em; font-weight: 400; color: var(--muted); line-height: 1.6; margin-top: 2px; }
+:lang(ur) .sub2, .sub2:lang(ur) { line-height: 2; }
+p.sub2 { margin: 2px 0 0; }
+.g-hero .sub2 { font-size: 0.45em; font-weight: 700; margin-top: 4px; }
+.g-sub .sub2 { font-size: 0.85em; }
+.xi > span:last-child, .x-head > span:last-child { min-width: 0; }
+.xi .sub2 { font-size: 0.85em; line-height: 1.4; margin-top: 0; }
+.x-head .sub2 { font-weight: 400; font-size: 0.8em; }
+.x-head.on-band .sub2 { color: rgb(255 255 255 / 0.85); }
+.x-five .sub2 { font-size: 0.85em; font-weight: 700; }
+.x-items.pills .xi .sub2 { display: inline; margin-inline-start: 4px; }
+.x-items.pills .xi .sub2::before { content: "· "; }
+
+/* 성구 팝업 — 두 번역본을 위아래로 */
+.v-scroll { overflow-y: auto; }
+.v-body { overflow: visible; }
+.v-body + .v-body { border-top: 1px dashed var(--line); }
+.v-label { margin: 0 0 4px !important; font-size: 0.78rem; font-weight: 700; color: var(--green); font-family: var(--font); }
+:lang(ur) .v-label { font-family: "Noto Nastaliq Urdu", var(--font); }
+
+/* 십자가 상세 팝업 — 두 언어 */
+.d-split { border: 0; border-top: 2px dashed var(--line); margin: 14px 0; }
+
+/* 메시지 2단 */
+.duo-tabs { display: flex; gap: 6px; margin: 8px 0 4px; }
+.duo-tabs button { font: inherit; font-size: 0.85rem; padding: 3px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.duo-tabs button.active { background: var(--green); border-color: var(--green); color: #fff; }
+.duo-col { display: none; }
+.duo-col.active { display: block; }
+@media (min-width: 820px) {
+  .article:has(.duo) { max-width: none; }
+  .duo-tabs { display: none; }
+  .duo-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .duo-col { display: block; }
+  html[dir="ltr"] .duo-col + .duo-col { border-left: 1px solid var(--line); padding-left: 28px; }
+  html[dir="rtl"] .duo-col + .duo-col { border-right: 1px solid var(--line); padding-right: 28px; }
+}
