@@ -265,11 +265,8 @@ async function gospel() {
   const listView = store.get("glist") === "1";
 
   const head = `<header class="g-hero">
-      <img class="g-mark" src="assets/logo-mark.svg" alt="">
-      <div>
-        <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
-        <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
-      </div>
+      <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
+      <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
     </header>
     <div class="toolbar">
       <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
