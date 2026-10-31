@@ -429,7 +429,6 @@ function detailHtml(doc, l, kind, key) {
 function openDetail(kind, key) {
   const { g, g2 } = gospelData;
   const block = (doc, l) => `<div class="d-lang" lang="${l}" dir="${dirOf(l)}">${detailHtml(doc, l, kind, key)}</div>`;
-  detailBack = { kind, key };
   dlg.innerHTML = `<div class="v-wrap">
     <div class="v-head"><span></span><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
     <div class="v-body d-body">${block(g, lang)}${g2 ? `<hr class="d-split">${block(g2, lang2)}` : ""}</div>
@@ -437,10 +436,52 @@ function openDetail(kind, key) {
   if (!dlg.open) dlg.showModal();
 }
 
+/**
+ * 설명 팝업 안의 성구: 화면을 바꾸지 않고 설명 바로 아래에 본문을 펼칩니다(다시 누르면 접힘).
+ * 두 언어 모드에서는 각 언어 블록의 같은 성구도 함께 펼쳐 두 설명이 나란히 유지됩니다.
+ */
+function toggleInlineVerse(chip) {
+  const key = chip.dataset.ref;
+  const r = parseRef(key);
+  if (!r) return;
+  const open = chip.classList.contains("on");
+  for (const block of dlg.querySelectorAll(".d-lang")) {
+    const l = block.getAttribute("lang");
+    // 같은 블록에서 누른 칩과 같은 위치(같은 li 또는 같은 성구 줄)의 칩을 찾음
+    const twin = block.contains(chip) ? chip : block.querySelector(`.ref[data-ref="${key}"]`);
+    if (!twin) continue;
+    const host = twin.closest("li") || block;
+    host.querySelector(`.d-verse[data-for="${key}"]`)?.remove();
+    twin.classList.toggle("on", !open);
+    if (open) continue;
+    const box = document.createElement("div");
+    box.className = "d-verse";
+    box.dataset.for = key;
+    box.innerHTML = `<p class="v-label">${refLabelHtml(r, l)} · ${esc(BIBLES[l]?.name || "")}</p><div class="v-text"><p class="muted">${esc(t.loading)}</p></div>`;
+    // li 안이면 그 항목 끝(설명 아래), 아니면 성구 줄 다음의 설명 문단 아래
+    if (twin.closest("li")) host.append(box);
+    else {
+      const refs = twin.closest(".refs");
+      let after = refs?.nextElementSibling?.tagName === "P" ? refs.nextElementSibling : refs || block.lastElementChild;
+      while (after.nextElementSibling?.classList.contains("d-verse")) after = after.nextElementSibling; // 누른 순서대로 쌓기
+      after.after(box);
+    }
+    getVerses(r, BIBLES[l] ? l : "ko")
+      .then((vs) => {
+        box.querySelector(".v-text").innerHTML = vs.length
+          ? vs.map((v) => `<p><sup>${v.v}</sup>${esc(v.text)}</p>`).join("")
+          : `<p class="muted">—</p>`;
+      })
+      .catch(() => {
+        box.querySelector(".v-text").innerHTML = `<p class="muted">${esc(t.verse_error)}</p>`;
+      });
+  }
+}
+
 // ---------- 이벤트 ----------
 document.addEventListener("click", (e) => {
   const ref = e.target.closest(".ref");
-  if (ref) return openVerse(ref.dataset.ref, dlg.contains(ref));
+  if (ref) return ref.closest(".d-body") ? toggleInlineVerse(ref) : openVerse(ref.dataset.ref);
   const item = e.target.closest("[data-item]");
   if (item) return openDetail("item", item.dataset.item);
   const sec = e.target.closest("[data-sec]");
@@ -485,12 +526,10 @@ window.addEventListener("hashchange", route);
 const dlg = document.getElementById("verse");
 let current = null;
 let shownLang = null;
-let detailBack = null; // 십자가 도식 팝업에서 성구를 열었을 때 돌아갈 곳
 
-async function openVerse(key, fromDetail = false) {
+async function openVerse(key) {
   const r = parseRef(key);
   if (!r) return;
-  if (!fromDetail) detailBack = null;
   current = r;
   shownLang = BIBLES[lang] ? lang : "ko";
   if (!dlg.open) dlg.showModal();
@@ -510,7 +549,6 @@ async function paintVerse() {
         .join("")}</div>`;
   dlg.innerHTML = `<div class="v-wrap">
     <div class="v-head">
-      ${detailBack ? `<button type="button" class="v-back" data-back aria-label="${esc(t.back)}">‹</button>` : ""}
       <h3>${refLabelHtml(r, l)}</h3>
       <button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button>
     </div>
@@ -548,7 +586,6 @@ async function paintVerse() {
 
 dlg.addEventListener("click", async (e) => {
   if (e.target === dlg || e.target.closest("[data-close]")) return dlg.close();
-  if (e.target.closest("[data-back]") && detailBack) return openDetail(detailBack.kind, detailBack.key);
   const tab = e.target.closest("[data-vlang]");
   if (tab) {
     shownLang = tab.dataset.vlang;

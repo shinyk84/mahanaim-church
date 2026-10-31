@@ -381,3 +381,15 @@ p.sub2 { margin: 2px 0 0; }
 .footer .f-brand { display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--navy); font-size: 0.85rem; margin-bottom: 6px; }
 .footer .f-brand img { width: 16px; }
 .v-head h3, .d-title { color: var(--navy); }
+
+/* 설명 팝업 안에서 펼쳐지는 성구 본문 */
+.d-verse {
+  margin: 10px 0 4px; padding: 10px 14px; border-radius: 12px;
+  background: var(--navy-soft); border-inline-start: 4px solid var(--brand-navy);
+  animation: dverse 0.18s ease-out;
+}
+.d-verse .v-text p { margin: 0 0 6px; }
+.d-verse .v-text p:last-child { margin-bottom: 0; }
+.d-verse sup { color: var(--navy); font-weight: 700; margin-inline-end: 4px; font-family: var(--font); }
+.ref.on { background: var(--fill); color: #fff; border-color: var(--fill); }
+@keyframes dverse { from { opacity: 0; transform: translateY(-4px); } }
