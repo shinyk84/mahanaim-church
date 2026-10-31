@@ -393,3 +393,20 @@ p.sub2 { margin: 2px 0 0; }
 .d-verse sup { color: var(--navy); font-weight: 700; margin-inline-end: 4px; font-family: var(--font); }
 .ref.on { background: var(--fill); color: #fff; border-color: var(--fill); }
 @keyframes dverse { from { opacity: 0; transform: translateY(-4px); } }
+
+/* 제목과 성구를 한 줄에 — 스크롤 줄이기 */
+.d-line { display: flex; flex-wrap: wrap; align-items: center; column-gap: 6px; row-gap: 0; }
+.d-line > h3, .d-line > h4, .d-line > strong { margin: 0; }
+.d-line > .refs { margin: 0; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0 2px; }
+.d-line .ref { margin: 1px 2px; }
+.d-line + p { margin-top: 2px; }
+.d-body .d-title { margin: 0; }
+.d-body .d-sec { margin-bottom: 2px; }
+.d-list li { padding: 6px 0; }
+.d-list li p { margin: 1px 0 0; }
+.d-verse { margin: 6px 0 2px; padding: 8px 12px; }
+.g-section h3 .refs.lead { margin: 0; }
+.g-section h3 .refs.lead .ref { font-size: 0.8em; }
+.items { gap: 6px; }
+.item p { margin-top: 1px; }
+.intro > p:first-child { margin-top: 0; } .intro > p:last-child { margin-bottom: 0; }

@@ -288,8 +288,7 @@ async function gospel() {
     return `<li class="item">
       ${n ? `<span class="num">${n}</span>` : ""}
       <div>
-        ${it.title ? `<h4>${esc(it.title)}${sub2(it2?.title)}</h4>` : ""}
-        ${refs ? `<div class="refs">${inline(refs)}</div>` : ""}
+        <div class="d-line">${it.title ? `<h4>${esc(it.title)}${sub2(it2?.title)}</h4>` : ""}${refs ? `<span class="refs">${inline(refs)}</span>` : ""}</div>
         ${rest.length ? `<p>${inline(rest.join(" "))}</p>${sub2(text2, "p")}` : ""}
       </div>
     </li>`;
@@ -311,8 +310,7 @@ async function gospel() {
         ? `<div class="prayer"><h4>🙏 ${esc(s.prayer.title)}</h4><p>${esc(s.prayer.body)}</p>${sub2(s2?.prayer?.body, "p")}</div>`
         : "";
       return `<section class="g-section ${s.highlight ? "highlight" : ""}" id="g${si}">
-        <h3>${s.no ? `<span class="sec-no">${esc(s.no)}</span>` : ""}${esc(s.title)}${sub2(s2?.title)}</h3>
-        ${s.lead ? `<div class="refs lead">${inline(s.lead)}</div>` : ""}
+        <h3>${s.no ? `<span class="sec-no">${esc(s.no)}</span>` : ""}${esc(s.title)}${s.lead ? `<span class="refs lead">${inline(s.lead)}</span>` : ""}${sub2(s2?.title)}</h3>
         ${body}
         ${s.note ? `<p class="note">${esc(s.note)}${sub2(s2?.note, "span")}</p>` : ""}
         ${prayer}
@@ -397,22 +395,22 @@ function detailHtml(doc, l, kind, key) {
     const it = itemAt(doc, +si, gi === "" ? null : +gi, +ii);
     const [refs, ...rest] = (it.body || "").split("\n");
     return `<p class="d-sec">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</p>
-      <h3 class="d-title">${esc(it.title)}</h3>
-      ${refs ? `<div class="refs">${il(refs)}</div>` : ""}
+      <div class="d-line"><h3 class="d-title">${esc(it.title)}</h3>${refs ? `<span class="refs">${il(refs)}</span>` : ""}</div>
       ${rest.length ? `<p>${il(rest.join(" "))}</p>` : ""}`;
   }
   if (kind === "sec") {
     const sec = doc.sections[+key];
     const groups = sec.groups || [{ items: sec.items }];
-    return `<h3 class="d-title">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</h3>
-      ${sec.lead ? `<div class="refs">${il(sec.lead)}</div>` : ""}
+    return `<div class="d-line"><h3 class="d-title">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</h3>${
+      sec.lead ? `<span class="refs">${il(sec.lead)}</span>` : ""
+    }</div>
       ${groups
         .map(
           (gr) =>
             `<ul class="d-list">${gr.items
               .map((it) => {
                 const [refs, ...rest] = (it.body || "").split("\n");
-                return `<li>${it.title ? `<strong>${esc(it.title)}</strong>` : ""}${refs ? `<div class="refs">${il(refs)}</div>` : ""}${
+                return `<li><div class="d-line">${it.title ? `<strong>${esc(it.title)}</strong>` : ""}${refs ? `<span class="refs">${il(refs)}</span>` : ""}</div>${
                   rest.length ? `<p>${il(rest.join(" "))}</p>` : ""
                 }</li>`;
               })
@@ -461,8 +459,8 @@ function toggleInlineVerse(chip) {
     // li 안이면 그 항목 끝(설명 아래), 아니면 성구 줄 다음의 설명 문단 아래
     if (twin.closest("li")) host.append(box);
     else {
-      const refs = twin.closest(".refs");
-      let after = refs?.nextElementSibling?.tagName === "P" ? refs.nextElementSibling : refs || block.lastElementChild;
+      const line = twin.closest(".d-line") || twin.closest(".refs");
+      let after = line?.nextElementSibling?.tagName === "P" ? line.nextElementSibling : line || block.lastElementChild;
       while (after.nextElementSibling?.classList.contains("d-verse")) after = after.nextElementSibling; // 누른 순서대로 쌓기
       after.after(box);
     }
