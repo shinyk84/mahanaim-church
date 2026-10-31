@@ -27,5 +27,10 @@
   "contents": "Contents",
   "bible_credit": "Bible text",
   "preacher": "Preacher",
-  "home": "Home"
+  "home": "Home",
+  "view_cross": "✝ Cross view",
+  "view_list": "☰ List view",
+  "intro": "Introduction — why do these problems come?",
+  "tap_item": "Tap any item to see its explanation and verses",
+  "prayer_btn": "Prayer to receive Christ"
 }

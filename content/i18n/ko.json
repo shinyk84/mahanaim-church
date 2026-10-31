@@ -27,5 +27,10 @@
   "contents": "목차",
   "bible_credit": "성경 본문",
   "preacher": "설교",
-  "home": "홈"
+  "home": "홈",
+  "view_cross": "✝ 십자가로 보기",
+  "view_list": "☰ 목록으로 보기",
+  "intro": "들어가며 — 왜 이런 문제가 올까요?",
+  "tap_item": "항목을 누르면 설명과 성구가 열립니다",
+  "prayer_btn": "영접 기도"
 }

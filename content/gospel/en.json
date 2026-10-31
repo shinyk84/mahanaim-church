@@ -7,42 +7,94 @@
       "no": "1",
       "title": "Man as Originally Created",
       "items": [
-        { "title": "Created in the image of God", "body": "[[GEN 1:27]]" },
-        { "title": "The blessing God gave", "body": "[[GEN 1:28]]" },
-        { "title": "The breath of life", "body": "[[GEN 2:7]]" }
+        {
+          "title": "Created in the image of God",
+          "body": "[[GEN 1:27]]"
+        },
+        {
+          "title": "The blessing God gave",
+          "body": "[[GEN 1:28]]"
+        },
+        {
+          "title": "The breath of life",
+          "body": "[[GEN 2:7]]"
+        }
       ],
-      "note": "The principle of creation: as fish belong in water, birds in the sky, and trees in the soil — people are only truly happy when they are with God."
+      "note": "The principle of creation: as fish belong in water, birds in the sky, and trees in the soil — people are only truly happy when they are with God.",
+      "short": "Man as Created"
     },
     {
       "no": "2",
       "title": "Man's Fundamental Problem — Sin (Original Sin)",
       "items": [
-        { "title": "Leaving God", "body": "[[GEN 3:1-6]]" },
-        { "title": "Disobedience", "body": "[[ROM 3:23]]" },
-        { "title": "Satan, the devil", "body": "[[JOH 8:44]]" }
-      ]
+        {
+          "title": "Leaving God",
+          "body": "[[GEN 3:1-6]]"
+        },
+        {
+          "title": "Disobedience",
+          "body": "[[ROM 3:23]]"
+        },
+        {
+          "title": "Satan, the devil",
+          "body": "[[JOH 8:44]]"
+        }
+      ],
+      "short": "The Root Problem"
     },
     {
       "no": "3",
       "title": "Six Problems of Man Apart from God",
       "items": [
-        { "title": "A child of the devil — bound by fate", "body": "[[JOH 8:44]] [[EPH 2:1]]\nApart from God, man is spiritually dead and under the rule of Satan." },
-        { "title": "Idolatry — enslaved to the devil", "body": "[[1CO 10:20]] [[EPH 2:2]]\nAs a result, people fall into superstition and idolatry — fortune-telling, rituals, good works — yet find no happiness, and live bound by fate, checking lucky days, directions, and burial sites." },
-        { "title": "Problems of the heart and mind", "body": "[[MAT 11:28]] [[EPH 2:3]]\nAnxiety, discontent, emptiness, mental illness, neurosis, insomnia, depression… even with good background, knowledge, and money, there is no true peace." },
-        { "title": "Physical problems and disease", "body": "[[ACT 8:4-8]]\nIncurable diseases, troubles, nightmares, and sleep paralysis; suffering from pain throughout the body with no diagnosis." },
-        { "title": "The life to come — death, judgment, hell", "body": "[[LUK 16:19-31]] [[HEB 9:27]]\nDenying God and clinging only to this life, man finally dies and faces eternal judgment in hell." },
-        { "title": "Problems for the next generation — spiritual inheritance", "body": "[[EXO 20:4-5]]\nIn the end, all these problems are passed down to our children." }
-      ]
+        {
+          "title": "A child of the devil — bound by fate",
+          "body": "[[JOH 8:44]] [[EPH 2:1]]\nApart from God, man is spiritually dead and under the rule of Satan."
+        },
+        {
+          "title": "Idolatry — enslaved to the devil",
+          "body": "[[1CO 10:20]] [[EPH 2:2]]\nAs a result, people fall into superstition and idolatry — fortune-telling, rituals, good works — yet find no happiness, and live bound by fate, checking lucky days, directions, and burial sites."
+        },
+        {
+          "title": "Problems of the heart and mind",
+          "body": "[[MAT 11:28]] [[EPH 2:3]]\nAnxiety, discontent, emptiness, mental illness, neurosis, insomnia, depression… even with good background, knowledge, and money, there is no true peace."
+        },
+        {
+          "title": "Physical problems and disease",
+          "body": "[[ACT 8:4-8]]\nIncurable diseases, troubles, nightmares, and sleep paralysis; suffering from pain throughout the body with no diagnosis."
+        },
+        {
+          "title": "The life to come — death, judgment, hell",
+          "body": "[[LUK 16:19-31]] [[HEB 9:27]]\nDenying God and clinging only to this life, man finally dies and faces eternal judgment in hell."
+        },
+        {
+          "title": "Problems for the next generation — spiritual inheritance",
+          "body": "[[EXO 20:4-5]]\nIn the end, all these problems are passed down to our children."
+        }
+      ],
+      "short": "Six Problems"
     },
     {
       "no": "4",
       "title": "Man's Own Methods",
       "items": [
-        { "title": "Religion", "body": "[[ACT 4:12]]" },
-        { "title": "Good works", "body": "[[ISA 64:6]]" },
-        { "title": "Philosophy", "body": "[[COL 2:8]]" },
-        { "title": "Science, fortune-telling", "body": "" }
-      ]
+        {
+          "title": "Religion",
+          "body": "[[ACT 4:12]]"
+        },
+        {
+          "title": "Good works",
+          "body": "[[ISA 64:6]]"
+        },
+        {
+          "title": "Philosophy",
+          "body": "[[COL 2:8]]"
+        },
+        {
+          "title": "Science, fortune-telling",
+          "body": ""
+        }
+      ],
+      "short": "Man's Own Methods"
     },
     {
       "no": "5",
@@ -52,60 +104,136 @@
       "groups": [
         {
           "items": [
-            { "title": "The true Prophet", "body": "[[GEN 3:1-6]] → [[JOH 14:6]]" },
-            { "title": "The true Priest", "body": "[[ROM 3:23]] → [[ROM 8:2]]" },
-            { "title": "The true King", "body": "[[JOH 8:44]] → [[1JO 3:8]]" }
+            {
+              "title": "The true Prophet",
+              "body": "[[GEN 3:1-6]] → [[JOH 14:6]]"
+            },
+            {
+              "title": "The true Priest",
+              "body": "[[ROM 3:23]] → [[ROM 8:2]]"
+            },
+            {
+              "title": "The true King",
+              "body": "[[JOH 8:44]] → [[1JO 3:8]]"
+            }
           ]
         },
         {
           "numbered": true,
           "items": [
-            { "title": "Promise", "body": "[[GEN 3:15]] [[EXO 3:18]] [[ISA 7:14]]" },
-            { "title": "Fulfillment", "body": "[[MAT 1:21-23]] [[MAT 16:16]] [[JOH 19:30]]" },
-            { "title": "Faith — receiving Him", "body": "[[JOH 1:12]] [[ROM 10:9-10]] [[REV 3:20]] [[PRO 27:1]]" },
-            { "title": "Saved by grace", "body": "[[EPH 2:8-9]] [[JOH 5:24]] [[COL 1:13]]" }
+            {
+              "title": "Promise",
+              "body": "[[GEN 3:15]] [[EXO 3:18]] [[ISA 7:14]]"
+            },
+            {
+              "title": "Fulfillment",
+              "body": "[[MAT 1:21-23]] [[MAT 16:16]] [[JOH 19:30]]"
+            },
+            {
+              "title": "Faith — receiving Him",
+              "body": "[[JOH 1:12]] [[ROM 10:9-10]] [[REV 3:20]] [[PRO 27:1]]"
+            },
+            {
+              "title": "Saved by grace",
+              "body": "[[EPH 2:8-9]] [[JOH 5:24]] [[COL 1:13]]"
+            }
           ]
         }
       ],
       "prayer": {
         "title": "Prayer to Receive Christ",
         "body": "God of love! I did not know You, and until now I have lived as I pleased. But now I believe that Jesus is the Christ who died on the cross for me and rose again. I open the door of my heart and receive Jesus as my Savior. Please come into my heart and lead me forever. I pray in the name of the living Jesus Christ. Amen."
-      }
+      },
+      "short": "Jesus Christ"
     },
     {
       "no": "6",
       "title": "Seven Blessings of God's Children",
       "items": [
-        { "title": "A child of God — set free from fate", "body": "[[JOH 1:12]]\nHaving received Jesus Christ, you are a child of God." },
-        { "title": "The Holy Spirit dwells in you, guides and protects", "body": "[[1CO 3:16]] [[JOH 14:26-27]]\nThe Holy Spirit is always with you and leads you." },
-        { "title": "The work of the Spirit — answered prayer", "body": "[[JOH 14:13-14]] [[JOH 16:24]]\nWhen you pray to God in the name of Jesus Christ, He answers." },
-        { "title": "Authority over the powers of darkness", "body": "[[MAR 3:13-15]] [[LUK 10:19]] [[MAT 12:28-29]]\nIn the name of Jesus Christ you can break and overcome the forces of Satan." },
-        { "title": "Help from angels — ministering spirits", "body": "[[HEB 1:14]] [[REV 8:3-5]]\nGod sends His heavenly hosts and angels to protect you." },
-        { "title": "Citizen of heaven — eternal blessing", "body": "[[PHI 3:20]] [[JOH 5:24]]\nAs God's people holding heavenly citizenship, you can enjoy its blessings even on this earth." },
-        { "title": "World evangelization — the blessing of mission", "body": "[[MAT 28:16-20]] [[ACT 1:8]]\nWe have regained the authority to conquer and rule the world with the Gospel." }
-      ]
+        {
+          "title": "A child of God — set free from fate",
+          "body": "[[JOH 1:12]]\nHaving received Jesus Christ, you are a child of God."
+        },
+        {
+          "title": "The Holy Spirit dwells in you, guides and protects",
+          "body": "[[1CO 3:16]] [[JOH 14:26-27]]\nThe Holy Spirit is always with you and leads you."
+        },
+        {
+          "title": "The work of the Spirit — answered prayer",
+          "body": "[[JOH 14:13-14]] [[JOH 16:24]]\nWhen you pray to God in the name of Jesus Christ, He answers."
+        },
+        {
+          "title": "Authority over the powers of darkness",
+          "body": "[[MAR 3:13-15]] [[LUK 10:19]] [[MAT 12:28-29]]\nIn the name of Jesus Christ you can break and overcome the forces of Satan."
+        },
+        {
+          "title": "Help from angels — ministering spirits",
+          "body": "[[HEB 1:14]] [[REV 8:3-5]]\nGod sends His heavenly hosts and angels to protect you."
+        },
+        {
+          "title": "Citizen of heaven — eternal blessing",
+          "body": "[[PHI 3:20]] [[JOH 5:24]]\nAs God's people holding heavenly citizenship, you can enjoy its blessings even on this earth."
+        },
+        {
+          "title": "World evangelization — the blessing of mission",
+          "body": "[[MAT 28:16-20]] [[ACT 1:8]]\nWe have regained the authority to conquer and rule the world with the Gospel."
+        }
+      ],
+      "short": "Seven Blessings"
     },
     {
       "no": "7",
       "title": "Five Assurances of God's Children",
       "items": [
-        { "title": "Assurance of salvation", "body": "[[1JO 5:10-13]]" },
-        { "title": "Assurance of answered prayer", "body": "[[JER 33:1-3]]" },
-        { "title": "Assurance of guidance", "body": "[[PRO 3:5-6]]" },
-        { "title": "Assurance of forgiveness", "body": "[[1JO 1:9]]" },
-        { "title": "Assurance of victory", "body": "[[1CO 10:13]]" }
-      ]
+        {
+          "title": "Assurance of salvation",
+          "body": "[[1JO 5:10-13]]"
+        },
+        {
+          "title": "Assurance of answered prayer",
+          "body": "[[JER 33:1-3]]"
+        },
+        {
+          "title": "Assurance of guidance",
+          "body": "[[PRO 3:5-6]]"
+        },
+        {
+          "title": "Assurance of forgiveness",
+          "body": "[[1JO 1:9]]"
+        },
+        {
+          "title": "Assurance of victory",
+          "body": "[[1CO 10:13]]"
+        }
+      ],
+      "short": "Five Assurances"
     },
     {
       "no": "",
       "title": "Conclusion",
       "items": [
-        { "title": "", "body": "[[MAT 28:16-20]]" },
-        { "title": "", "body": "[[MAR 16:17-18]]" },
-        { "title": "", "body": "[[LUK 24:25-27]]" },
-        { "title": "", "body": "[[JOH 21:15-17]]" },
-        { "title": "", "body": "[[ACT 1:8]]" }
-      ]
+        {
+          "title": "",
+          "body": "[[MAT 28:16-20]]"
+        },
+        {
+          "title": "",
+          "body": "[[MAR 16:17-18]]"
+        },
+        {
+          "title": "",
+          "body": "[[LUK 24:25-27]]"
+        },
+        {
+          "title": "",
+          "body": "[[JOH 21:15-17]]"
+        },
+        {
+          "title": "",
+          "body": "[[ACT 1:8]]"
+        }
+      ],
+      "short": "Conclusion"
     }
   ]
 }

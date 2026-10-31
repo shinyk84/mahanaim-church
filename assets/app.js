@@ -251,15 +251,27 @@ async function gospel() {
     })
     .join("");
 
-  return `<article class="gospel-page">
-    <header class="g-hero">
+  gospelData = { g, ko };
+  const listView = store.get("glist") === "1";
+  const head = `<header class="g-hero">
       <h1>${esc(g.title)}</h1>
       <p class="g-sub">${esc(g.subtitle)}</p>
     </header>
     <div class="toolbar">
+      <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
       <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
       ${lang !== "ko" ? `<button type="button" class="toggle ${bilingual ? "on" : ""}" data-toggle="bilingual">가 ${esc(t.bilingual)}</button>` : ""}
-    </div>
+    </div>`;
+
+  if (!listView) {
+    return `<article class="gospel-page">${head}
+      <p class="hint">👆 ${esc(t.tap_item)}</p>
+      ${crossMap(g)}
+      <details class="x-intro"><summary>${esc(t.intro)}</summary><p>${esc(g.intro)}</p></details>
+    </article>`;
+  }
+
+  return `<article class="gospel-page">${head}
     <nav class="toc" aria-label="${esc(t.contents)}">${g.sections
       .map((s, i) => `<a href="#g${i}" data-jump="g${i}">${s.no ? esc(s.no) + ". " : ""}${esc(s.title.split(/[—“"(:]/)[0].trim())}</a>`)
       .join("")}</nav>
@@ -269,10 +281,117 @@ async function gospel() {
   </article>`;
 }
 
+// ---------- 복음 메시지: 십자가 도식 ----------
+let gospelData = null;
+const shortTitle = (s) => s.split(" — ")[0];
+
+/**
+ * 책받침과 같은 배치. 가운데 십자가(5), 가로대 띠에 6(왼쪽)·3(오른쪽),
+ * 위쪽 1·2, 오른쪽 아래 4(십자가를 향한 화살표), 맨 아래 7과 결론.
+ * RTL(우르드어)에서는 grid가 자동으로 좌우 반전됩니다.
+ */
+function crossMap(g) {
+  const S = g.sections;
+  const head = (si, cls = "") =>
+    `<button type="button" class="x-head ${cls}" data-sec="${si}">${S[si].no ? `<span class="xn">${esc(S[si].no)}</span>` : ""}${esc(S[si].short || S[si].title)}</button>`;
+  const items = (si, gi = null, { numbered = true, cls = "" } = {}) => {
+    const list = gi === null ? S[si].items : S[si].groups[gi].items;
+    return `<ol class="x-items ${cls}">${list
+      .map(
+        (it, ii) =>
+          `<li><button type="button" class="xi" data-item="${si}.${gi ?? ""}.${ii}">${
+            numbered ? `<span class="xi-no">${ii + 1}</span>` : ""
+          }<span>${esc(shortTitle(it.title))}</span></button></li>`,
+      )
+      .join("")}</ol>`;
+  };
+  const five = S[4];
+  const fiveLabel = five.title.replace(/[“"”«].*$/, "").replace(/[:：]\s*$/, "").trim();
+  const end = S[7];
+
+  return `<div class="xmap">
+    <section class="x-cell x-s1">${head(0)}${items(0)}</section>
+    <section class="x-cell x-s2">${head(1)}${items(1)}</section>
+
+    <div class="x-top">
+      <button type="button" class="x-five" data-sec="4">
+        <span class="xn">5</span>
+        <small>${esc(fiveLabel)}</small>
+        <strong>${esc(five.short)}</strong>
+      </button>
+      <div class="x-lead">${inline(five.lead)}</div>
+    </div>
+
+    <div class="x-band x-b6">${head(5, "on-band")}</div>
+    <div class="x-arm">${items(4, 0, { numbered: false, cls: "triad" })}</div>
+    <div class="x-band x-b3">${head(2, "on-band")}</div>
+
+    <section class="x-cell x-l6">${items(5)}</section>
+    <div class="x-stem">
+      ${items(4, 1)}
+      <button type="button" class="x-pray" data-prayer>🙏 ${esc(t.prayer_btn)}</button>
+    </div>
+    <section class="x-cell x-l3">${items(2)}</section>
+    <section class="x-cell x-s4">${head(3)}${items(3, null, { numbered: false, cls: "arrows" })}</section>
+
+    <section class="x-cell x-s7">${head(6)}${items(6, null, { cls: "pills" })}</section>
+    <section class="x-cell x-end">${head(7)}<div class="refs">${end.items.map((it) => inline(it.body)).join(" ")}</div></section>
+  </div>`;
+}
+
+/** 십자가 도식에서 누른 항목/섹션/영접기도를 팝업으로 보여 줍니다. */
+function openDetail(kind, key) {
+  const { g, ko } = gospelData;
+  let html = "";
+  if (kind === "item") {
+    const [si, gi, ii] = key.split(".");
+    const sec = g.sections[+si];
+    const it = gi === "" ? sec.items[+ii] : sec.groups[+gi].items[+ii];
+    const [refs, ...rest] = (it.body || "").split("\n");
+    html = `<p class="d-sec">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</p>
+      <h3 class="d-title">${esc(it.title)}</h3>
+      ${refs ? `<div class="refs">${inline(refs)}</div>` : ""}
+      ${rest.length ? `<p>${inline(rest.join(" "))}</p>` : ""}`;
+  } else if (kind === "sec") {
+    const sec = g.sections[+key];
+    const groups = sec.groups || [{ items: sec.items }];
+    html = `<h3 class="d-title">${sec.no ? esc(sec.no) + ". " : ""}${esc(sec.title)}</h3>
+      ${sec.lead ? `<div class="refs">${inline(sec.lead)}</div>` : ""}
+      ${groups
+        .map(
+          (gr) =>
+            `<ul class="d-list">${gr.items
+              .map((it) => {
+                const [refs, ...rest] = (it.body || "").split("\n");
+                return `<li>${it.title ? `<strong>${esc(it.title)}</strong>` : ""}${refs ? `<div class="refs">${inline(refs)}</div>` : ""}${
+                  rest.length ? `<p>${inline(rest.join(" "))}</p>` : ""
+                }</li>`;
+              })
+              .join("")}</ul>`,
+        )
+        .join("")}
+      ${sec.note ? `<p class="note">${esc(sec.note)}</p>` : ""}`;
+  } else {
+    const p = g.sections[4].prayer;
+    html = `<h3 class="d-title">🙏 ${esc(p.title)}</h3><p class="d-prayer">${esc(p.body)}</p>`;
+  }
+  detailBack = { kind, key };
+  dlg.innerHTML = `<div class="v-wrap">
+    <div class="v-head"><span></span><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
+    <div class="v-body d-body">${html}</div>
+  </div>`;
+  if (!dlg.open) dlg.showModal();
+}
+
 // ---------- 이벤트 ----------
 document.addEventListener("click", (e) => {
   const ref = e.target.closest(".ref");
-  if (ref) return openVerse(ref.dataset.ref);
+  if (ref) return openVerse(ref.dataset.ref, dlg.contains(ref));
+  const item = e.target.closest("[data-item]");
+  if (item) return openDetail("item", item.dataset.item);
+  const sec = e.target.closest("[data-sec]");
+  if (sec) return openDetail("sec", sec.dataset.sec);
+  if (e.target.closest("[data-prayer]")) return openDetail("prayer");
   const jump = e.target.closest("[data-jump]");
   if (jump) {
     e.preventDefault();
@@ -298,10 +417,12 @@ window.addEventListener("hashchange", route);
 const dlg = document.getElementById("verse");
 let current = null;
 let shownLang = null;
+let detailBack = null; // 십자가 도식 팝업에서 성구를 열었을 때 돌아갈 곳
 
-async function openVerse(key) {
+async function openVerse(key, fromDetail = false) {
   const r = parseRef(key);
   if (!r) return;
+  if (!fromDetail) detailBack = null;
   current = r;
   shownLang = BIBLES[lang] ? lang : "ko";
   if (!dlg.open) dlg.showModal();
@@ -317,6 +438,7 @@ async function paintVerse() {
     .join("");
   dlg.innerHTML = `<div class="v-wrap">
     <div class="v-head">
+      ${detailBack ? `<button type="button" class="v-back" data-back aria-label="${esc(t.back)}">‹</button>` : ""}
       <h3>${refLabelHtml(r, l)}</h3>
       <button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button>
     </div>
@@ -342,6 +464,7 @@ async function paintVerse() {
 
 dlg.addEventListener("click", async (e) => {
   if (e.target === dlg || e.target.closest("[data-close]")) return dlg.close();
+  if (e.target.closest("[data-back]") && detailBack) return openDetail(detailBack.kind, detailBack.key);
   const tab = e.target.closest("[data-vlang]");
   if (tab) {
     shownLang = tab.dataset.vlang;

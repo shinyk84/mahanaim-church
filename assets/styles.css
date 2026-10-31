@@ -185,3 +185,112 @@ h3 .ko-sub, h4 .ko-sub { flex-basis: 100%; }
 /* ---------- footer ---------- */
 .footer { padding-top: 24px; padding-bottom: 40px; font-size: 0.75rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: 32px; font-family: var(--font); }
 .footer p { margin: 2px 0; }
+
+/* ---------- 복음 메시지: 십자가 도식 ---------- */
+:root { --cross: #ecefe6; --cross-line: #cfd6c6; --band: #3d8b40; }
+@media (prefers-color-scheme: dark) { :root { --cross: #2a3128; --cross-line: #3b463a; --band: #2f6b31; } }
+.xmap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-areas:
+    "s1  top  s2"
+    "b6  arm  b3"
+    "l6  stem l3"
+    "l6  stem s4"
+    "s7  s7   s7"
+    "end end  end";
+  column-gap: 8px;
+  margin: 8px 0 16px;
+  font-size: 0.8em;
+  line-height: 1.45;
+}
+@media (min-width: 720px) { .xmap { font-size: 0.95em; column-gap: 14px; } }
+.x-s1 { grid-area: s1; } .x-s2 { grid-area: s2; } .x-top { grid-area: top; }
+.x-b6 { grid-area: b6; } .x-arm { grid-area: arm; } .x-b3 { grid-area: b3; }
+.x-l6 { grid-area: l6; } .x-stem { grid-area: stem; } .x-l3 { grid-area: l3; }
+.x-s4 { grid-area: s4; } .x-s7 { grid-area: s7; } .x-end { grid-area: end; }
+
+.x-cell { padding: 8px 2px; min-width: 0; }
+.x-s1, .x-s2 { align-self: end; padding-bottom: 12px; }
+.x-s7, .x-end { margin-top: 14px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.x-end { margin-top: 8px; }
+
+.x-head {
+  display: flex; align-items: center; gap: 6px; width: 100%; padding: 0 0 4px; margin: 0;
+  font: inherit; font-weight: 900; font-size: 1.05em; line-height: 1.35; text-align: start;
+  background: none; border: 0; color: var(--green); cursor: pointer;
+}
+.x-head.on-band { color: #fff; padding: 0; height: 100%; }
+.xn {
+  flex: 0 0 auto; display: inline-grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%;
+  background: var(--green); color: #fff; font-size: 0.85em; font-family: var(--font);
+}
+.on-band .xn { background: #fff; color: var(--band); }
+
+.x-items { list-style: none; margin: 0; padding: 0; }
+.x-items li + li { border-top: 1px dotted var(--cross-line); }
+.xi {
+  display: flex; gap: 5px; align-items: baseline; width: 100%; padding: 5px 2px; margin: 0;
+  font: inherit; text-align: start; color: var(--ink); background: none; border: 0; cursor: pointer; border-radius: 6px;
+}
+.xi:hover, .xi:active { background: var(--green-soft); color: var(--green); }
+.xi-no { flex: 0 0 auto; font-weight: 900; color: var(--green); font-family: var(--font); font-size: 0.9em; }
+.x-items.arrows .xi::before { content: "←"; color: var(--green); font-weight: 900; font-family: var(--font); }
+[dir="rtl"] .x-items.arrows .xi::before { content: "→"; }
+.x-items.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.x-items.pills li + li { border: 0; }
+.x-items.pills .xi { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); }
+
+/* 십자가 몸체 */
+.x-top, .x-arm, .x-stem { background: var(--cross); text-align: center; }
+.x-top { border-radius: 14px 14px 0 0; padding: 10px 8px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.x-five {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0; margin: 0;
+  font: inherit; background: none; border: 0; color: var(--ink); cursor: pointer;
+}
+.x-five small { color: var(--muted); font-weight: 700; }
+.x-five strong { font-size: 1.35em; font-weight: 900; color: var(--green); line-height: 1.25; }
+.x-lead .ref { font-size: 1em; }
+.x-stem { border-radius: 0 0 14px 14px; padding: 8px 6px 14px; display: flex; flex-direction: column; gap: 8px; }
+.x-stem .xi { justify-content: center; font-weight: 700; }
+
+/* 가로 띠 + 십자가 가로대 */
+.x-band { background: var(--band); padding: 10px 8px; display: flex; align-items: center; }
+.x-b6 { border-radius: 12px 0 0 12px; }
+.x-b3 { border-radius: 0 12px 12px 0; }
+[dir="rtl"] .x-b6 { border-radius: 0 12px 12px 0; }
+[dir="rtl"] .x-b3 { border-radius: 12px 0 0 12px; }
+.xmap { position: relative; }
+.x-arm {
+  margin: -6px -10px; padding: 12px 8px; border-radius: 10px; position: relative; z-index: 1;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.12);
+}
+@media (min-width: 720px) { .x-arm { margin: -6px -16px; } }
+.x-items.triad .xi { justify-content: center; font-weight: 900; color: var(--green); padding: 3px 2px; }
+.x-items.triad li + li { border-top: 1px solid var(--cross-line); }
+.x-pray {
+  font: inherit; font-weight: 700; padding: 6px 8px; border-radius: 10px; cursor: pointer;
+  background: var(--cream); color: var(--ink); border: 1px solid var(--line);
+}
+
+.x-intro { margin: 8px 0 24px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
+.x-intro summary { cursor: pointer; font-weight: 700; color: var(--green); }
+.x-intro p { margin: 8px 0 0; }
+
+/* 십자가 도식 상세 팝업 */
+.d-body { padding-top: 0; }
+.d-sec { margin: 0; color: var(--muted); font-size: 0.85em; }
+.d-title { margin: 2px 0 8px; color: var(--green); font-size: 1.2em; line-height: 1.4; }
+.d-list { list-style: none; padding: 0; margin: 0 0 8px; }
+.d-list li { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.d-list li p { margin: 2px 0 0; }
+.d-prayer { font-size: 1.1em; line-height: 1.9; }
+.v-back { border: 0; background: var(--bg); color: var(--ink); width: 34px; height: 34px; border-radius: 50%; font-size: 1.3rem; line-height: 1; cursor: pointer; flex: 0 0 auto; }
+[dir="rtl"] .v-back { transform: scaleX(-1); }
+.v-head h3 { flex: 1; }
+:lang(ko) { word-break: keep-all; overflow-wrap: anywhere; }
+[dir="rtl"] .xi, [dir="rtl"] .x-head, [dir="rtl"] .x-five { direction: rtl; }
+:lang(ur) .x-five { gap: 6px; }
+:lang(ur) .x-five small { line-height: 2; }
+:lang(ur) .x-five strong { line-height: 2.1; }
+:lang(ur) .x-five small { display: block; line-height: 2.2; }
