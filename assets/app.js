@@ -269,9 +269,9 @@ async function gospel() {
 
   if (!listView) {
     return `<article class="gospel-page">${head}
+      <details class="x-intro"><summary>${esc(t.intro)}</summary>${intro}</details>
       <p class="hint">👆 ${esc(t.tap_item)}</p>
       ${crossMap(g, g2)}
-      <details class="x-intro"><summary>${esc(t.intro)}</summary>${intro}</details>
     </article>`;
   }
 

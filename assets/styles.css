@@ -273,7 +273,7 @@ h3 .sub2, h4 .sub2 { flex-basis: 100%; }
   background: var(--cream); color: var(--ink); border: 1px solid var(--line);
 }
 
-.x-intro { margin: 8px 0 24px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
+.x-intro { margin: 4px 0 8px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
 .x-intro summary { cursor: pointer; font-weight: 700; color: var(--green); }
 .x-intro p { margin: 8px 0 0; }
 
