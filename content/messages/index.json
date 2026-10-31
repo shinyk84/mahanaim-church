@@ -1,0 +1,26 @@
+{
+  "pulpit": [
+    {
+      "id": "2026-11-01-sample",
+      "date": "2026-11-01",
+      "preacher": { "ko": "담임목사", "en": "Senior Pastor", "ur": "سینئر پاسٹر" },
+      "title": {
+        "ko": "[샘플] 오직 예수 그리스도",
+        "en": "[Sample] Only Jesus Christ",
+        "ur": "[نمونہ] صرف یسوع مسیح"
+      },
+      "langs": ["ko", "en", "ur"]
+    }
+  ],
+  "hq": [
+    {
+      "id": "2026-11-01-sample",
+      "date": "2026-11-01",
+      "title": {
+        "ko": "[샘플] 본부 메시지 작성 예시",
+        "en": "[Sample] Headquarters message example"
+      },
+      "langs": ["ko"]
+    }
+  ]
+}
