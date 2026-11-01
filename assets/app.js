@@ -53,7 +53,7 @@ const inline = (s, l = lang) => renderInline(s || "", l);
 const sub2 = (s, tag = "span") => (s && lang2 ? `<${tag} class="sub2" lang="${lang2}" dir="${dirOf(lang2)}">${esc(s)}</${tag}>` : "");
 
 function formatDate(d) {
-  const locale = { ko: "ko-KR", en: "en-US", ur: "ur-PK" }[lang] || "en-US";
+  const locale = { ko: "ko-KR", en: "en-US", ur: "ur-PK", zh: "zh-CN", ja: "ja-JP", fr: "fr-FR", de: "de-DE", es: "es-ES", ru: "ru-RU" }[lang] || "en-US";
   try {
     return new Date(d + "T00:00:00").toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
   } catch {
@@ -121,10 +121,11 @@ function renderChrome(page, id) {
     .map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`)
     .join("");
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
-  const primary = READY.map(
-    (c) =>
-      `<a href="${href(page, id, c, c === lang2 ? lang : lang2)}" class="${c === lang ? "active" : ""}" lang="${c}">${nameOf(c)}</a>`,
-  ).join("");
+  const primary = `<label class="lang1"><span aria-hidden="true">🌐</span>
+      <select data-lang1 aria-label="Language">
+        ${READY.map((c) => `<option value="${c}" ${c === lang ? "selected" : ""}>${nameOf(c)}</option>`).join("")}
+      </select>
+    </label>`;
   const second = `<label class="lang2">
       <span>+ ${esc(t.second_lang)}</span>
       <select data-lang2>
@@ -135,10 +136,10 @@ function renderChrome(page, id) {
       </select>
     </label>
     ${lang2 ? `<a class="swap" href="${href(page, id, lang2, lang)}" title="${esc(t.swap)}" aria-label="${esc(t.swap)}">⇄</a>` : ""}`;
-  langBar.innerHTML = `${primary}${second}<span class="soon">${LANGS.filter((l) => !l.ready)
-    .map((l) => l.name)
-    .join(" · ")} — ${esc(t.soon)}</span>`;
+  const soon = LANGS.filter((l) => !l.ready);
+  langBar.innerHTML = `${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}`;
   footer.innerHTML = `<div class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(t.denomination)} ${esc(t.church)}</div><p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
+    .filter(([c]) => c === lang || c === lang2 || c === "ko")
     .map(([, b]) => `${esc(b.name)} (${esc(b.license)})`)
     .join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
 }
@@ -288,13 +289,25 @@ async function prayer777() {
   const stripR = (s) => stripRefs(s).replace(/\s+/g, " ");
   const item = (g, gi, it, ii) => {
     const it2 = p2?.groups[gi].items[ii];
-    // 10발판처럼 짧은 항목이 많으면 두 칸으로 촘촘하게
-    const compact = it.rows.length > 4 && it.rows.every(([k, v]) => (k + v).length <= 45);
+    // 10비밀·10발판처럼 짧은 항목이 많으면 두 칸으로 촘촘하게
+    const compact = it.rows.length > 4 && it.rows.every(([k, v]) => typeof v === "string" && (k + v).length <= 45);
+    // 행 형식: [이름, 설명] · 이름이 "#"로 시작하면 소제목 · 설명이 배열이면 표
+    const table = (cells) =>
+      `<table class="p7-table">${cells.map((r) => `<tr>${r.map((c) => `<td>${rich(c)}</td>`).join("")}</tr>`).join("")}</table>`;
     const rows = it.rows.length
       ? `<dl class="p7-rows ${compact ? "compact" : ""}">${it.rows
           .map(([k, v], ri) => {
             const v2 = it2?.rows[ri]?.[1];
-            return `<div>${k ? `<dt>${esc(k)}</dt>` : ""}<dd>${rich(v)}${v2 ? sub2(stripR(v2)) : ""}</dd></div>`;
+            const no = it.numbered ? `<span class="p7-rn">${ri + 1}</span>` : "";
+            if (k.startsWith("#") || Array.isArray(v)) {
+              const h = k.replace(/^#/, "");
+              return `<div class="p7-block">${h ? `<dt class="p7-rh">${esc(h)}</dt>` : ""}<dd>${Array.isArray(v) ? table(v) : rich(v)}${
+                typeof v2 === "string" ? sub2(stripR(v2)) : ""
+              }</dd></div>`;
+            }
+            return `<div>${k ? `<dt>${no}${rich(k)}</dt>` : ""}<dd>${rich(v)}${typeof v2 === "string" ? sub2(stripR(v2)) : ""}${
+              !v && it2?.rows[ri]?.[0] && it2.rows[ri][0] !== k ? sub2(it2.rows[ri][0]) : ""
+            }</dd></div>`;
           })
           .join("")}</dl>`
       : "";
@@ -317,8 +330,7 @@ async function prayer777() {
   // 맨 위 777 그림: 기도 순서대로 7망대 → 7여정 → 7이정표
   const card = (g, gi, tag) => `<a class="p7-card p7-${g.id}" href="#p7-${g.id}" data-jump="p7-${g.id}">
       <span class="p7-tag">${esc(tag)}</span>
-      <span class="p7-big">7</span>
-      <strong>${esc(g.name.replace(/^7\s*/, ""))}</strong>
+      <strong class="p7-title"><span class="p7-big">7</span>${esc(g.name.replace(/^7\s*/, ""))}</strong>
       <small>${esc(g.where)}</small>
       ${sub2(p2?.groups[gi].name)}
     </a>`;
@@ -330,7 +342,6 @@ async function prayer777() {
     </div>`;
 
   return `<article class="p7">${head}
-    <p class="p7-intro">${esc(p.intro)}${sub2(p2?.intro)}</p>
     ${hero}
     <p class="hint">👆 ${esc(t.p7_hint)}</p>
     ${section(B, 0, "road")}
@@ -618,9 +629,13 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("change", (e) => {
-  if (!e.target.matches("[data-lang2]")) return;
   const { page, id } = parseHash();
-  location.hash = href(page, id, lang, e.target.value || null);
+  if (e.target.matches("[data-lang2]")) location.hash = href(page, id, lang, e.target.value || null);
+  // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
+  if (e.target.matches("[data-lang1]")) {
+    const c = e.target.value;
+    location.hash = href(page, id, c, c === lang2 ? lang : lang2);
+  }
 });
 
 window.addEventListener("hashchange", route);
@@ -647,7 +662,8 @@ async function paintVerse() {
   const langs = dual || [l];
   const tabs = dual
     ? ""
-    : `<div class="v-tabs">${Object.keys(BIBLES)
+    : `<div class="v-tabs">${[...new Set([lang, "ko", "en"])]
+        .filter((c) => BIBLES[c])
         .map((c) => `<button type="button" data-vlang="${c}" class="${c === l ? "active" : ""}">${nameOf(c)}</button>`)
         .join("")}</div>`;
   dlg.innerHTML = `<div class="v-wrap">

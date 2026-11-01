@@ -3,7 +3,7 @@
 빌드 과정이 없는 정적 웹앱입니다(HTML + JS 모듈 + JSON). Vercel이 파일을 그대로 서비스합니다.
 
 - 화면 순서: **강단 메시지 → 본부 메시지 → 전도 도구(복음 메시지, 777 기도문)**
-- 언어: 한국어 · English · اردو (RTL) — 중국어·일본어·프랑스어·독일어·스페인어·러시아어는 자리만 잡혀 있음
+- 언어: 한국어 · English · اردو (RTL) · 中文 · 日本語 · Français · Deutsch · Español · Русский (상단 🌐 드롭다운, "함께 볼 언어"로 두 언어 동시 보기)
 - 성구 버튼을 누르면 팝업으로 본문이 열리고, 팝업 안에서 한국어/영어/우르드어 본문을 바로 바꿔 볼 수 있습니다.
 
 ## 폴더 구조
@@ -15,7 +15,7 @@ assets/scripture.js        성구 인식·Markdown 렌더링·성경 본문 로�
 assets/app.js              화면(라우팅), 성구 팝업
 content/i18n/<언어>.json    화면 문구
 content/gospel/<언어>.json  복음 메시지(구원의 길)
-content/prayer777/<언어>.md 777 기도문
+content/prayer777/<언어>.json 777 기도 (7망대·7여정·7이정표, 항목별 세부 내용과 기도문)
 content/messages/index.json 강단/본부 메시지 목록
 content/messages/<pulpit|hq>/<id>/<언어>.md  메시지 본문
 bible/<언어>/<책코드>.json   성경 본문(책별로 필요할 때만 내려받음)
@@ -53,9 +53,17 @@ scripts/build_bible.py     eBible.org 파일 → bible/ 변환
 | 한국어 | 개역한글 | Public Domain |
 | English | Berean Standard Bible | Public Domain |
 | اردو | Urdu Geo Version | © 2019, CC BY-NC-ND 4.0 (비상업·원문 그대로·출처 표기 조건) |
+| 中文 | 和合本 (Chinese Union Version, 简体) | Public Domain |
+| 日本語 | Japanese Freedom Bible | Public Domain |
+| Français | Louis Segond 1910 | Public Domain |
+| Deutsch | Lutherbibel 1912 | Public Domain |
+| Español | Reina-Valera 1909 | Public Domain |
+| Русский | Синодальный перевод | Public Domain |
+
+777 기도문 공식 문구: 세계복음화전도협회(WEEA) "777 기도 다국어 파일". 우르드어는 공식 파일이 없어 교회에서 번역.
 
 새 언어 추가: eBible.org 에서 `<id>_vpl.zip` 을 받아 `python scripts/build_bible.py <vpl.txt> <언어코드>` 실행 →
-`assets/config.js` 의 `BIBLES`·`LANGS` 수정 → `content/i18n`, `content/gospel` 번역 추가.
+`assets/config.js` 의 `BIBLES`·`LANGS` 수정, `assets/booknames.js` 에 책 이름 추가 → `content/i18n`, `content/gospel`, `content/prayer777` 번역 추가.
 
 ## 로컬 미리보기
 

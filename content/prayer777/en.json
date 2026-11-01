@@ -1,7 +1,6 @@
 {
   "title": "777 Prayer",
   "subtitle": "7 Bartizans · 7 Journeys · 7 Guideposts",
-  "intro": "The 7 bartizans are inside of me, the 7 journeys lie ahead of me, and the 7 guideposts are my background — the prayer a Remnant holds onto every day.",
   "groups": [
     {
       "id": "bartizan",
@@ -54,7 +53,7 @@
         },
         {
           "name": "The Universe",
-          "sum": "Authority to defeat Satan, the ruler of the air",
+          "sum": "Authority of the air",
           "rows": [],
           "prayer": [
             "Grant me the power to transcend time and space and to overcome the ruler of the kingdom of the air."
@@ -81,16 +80,8 @@
           "sum": "Gentiles' · Prayer · Children's courtyard",
           "rows": [
             [
-              "237",
-              "The courtyard of the Gentiles"
-            ],
-            [
-              "Healing",
-              "The courtyard of prayer"
-            ],
-            [
-              "Summit",
-              "The courtyard of children"
+              "",
+              "237 (courtyard of the Gentiles) · Healing (courtyard of prayer) · Summit (courtyard of children)"
             ]
           ],
           "prayer": [
@@ -106,16 +97,10 @@
       "items": [
         {
           "name": "Blessing of the Throne",
-          "sum": "The Triune God with me, with us, with all things",
-          "rows": [
-            [
-              "",
-              "The Triune God with me (With), with us (Immanuel), and with all things (Oneness)"
-            ]
-          ],
+          "sum": "The Triune God with me, with us, with the church",
+          "rows": [],
           "prayer": [
-            "God, fill me and lead me on the path of the Triune God.",
-            "I have many hardships."
+            "God, fill me and lead me on the path of the Triune God."
           ]
         },
         {
@@ -123,13 +108,51 @@
           "sum": "Independence · Spiritual facts · Reverse thinking · Synergy · Crisis …",
           "rows": [
             [
-              "",
-              "Independence · Spiritual facts · Reverse thinking · Synergy · Crisis · No competition · Re-creation · Summit · Wilderness · Absolute"
+              "Independence",
+              ""
+            ],
+            [
+              "Spiritual facts",
+              ""
+            ],
+            [
+              "Reverse thinking",
+              ""
+            ],
+            [
+              "Synergy",
+              ""
+            ],
+            [
+              "Crisis",
+              ""
+            ],
+            [
+              "No competition",
+              ""
+            ],
+            [
+              "Re-creation",
+              ""
+            ],
+            [
+              "Summit",
+              ""
+            ],
+            [
+              "Wilderness",
+              ""
+            ],
+            [
+              "Absolute",
+              ""
             ]
           ],
           "prayer": [
+            "I have many hardships.",
             "Help me enjoy the ten mysteries so I can find the path that You are directing me on."
-          ]
+          ],
+          "numbered": true
         },
         {
           "name": "10 Foundations",
@@ -179,7 +202,8 @@
           "prayer": [
             "People just think whatever they want, they talk and say whatever they want, and they add things to that as well.",
             "God may the ten foundations be established in me."
-          ]
+          ],
+          "numbered": true
         },
         {
           "name": "5 Assurances",
@@ -217,19 +241,27 @@
           "rows": [
             [
               "",
-              "Height · Depth · Width"
-            ],
-            [
-              "",
-              "Above · Below · Beside"
-            ],
-            [
-              "",
-              "Past · Present · Future"
+              [
+                [
+                  "Height",
+                  "Depth",
+                  "Width"
+                ],
+                [
+                  "Above",
+                  "Below",
+                  "Beside"
+                ],
+                [
+                  "Past",
+                  "Present",
+                  "Future"
+                ]
+              ]
             ]
           ],
           "prayer": [
-            "I must change America.",
+            "I must change my field.",
             "By Your power, help me enjoy the nine streams."
           ]
         },
@@ -238,24 +270,93 @@
           "sum": "21 lives · 5 prayer mysteries · 7 summits · 9 streams · 20 strategies",
           "rows": [
             [
-              "21 lives of an evangelist",
-              "Calvary [[ACT 1:1]] · Mount of Olives [[ACT 1:3]] God's kingdom · Mark's upper room [[ACT 1:8]] power\nCalling from heaven·calling·mission / natural·inevitable·absolute / one mind·whole heart·continuity / only·uniqueness·re-creation / 24·25·eternity / imprint·root·nature"
+              "#21 lives of an evangelist",
+              [
+                [
+                  "Calvary [[ACT 1:1]]",
+                  "Mount of Olives [[ACT 1:3]] God's kingdom",
+                  "Mark's upper room [[ACT 1:8]] power"
+                ],
+                [
+                  "Heavenly calling",
+                  "Calling",
+                  "Mission"
+                ],
+                [
+                  "Natural",
+                  "Inevitable",
+                  "Absolute"
+                ],
+                [
+                  "One mind",
+                  "Whole heart",
+                  "Continuity"
+                ],
+                [
+                  "Only",
+                  "Uniqueness",
+                  "Re-creation"
+                ],
+                [
+                  "24",
+                  "25",
+                  "Eternity"
+                ],
+                [
+                  "Imprint",
+                  "Root",
+                  "Nature"
+                ]
+              ]
             ],
             [
-              "5 mysteries of prayer",
+              "#5 mysteries of prayer",
               "Gratitude for salvation · Flow of the Word · Concentration · Healing · Future"
             ],
             [
-              "7 summits",
+              "#7 summits",
               "Bible · RT 7 · 1.3.8 · Worship · Only · Uniqueness · Re-creation"
             ],
             [
-              "9 streams",
-              "Same as above"
+              "#9 streams",
+              [
+                [
+                  "Height",
+                  "Depth",
+                  "Width"
+                ],
+                [
+                  "Above",
+                  "Below",
+                  "Beside"
+                ],
+                [
+                  "Past",
+                  "Present",
+                  "Future"
+                ]
+              ]
             ],
             [
-              "20 evangelism strategies",
-              "5 foundations: Darakbang · Team ministry · Mission home · Specialized church · Branch church\n5 trainings: Retreat · Team retreat · Field (70) retreat · Specialized retreat · Intensive (evangelism) retreat\n5 organizations: Evangelism school · Evangelism seminary · Missionary training center · RTS · RU\n5 futures: Elite · Culture · Industry · Healing · Remnant"
+              "#20 evangelism strategies",
+              [
+                [
+                  "5 foundations",
+                  "Darakbang · Team ministry · Mission home · Specialized church · Branch church"
+                ],
+                [
+                  "5 trainings",
+                  "Retreat · Team retreat · Field (70) retreat · Specialized retreat · Intensive (evangelism) retreat"
+                ],
+                [
+                  "5 organizations",
+                  "Evangelism school · Evangelism seminary · Missionary training center · RTS · RU"
+                ],
+                [
+                  "5 futures",
+                  "Elite · Culture · Industry · Healing · Remnant"
+                ]
+              ]
             ]
           ],
           "prayer": [
@@ -265,14 +366,9 @@
         {
           "name": "The Church (Worship)",
           "sum": "World evangelization through the church and worship",
-          "rows": [
-            [
-              "",
-              "Because the blessing of the throne works in the church and in worship, the world is evangelized through the church and worship."
-            ]
-          ],
+          "rows": [],
           "prayer": [
-            "I'm going to such and such a place today.",
+            "I'm going to my field today.",
             "May that become the camp."
           ]
         }
@@ -296,7 +392,7 @@
           "sum": "[[ACT 1:3]]",
           "rows": [],
           "prayer": [
-            "Wherever I go, may the covenant of the Mount of Olives, the things pertaining to God's kingdom, be fulfilled."
+            "As I go to my field today, may the covenant of the Mount of Olives, the things pertaining to God's kingdom, be fulfilled."
           ]
         },
         {

@@ -1,0 +1,449 @@
+{
+  "title": "777 Gebet",
+  "subtitle": "7 Wachtürme · 7 Reisen · 7 Meilensteine",
+  "groups": [
+    {
+      "id": "bartizan",
+      "name": "7 Wachtürme",
+      "where": "In mir",
+      "items": [
+        {
+          "name": "Der dreieinige Gott",
+          "sum": "Gott Vater, Sohn und Heiliger Geist",
+          "rows": [],
+          "prayer": [
+            "Mögest du, Gott der Dreieinigkeit, in mir wirken.",
+            "Erfasse meine Gedanken, mein Herz, Geist, Körper und mein alles."
+          ]
+        },
+        {
+          "name": "Der Thron",
+          "sum": "3 Überschreitungen · 3 Leben · 3 Einzigartigkeiten",
+          "rows": [
+            [
+              "3 Überschreitungen",
+              "Segen des Thrones · Überschreitung von Raum und Zeit · Licht für die 237 Nationen"
+            ],
+            [
+              "3 Leben",
+              "Ebenbild [[GEN 1:27]] · Odem des Lebens [[GEN 2:7]] · Segen Edens [[GEN 2:1-19]]"
+            ],
+            [
+              "3 Einzigartigkeiten",
+              "Ich · Die Kirche · Mein Feld"
+            ]
+          ],
+          "prayer": [
+            "Möge die Kraft des Thrones in mir herabkommen.",
+            "Und möge dein Reich erfüllt werden.",
+            "Lasse die Überschreitung von Raum und Zeit und die Kraft der 237 Nationen in mir herabkommen.",
+            "Und lasse diese Kraft in meinem Leben kommen.",
+            "Möge es in meinem Geist herabkommen.",
+            "Und in meinem Leben kommen.",
+            "Gib mir die Antwort, die es nie gegeben hat und nie wieder geben wird, für mich, mein Studium, mein Feld und die Kirche."
+          ]
+        },
+        {
+          "name": "3 Zeitalter",
+          "sum": "Vergangenheit · Gegenwart · Zukunft",
+          "rows": [],
+          "prayer": [
+            "Wirke du mit deiner Kraft auf meine Vergangenheit, Gegenwart und Zukunft."
+          ]
+        },
+        {
+          "name": "Das Universum",
+          "sum": "Die Macht der Luft",
+          "rows": [],
+          "prayer": [
+            "Und gib mir die Kraft, die Raum und Zeit überschreitet, um den Machthaber der Luft zu besiegen."
+          ]
+        },
+        {
+          "name": "5 Kräfte",
+          "sum": "Geistliche Kraft · Geisteskraft · Körperkraft · Wirtschaftskraft · Menschenkraft",
+          "rows": [],
+          "prayer": [
+            "In dieser Stunde bitte ich dich um die 5 Kräfte."
+          ]
+        },
+        {
+          "name": "CVDIP im Voraus",
+          "sum": "Covenant (Bund) · Vision · Dream (Traum) · Image (Bild) · Practice (Praxis)",
+          "rows": [],
+          "prayer": [
+            "Erlaube mir jetzt den Segen des CVDIP, durch den ich die Zukunft im Voraus erblicken kann."
+          ]
+        },
+        {
+          "name": "3 Vorhöfe",
+          "sum": "Vorhof der Heiden · Vorhof des Gebets · Vorhof der Kinder",
+          "rows": [
+            [
+              "",
+              "237 (Vorhof der Heiden) · Heilung (Vorhof des Gebets) · Summit (Vorhof der Kinder)"
+            ]
+          ],
+          "prayer": [
+            "Lasse die Kraft der drei Vorhöfe auf mich herabkommen."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journey",
+      "name": "7 Reisen",
+      "where": "Vor mir",
+      "items": [
+        {
+          "name": "Der Segen des Thrones",
+          "sum": "Der dreieinige Gott mit mir, mit uns, mit der Kirche",
+          "rows": [],
+          "prayer": [
+            "Mögest du auf mich und in mir wirken, damit ich dem Weg folgen kann, den du, dreieiniger Gott, mir zeigst."
+          ]
+        },
+        {
+          "name": "10 Geheimnisse",
+          "sum": "Unabhängigkeit · Geistliche Tatsachen · Umgekehrtes Denken · Synergie · Krise …",
+          "rows": [
+            [
+              "Unabhängigkeit",
+              ""
+            ],
+            [
+              "Geistliche Tatsachen",
+              ""
+            ],
+            [
+              "Umgekehrtes Denken",
+              ""
+            ],
+            [
+              "Synergie",
+              ""
+            ],
+            [
+              "Krise",
+              ""
+            ],
+            [
+              "Ohne Konkurrenz",
+              ""
+            ],
+            [
+              "Neuschöpfung",
+              ""
+            ],
+            [
+              "Summit",
+              ""
+            ],
+            [
+              "Wüste",
+              ""
+            ],
+            [
+              "Absolut",
+              ""
+            ]
+          ],
+          "prayer": [
+            "Ich habe viele Schwierigkeiten im Leben.",
+            "Lasse mich die 10 Geheimnisse genießen, damit ich den Weg finden kann, den du vorbereitet hast."
+          ],
+          "numbered": true
+        },
+        {
+          "name": "10 Sprungbretter",
+          "sum": "Gottes Souveränität · Weg · Kraft · Garantie · Tempel …",
+          "rows": [
+            [
+              "Gottes Souveränität",
+              ""
+            ],
+            [
+              "Gottes Weg",
+              "JX, die Hauptperson der Geschichte"
+            ],
+            [
+              "Gottes Kraft",
+              "Das Wirken des Heiligen Geistes"
+            ],
+            [
+              "Gottes Garantie",
+              "Die Bibel"
+            ],
+            [
+              "Gottes Tempel",
+              ""
+            ],
+            [
+              "Gottes Plan",
+              "Wo ich bin, ist das Missionsfeld"
+            ],
+            [
+              "Gottes Herrschaft",
+              "Herr über Leben und Tod, Glück und Unglück"
+            ],
+            [
+              "Gottes Vorsehung",
+              "Ein Leben mit begrenzter Zeit"
+            ],
+            [
+              "Gottes Gericht",
+              "Das Leben nach dem Tod"
+            ],
+            [
+              "Gottes Lohn",
+              "Der Lohn des Evangelisten"
+            ]
+          ],
+          "prayer": [
+            "Menschen geben Worte von sich, nach dem, was sie hören, denken und vermuten. Dabei fügen sie zusätzliche Dinge hinzu.",
+            "Gott, mögen die 10 Sprungbretter in mir gelegt werden."
+          ],
+          "numbered": true
+        },
+        {
+          "name": "5 Zuversichten",
+          "sum": "Errettung · Gebetserhörung · Sieg · Vergebung · Führung",
+          "rows": [
+            [
+              "Zuversicht der Errettung",
+              "[[1JO 5:10-13]]"
+            ],
+            [
+              "Zuversicht der Gebetserhörung",
+              "[[JER 33:1-3]]"
+            ],
+            [
+              "Zuversicht des Sieges",
+              "[[1CO 10:13]]"
+            ],
+            [
+              "Zuversicht der Vergebung",
+              "[[1JO 1:9]]"
+            ],
+            [
+              "Zuversicht der Führung",
+              "[[PRO 3:5-6]]"
+            ]
+          ],
+          "prayer": [
+            "Keine Schwierigkeit der Welt vermag das Evangelium zu besiegen.",
+            "Lasse die 5 Zuversichten in mir als Antworten wirken."
+          ]
+        },
+        {
+          "name": "9 Ströme",
+          "sum": "Höhe·Tiefe·Breite / oben·unten·daneben / Vergangenheit·Gegenwart·Zukunft",
+          "rows": [
+            [
+              "",
+              [
+                [
+                  "Höhe",
+                  "Tiefe",
+                  "Breite"
+                ],
+                [
+                  "Oben",
+                  "Unten",
+                  "Daneben"
+                ],
+                [
+                  "Vergangenheit",
+                  "Gegenwart",
+                  "Zukunft"
+                ]
+              ]
+            ]
+          ],
+          "prayer": [
+            "Ich muss mein Feld verändern.",
+            "Gott, lasse mich durch deine Kraft die 9 Ströme genießen."
+          ]
+        },
+        {
+          "name": "62 Lebensweisen des Evangelisten",
+          "sum": "21 Lebensweisen · 5 Gebetsgeheimnisse · 7 Summits · 9 Ströme · 20 Strategien",
+          "rows": [
+            [
+              "#21 Lebensweisen des Evangelisten",
+              [
+                [
+                  "Golgatha [[ACT 1:1]]",
+                  "Ölberg [[ACT 1:3]] Reich Gottes",
+                  "Obergemach des Markus [[ACT 1:8]] Kraft"
+                ],
+                [
+                  "Himmlische Bestimmung",
+                  "Berufung",
+                  "Sendung"
+                ],
+                [
+                  "Selbstverständlich",
+                  "Notwendig",
+                  "Absolut"
+                ],
+                [
+                  "Ein Sinn",
+                  "Ganzes Herz",
+                  "Beständigkeit"
+                ],
+                [
+                  "Nur",
+                  "Einzigartigkeit",
+                  "Neuschöpfung"
+                ],
+                [
+                  "24",
+                  "25",
+                  "Ewigkeit"
+                ],
+                [
+                  "Einprägung",
+                  "Wurzel",
+                  "Wesen"
+                ]
+              ]
+            ],
+            [
+              "#5 Geheimnisse des Gebets",
+              "Dank für die Errettung · Fluss des Wortes · Konzentration · Heilung · Zukunft"
+            ],
+            [
+              "#7 Summits",
+              "Bibel · RT 7 · 1.3.8 · Gottesdienst · Nur · Einzigartigkeit · Neuschöpfung"
+            ],
+            [
+              "#9 Ströme",
+              [
+                [
+                  "Höhe",
+                  "Tiefe",
+                  "Breite"
+                ],
+                [
+                  "Oben",
+                  "Unten",
+                  "Daneben"
+                ],
+                [
+                  "Vergangenheit",
+                  "Gegenwart",
+                  "Zukunft"
+                ]
+              ]
+            ],
+            [
+              "#20 Evangelisationsstrategien",
+              [
+                [
+                  "5 Grundlagen",
+                  "Darakbang · Teamdienst · Missionshaus · Spezialisierte Gemeinde · Zweiggemeinde"
+                ],
+                [
+                  "5 Trainings",
+                  "Freizeit · Teamfreizeit · Feld-Freizeit (70) · Spezialisierte Freizeit · Intensiv-Freizeit (Evangelisation)"
+                ],
+                [
+                  "5 Organisationen",
+                  "Evangelisationsschule · Evangelisationsseminar · Missionarsausbildungszentrum · RTS · RU"
+                ],
+                [
+                  "5 Zukünfte",
+                  "Elite · Kultur · Industrie · Heilung · Remnant"
+                ]
+              ]
+            ]
+          ],
+          "prayer": [
+            "Und erlaube mir die Antworten, die ich mein Leben lang genießen kann."
+          ]
+        },
+        {
+          "name": "Die Kirche (Gottesdienst)",
+          "sum": "Weltevangelisation durch die Kirche und den Gottesdienst",
+          "rows": [],
+          "prayer": [
+            "Heute gehe ich hinaus in mein Feld.",
+            "Möge dort das Camp stattfinden."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guidepost",
+      "name": "7 Meilensteine",
+      "where": "In meinem Hintergrund",
+      "items": [
+        {
+          "name": "Golgatha",
+          "sum": "[[JOH 19:30]]",
+          "rows": [],
+          "prayer": [
+            "Möge die Kraft des Blutes des Kreuzes überall wirken, wohin ich gehe."
+          ]
+        },
+        {
+          "name": "Ölberg",
+          "sum": "[[ACT 1:3]]",
+          "rows": [],
+          "prayer": [
+            "Heute gehe ich in mein Feld – möge dort durch das Bündnis vom Ölberg das Werk des Reiches Gottes erfüllt werden."
+          ]
+        },
+        {
+          "name": "Obergemach des Markus",
+          "sum": "[[ACT 2:1-47]]",
+          "rows": [],
+          "prayer": [
+            "Und lasse deine Werke, die im Obergemach des Markus gewirkt haben, auf mich herabkommen."
+          ]
+        },
+        {
+          "name": "Antiochia",
+          "sum": "[[ACT 11:19-30]]",
+          "rows": [],
+          "prayer": [
+            "Erlaube mir deine Stunde, die auch in Antiochia gegeben worden war."
+          ]
+        },
+        {
+          "name": "Asien",
+          "sum": "[[ACT 13:1-4]]",
+          "rows": [],
+          "prayer": [
+            "Ich bitte dich um die Werke aller Antworten, die Paulus auf seiner ersten Missionsreise in Asien gefunden hatte."
+          ]
+        },
+        {
+          "name": "Mazedonien",
+          "sum": "[[ACT 16:6-10]]",
+          "rows": [],
+          "prayer": [
+            "Und lasse mich den Wendepunkt des Lebens finden, den das Team von Paulus ebenfalls entdeckt hatte."
+          ]
+        },
+        {
+          "name": "Rom",
+          "sum": "[[ACT 19:21]]",
+          "rows": [],
+          "prayer": [
+            "Und lasse mich auch Rom erblicken."
+          ]
+        }
+      ]
+    }
+  ],
+  "closing": [
+    "Ihr seid die Remnants.",
+    "Die 7 Wachtürme in mir,",
+    "die 7 Reisen vor mir,",
+    "und mit den 7 Meilensteinen als Hintergrund",
+    "gehen wir."
+  ],
+  "source": "777 Gebet (RCA ver.) — World Evangelization Evangelism Alliance"
+}

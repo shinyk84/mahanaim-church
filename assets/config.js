@@ -1,15 +1,17 @@
+import { BOOK_NAMES } from "./booknames.js";
+
 // 사이트 전역 설정. 새 언어를 열 때는 LANGS의 ready를 true로 바꾸고
 // content/i18n/<code>.json, content/gospel/<code>.json, bible/<code>/ 를 추가합니다.
 export const LANGS = [
   { code: "ko", name: "한국어", dir: "ltr", ready: true },
   { code: "en", name: "English", dir: "ltr", ready: true },
   { code: "ur", name: "اردو", dir: "rtl", ready: true },
-  { code: "zh", name: "中文", dir: "ltr", ready: false },
-  { code: "ja", name: "日本語", dir: "ltr", ready: false },
-  { code: "fr", name: "Français", dir: "ltr", ready: false },
-  { code: "de", name: "Deutsch", dir: "ltr", ready: false },
-  { code: "es", name: "Español", dir: "ltr", ready: false },
-  { code: "ru", name: "Русский", dir: "ltr", ready: false },
+  { code: "zh", name: "中文", dir: "ltr", ready: true },
+  { code: "ja", name: "日本語", dir: "ltr", ready: true },
+  { code: "fr", name: "Français", dir: "ltr", ready: true },
+  { code: "de", name: "Deutsch", dir: "ltr", ready: true },
+  { code: "es", name: "Español", dir: "ltr", ready: true },
+  { code: "ru", name: "Русский", dir: "ltr", ready: true },
 ];
 
 // 성경 본문 (bible/<code>/<BOOK>.json). 모두 공개 또는 비상업 무료 배포 허용 번역본.
@@ -17,6 +19,12 @@ export const BIBLES = {
   ko: { name: "개역한글", license: "Public Domain" },
   en: { name: "Berean Standard Bible", license: "Public Domain" },
   ur: { name: "Urdu Geo Version", license: "© 2019 Urdu Geo Version, CC BY-NC-ND 4.0" },
+  zh: { name: "和合本", license: "Public Domain" },
+  ja: { name: "Japanese Freedom Bible", license: "Public Domain" },
+  fr: { name: "Louis Segond 1910", license: "Public Domain" },
+  de: { name: "Lutherbibel 1912", license: "Public Domain" },
+  es: { name: "Reina-Valera 1909", license: "Public Domain" },
+  ru: { name: "Синодальный перевод", license: "Public Domain" },
 };
 
 // [eBible 코드, 한국어, 한국어 약어, English, English 약어들, اردو]
@@ -92,7 +100,10 @@ const BOOK_ROWS = [
 export const BOOKS = Object.fromEntries(
   BOOK_ROWS.map(([id, ko, koAbbr, en, enAbbr, ur]) => [
     id,
-    { id, ko, koAbbr, en, enAbbr: enAbbr ? enAbbr.split("|") : [], ur },
+    {
+      id, ko, koAbbr, en, enAbbr: enAbbr ? enAbbr.split("|") : [], ur,
+      ...Object.fromEntries(Object.entries(BOOK_NAMES).map(([l, names]) => [l, names[id]])),
+    },
   ]),
 );
 

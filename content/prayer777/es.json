@@ -1,0 +1,449 @@
+{
+  "title": "La oración 7.7.7",
+  "subtitle": "7 torres · 7 itinerarios · 7 señales",
+  "groups": [
+    {
+      "id": "bartizan",
+      "name": "7 torres",
+      "where": "Dentro de mí",
+      "items": [
+        {
+          "name": "El Dios Trino",
+          "sum": "Dios Padre, Dios Hijo y Dios Espíritu Santo, el Dios Trino",
+          "rows": [],
+          "prayer": [
+            "Dios Trino, te pido que obres dentro de mi vida.",
+            "Gobierna mi pensamiento, corazón, espíritu, alma, cuerpo y todo mi ser."
+          ]
+        },
+        {
+          "name": "El trono",
+          "sum": "3 trascendencias · 3 vidas · 3 sin precedentes",
+          "rows": [
+            [
+              "3 trascendencias",
+              "Bendición del trono · Trascender el tiempo y el espacio · Luz para las 237 naciones"
+            ],
+            [
+              "3 vidas",
+              "Imagen [[GEN 1:27]] · Aliento de vida [[GEN 2:7]] · Bendición del Edén [[GEN 2:1-19]]"
+            ],
+            [
+              "3 sin precedentes",
+              "Yo · La iglesia · Mi campo"
+            ]
+          ],
+          "prayer": [
+            "Que se establezca el poder del trono celestial dentro de mí.",
+            "Que tu reino sea establecido.",
+            "Establece en mí las obras que trascienden el tiempo y el espacio y el poder para las 237 naciones.",
+            "Que este poder sea establecido en mi vida.",
+            "Que sea establecido en mi espíritu.",
+            "Que sea establecido en mi vida.",
+            "Establece esas respuestas de nunca antes ni después en mí, en mis estudios, en mi campo y en mi Iglesia."
+          ]
+        },
+        {
+          "name": "3 eras",
+          "sum": "Pasado · Presente · Futuro",
+          "rows": [],
+          "prayer": [
+            "Dios, obra en mi pasado, presente y futuro con tu poder."
+          ]
+        },
+        {
+          "name": "El universo",
+          "sum": "La potestad del aire",
+          "rows": [],
+          "prayer": [
+            "Dame ese poder que trasciende el tiempo y el espacio para vencer a aquel que domina la potestad del aire."
+          ]
+        },
+        {
+          "name": "5 poderes",
+          "sum": "Espiritual · Intelectual · Físico · Económico · Humano",
+          "rows": [],
+          "prayer": [
+            "Dios, dame en este momento los 5 poderes."
+          ]
+        },
+        {
+          "name": "CVDIP por adelantado",
+          "sum": "Pacto (Covenant) · Visión · Sueño (Dream) · Imagen · Práctica",
+          "rows": [],
+          "prayer": [
+            "Permíteme recibir en este momento las bendiciones de ver por adelantado el CVDIP."
+          ]
+        },
+        {
+          "name": "3 atrios",
+          "sum": "Atrio de los gentiles · Atrio de oración · Atrio de los niños",
+          "rows": [
+            [
+              "",
+              "237 (atrio de los gentiles) · Sanidad (atrio de oración) · Cumbre (atrio de los niños)"
+            ]
+          ],
+          "prayer": [
+            "Establece el poder de los tres atrios en mí."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "journey",
+      "name": "7 itinerarios",
+      "where": "Por delante de mí",
+      "items": [
+        {
+          "name": "La bendición del trono",
+          "sum": "El Dios Trino conmigo, con nosotros y con la iglesia",
+          "rows": [],
+          "prayer": [
+            "Dios, hazme ser lleno de tu presencia para ir por el camino por el cual el Dios Trino me guía."
+          ]
+        },
+        {
+          "name": "10 secretos",
+          "sum": "Independencia · Hechos espirituales · Pensamiento inverso · Sinergia · Crisis …",
+          "rows": [
+            [
+              "Independencia",
+              ""
+            ],
+            [
+              "Hechos espirituales",
+              ""
+            ],
+            [
+              "Pensamiento inverso",
+              ""
+            ],
+            [
+              "Sinergia",
+              ""
+            ],
+            [
+              "Crisis",
+              ""
+            ],
+            [
+              "Sin competencia",
+              ""
+            ],
+            [
+              "Recreación",
+              ""
+            ],
+            [
+              "Cumbre",
+              ""
+            ],
+            [
+              "Desierto",
+              ""
+            ],
+            [
+              "Absoluto",
+              ""
+            ]
+          ],
+          "prayer": [
+            "Tengo muchas dificultades en mi vida.",
+            "Dios, permíteme disfrutar de los 10 secretos para encontrar ese camino que has preparado."
+          ],
+          "numbered": true
+        },
+        {
+          "name": "10 plataformas",
+          "sum": "La soberanía de Dios · camino · poder · garantía · templo …",
+          "rows": [
+            [
+              "La soberanía de Dios",
+              ""
+            ],
+            [
+              "El camino de Dios",
+              "JX, el protagonista de la historia"
+            ],
+            [
+              "El poder de Dios",
+              "La obra del Espíritu Santo"
+            ],
+            [
+              "La garantía de Dios",
+              "La Biblia"
+            ],
+            [
+              "El templo de Dios",
+              ""
+            ],
+            [
+              "El plan de Dios",
+              "Donde estoy es campo misionero"
+            ],
+            [
+              "El gobierno de Dios",
+              "Señor de la vida y la muerte, la dicha y la desgracia"
+            ],
+            [
+              "La providencia de Dios",
+              "Una vida con tiempo limitado"
+            ],
+            [
+              "El juicio de Dios",
+              "La vida venidera"
+            ],
+            [
+              "La recompensa de Dios",
+              "La recompensa del evangelista"
+            ]
+          ],
+          "prayer": [
+            "La gente habla lo que escucha, habla lo que piensa y lo que supone. Habla más de la cuenta.",
+            "Dios, establece las 10 plataformas en mí."
+          ],
+          "numbered": true
+        },
+        {
+          "name": "5 seguridades",
+          "sum": "Salvación · Respuesta a la oración · Victoria · Perdón · Guía",
+          "rows": [
+            [
+              "Seguridad de la salvación",
+              "[[1JO 5:10-13]]"
+            ],
+            [
+              "Seguridad de la respuesta a la oración",
+              "[[JER 33:1-3]]"
+            ],
+            [
+              "Seguridad de la victoria",
+              "[[1CO 10:13]]"
+            ],
+            [
+              "Seguridad del perdón",
+              "[[1JO 1:9]]"
+            ],
+            [
+              "Seguridad de la guía",
+              "[[PRO 3:5-6]]"
+            ]
+          ],
+          "prayer": [
+            "Ninguna dificultad puede prevalecer ante el Evangelio.",
+            "Obra para que yo tenga las respuestas de las 5 seguridades."
+          ]
+        },
+        {
+          "name": "9 corrientes",
+          "sum": "Altura·profundidad·anchura / arriba·abajo·al lado / pasado·presente·futuro",
+          "rows": [
+            [
+              "",
+              [
+                [
+                  "Altura",
+                  "Profundidad",
+                  "Anchura"
+                ],
+                [
+                  "Arriba",
+                  "Abajo",
+                  "Al lado"
+                ],
+                [
+                  "Pasado",
+                  "Presente",
+                  "Futuro"
+                ]
+              ]
+            ]
+          ],
+          "prayer": [
+            "He de cambiar mi campo.",
+            "Permíteme disfrutar de las 9 corrientes con tu poder."
+          ]
+        },
+        {
+          "name": "62 vidas del evangelista",
+          "sum": "21 vidas · 5 secretos de oración · 7 cumbres · 9 corrientes · 20 estrategias",
+          "rows": [
+            [
+              "#21 vidas del evangelista",
+              [
+                [
+                  "Calvario [[ACT 1:1]]",
+                  "Monte de los Olivos [[ACT 1:3]] reino de Dios",
+                  "Aposento Alto de Marcos [[ACT 1:8]] poder"
+                ],
+                [
+                  "Mandato celestial",
+                  "Llamado",
+                  "Misión"
+                ],
+                [
+                  "Natural",
+                  "Inevitable",
+                  "Absoluto"
+                ],
+                [
+                  "Una sola mente",
+                  "Todo el corazón",
+                  "Continuidad"
+                ],
+                [
+                  "Solo",
+                  "Unicidad",
+                  "Recreación"
+                ],
+                [
+                  "24",
+                  "25",
+                  "Eternidad"
+                ],
+                [
+                  "Impronta",
+                  "Raíz",
+                  "Constitución"
+                ]
+              ]
+            ],
+            [
+              "#5 secretos de la oración",
+              "Gratitud por la salvación · Corriente de la Palabra · Concentración · Sanidad · Futuro"
+            ],
+            [
+              "#7 cumbres",
+              "Biblia · RT 7 · 1.3.8 · Adoración · Solo · Unicidad · Recreación"
+            ],
+            [
+              "#9 corrientes",
+              [
+                [
+                  "Altura",
+                  "Profundidad",
+                  "Anchura"
+                ],
+                [
+                  "Arriba",
+                  "Abajo",
+                  "Al lado"
+                ],
+                [
+                  "Pasado",
+                  "Presente",
+                  "Futuro"
+                ]
+              ]
+            ],
+            [
+              "#20 estrategias de evangelización",
+              [
+                [
+                  "5 fundamentos",
+                  "Darakbang (aposento alto) · Ministerio en equipo · Hogar misionero · Iglesia especializada · Iglesia filial"
+                ],
+                [
+                  "5 entrenamientos",
+                  "Retiro · Retiro de equipo · Retiro de campo (70) · Retiro especializado · Retiro intensivo (de evangelización)"
+                ],
+                [
+                  "5 organizaciones",
+                  "Escuela de evangelización · Seminario de evangelización · Centro de entrenamiento misionero · RTS · RU"
+                ],
+                [
+                  "5 futuros",
+                  "Élite · Cultura · Industria · Sanidad · Remanente"
+                ]
+              ]
+            ]
+          ],
+          "prayer": [
+            "Permíteme recibir la solución que debo disfrutar durante toda mi vida."
+          ]
+        },
+        {
+          "name": "La iglesia (adoración)",
+          "sum": "Evangelización mundial a través de la iglesia y la adoración",
+          "rows": [],
+          "prayer": [
+            "Hoy voy a mi campo.",
+            "Que allí pueda hacer el campamento."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guidepost",
+      "name": "7 señales",
+      "where": "Como mi respaldo",
+      "items": [
+        {
+          "name": "Calvario",
+          "sum": "[[JOH 19:30]]",
+          "rows": [],
+          "prayer": [
+            "Establece el poder de la sangre de la cruz en todos los lugares donde voy."
+          ]
+        },
+        {
+          "name": "Monte de los Olivos",
+          "sum": "[[ACT 1:3]]",
+          "rows": [],
+          "prayer": [
+            "Hoy voy a mi campo. Establece allí el pacto del Monte de los Olivos y la obra de tu reino."
+          ]
+        },
+        {
+          "name": "Aposento Alto de Marcos",
+          "sum": "[[ACT 2:1-47]]",
+          "rows": [],
+          "prayer": [
+            "Establece esas obras de Dios que vinieron sobre el Aposento Alto de Marcos."
+          ]
+        },
+        {
+          "name": "Antioquía",
+          "sum": "[[ACT 11:19-30]]",
+          "rows": [],
+          "prayer": [
+            "Permíteme el horario de Dios que hubo en Antioquía."
+          ]
+        },
+        {
+          "name": "Asia",
+          "sum": "[[ACT 13:1-4]]",
+          "rows": [],
+          "prayer": [
+            "Permíteme esas obras del primer campo de misiones de Pablo en Asia, donde descubrió todas las respuestas."
+          ]
+        },
+        {
+          "name": "Macedonia",
+          "sum": "[[ACT 16:6-10]]",
+          "rows": [],
+          "prayer": [
+            "Permíteme encontrar el punto de cambio de la vida que recibió el equipo de Pablo."
+          ]
+        },
+        {
+          "name": "Roma",
+          "sum": "[[ACT 19:21]]",
+          "rows": [],
+          "prayer": [
+            "Permíteme ver Roma."
+          ]
+        }
+      ]
+    }
+  ],
+  "closing": [
+    "Ustedes son Remanentes.",
+    "Las 7 torres dentro de mí,",
+    "los 7 itinerarios por delante de mí,",
+    "las 7 señales como mi respaldo.",
+    "Es por donde hemos de ir."
+  ],
+  "source": "La oración de los 7.7.7 puntos (versión de la Conferencia de Remanentes en América) — Asociación de Evangelización Mundial"
+}

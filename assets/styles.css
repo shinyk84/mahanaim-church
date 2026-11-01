@@ -519,3 +519,40 @@ p.sub2 { margin: 2px 0 0; }
 .p7-rows.compact dd { flex: 1 1 auto; font-size: 0.85em; color: var(--muted); }
 
 :lang(ur) .p7-card strong { font-size: 1.05rem; line-height: 1.9; }
+
+/* 언어 선택: 드롭다운 */
+.lang1 { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; flex: 0 0 auto; }
+.lang1 select {
+  font: inherit; font-weight: 700; padding: 3px 10px; border-radius: 999px; cursor: pointer;
+  background: var(--fill); color: #fff; border: 1px solid var(--fill);
+}
+.lang1 select option, .lang2 select option { background: var(--card); color: var(--ink); }
+/* ⇄ 버튼: 언어 알약의 좌우 여백을 물려받지 않도록 */
+.langs a.swap { padding: 0; line-height: 1; font-family: system-ui, sans-serif; font-size: 1rem; color: var(--navy); }
+
+/* 777 카드: "7망대"를 한 줄로 */
+.p7-title { display: inline-flex; align-items: baseline; gap: 1px; white-space: nowrap; }
+.p7-title .p7-big { font-size: 1.35em; line-height: 1; }
+.p7-card .p7-title { margin-top: 4px; }
+
+/* 번호 목록(10비밀·10발판) */
+.p7-rn {
+  display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; margin-inline-end: 5px; border-radius: 50%;
+  background: var(--cf); color: #fff; font-size: 0.75em; font-weight: 800; font-family: var(--font); vertical-align: 1px;
+}
+.p7-rows.compact dt { display: inline-flex; align-items: center; }
+
+/* 소제목 + 표(62가지 전도자의 삶, 9흐름) */
+.p7-rows > .p7-block { display: block; padding: 8px 10px; }
+.p7-rh { font-weight: 800; color: var(--c); margin-bottom: 4px; }
+.p7-block dd { margin: 0; }
+.p7-table { width: 100%; border-collapse: separate; border-spacing: 3px; table-layout: fixed; font-size: 0.92em; }
+.p7-table td { background: var(--card); border-radius: 6px; padding: 4px 6px; text-align: center; vertical-align: middle; line-height: 1.45; }
+.p7-table tr:first-child td:has(.ref) { font-weight: 700; color: var(--c); }
+.p7-table td .ref { font-size: 0.85em; margin: 1px; }
+.p7-table tr:has(td:nth-child(2):last-child) td:first-child { width: 22%; color: var(--c); }
+.p7-table tr:has(td:nth-child(2):last-child) td:last-child { text-align: start; }
+.p7-rows.compact > div { flex-direction: column; align-items: flex-start; }
+.p7-rows.compact dd { flex: none; }
+.p7-table tr:has(td:nth-child(2):last-child) td:first-child { font-weight: 700; }
+.p7-title { white-space: normal; flex-wrap: wrap; justify-content: center; gap: 0 4px; }
