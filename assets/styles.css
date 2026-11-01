@@ -435,9 +435,9 @@ p.sub2 { margin: 2px 0 0; }
 }
 .p7-card { background: linear-gradient(180deg, var(--cs), var(--card)); }
 .p7-tag { display: inline-grid; place-items: center; width: 22px; height: 22px; font-size: 0.75rem; font-weight: 800; color: #fff; background: var(--cf); border-radius: 50%; font-family: var(--font); }
-.p7-big { font-size: 2.6rem; font-weight: 900; line-height: 1.05; color: var(--c); font-family: var(--font); }
+.p7-big { font-size: 2rem; font-weight: 900; line-height: 1.1; color: var(--c); font-family: var(--font); }
 
-.p7-card strong { color: var(--c); font-size: 1.02rem; line-height: 1.3; }
+.p7-card strong { color: var(--c); font-size: clamp(0.95rem, 4.2vw, 1.45rem); overflow-wrap: anywhere; font-weight: 900; line-height: 1.25; letter-spacing: -0.02em; }
 .p7-card small { color: var(--muted); font-size: 0.78rem; }
 .p7-card .sub2 { font-size: 0.75rem; }
 
@@ -540,3 +540,5 @@ p.sub2 { margin: 2px 0 0; }
 .p7-rows.compact > div { padding: 4px 8px; gap: 0 6px; }
 .p7-rows.compact dt { min-width: 0; }
 .p7-rows.compact dd { flex: 1 1 auto; font-size: 0.85em; color: var(--muted); }
+
+:lang(ur) .p7-card strong { font-size: 1.3rem; line-height: 1.9; }
