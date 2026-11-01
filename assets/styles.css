@@ -435,15 +435,15 @@ p.sub2 { margin: 2px 0 0; }
 }
 .p7-card { background: linear-gradient(180deg, var(--cs), var(--card)); }
 .p7-tag { display: inline-grid; place-items: center; width: 22px; height: 22px; font-size: 0.75rem; font-weight: 800; color: #fff; background: var(--cf); border-radius: 50%; font-family: var(--font); }
-.p7-big { font-size: 2rem; font-weight: 900; line-height: 1.1; color: var(--c); font-family: var(--font); }
+.p7-big { font-size: 1.6rem; font-weight: 900; line-height: 1.1; color: var(--c); font-family: var(--font); }
 
-.p7-card strong { color: var(--c); font-size: clamp(0.95rem, 4.2vw, 1.45rem); overflow-wrap: anywhere; font-weight: 900; line-height: 1.25; letter-spacing: -0.02em; }
+.p7-card strong { color: var(--c); font-size: clamp(0.9rem, 3.6vw, 1.1rem); overflow-wrap: anywhere; font-weight: 900; line-height: 1.25; letter-spacing: -0.02em; }
 .p7-card small { color: var(--muted); font-size: 0.78rem; }
 .p7-card .sub2 { font-size: 0.75rem; }
 
 /* 섹션 공통 */
 .p7-sec { margin: 22px 0; scroll-margin-top: 110px; }
-.p7-sec h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; margin: 0 0 10px; font-size: 1.25rem; color: var(--c); }
+.p7-sec h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; margin: 0 0 8px; font-size: 1.1rem; color: var(--c); }
 .p7-sec h2 small { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
 .p7-sec h2 .sub2 { flex-basis: 100%; }
 .p7-seven {
@@ -478,37 +478,14 @@ p.sub2 { margin: 2px 0 0; }
 .p7-prayer p { margin: 0; padding: 2px 0; }
 .p7-prayer > p::before { content: "\1F64F  "; }
 
-/* 7망대 = 탑: 위로 갈수록 좁아지는 7층 + 지붕 */
-.tower .p7-items { align-items: center; gap: 3px; }
-.tower .p7-items::before {
-  content: ""; width: 34%; height: 26px; margin-bottom: -1px; background: var(--brand-navy);
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-.tower .p7-item { width: 100%; display: flex; flex-direction: column; align-items: center; }
-.tower .p7-item summary { width: var(--w); border: 0; border-radius: 6px; background: var(--fl); color: #fff; justify-content: center; text-align: center; }
-.tower .p7-item:nth-child(1) { --w: 58%; --fl: #4a5fc4; }
-.tower .p7-item:nth-child(2) { --w: 65%; --fl: #4054ba; }
-.tower .p7-item:nth-child(3) { --w: 72%; --fl: #3649ae; }
-.tower .p7-item:nth-child(4) { --w: 79%; --fl: #2c3fa3; }
-.tower .p7-item:nth-child(5) { --w: 86%; --fl: #233598; }
-.tower .p7-item:nth-child(6) { --w: 93%; --fl: #1c2f90; }
-.tower .p7-item:nth-child(7) { --w: 100%; --fl: #172a88; }
-.tower .p7-item summary .p7-no { background: #fff; color: #172a88; }
-.tower .p7-item summary .p7-name, .tower .p7-item summary::after { color: #fff; }
-.tower .p7-item summary .p7-sum, .tower .p7-item summary .sub2 { color: rgb(255 255 255 / 0.82); }
-.tower .p7-item summary::after { margin-inline-start: 0; }
-.tower .p7-body { width: 100%; }
-
-/* 7여정 = 앞으로 난 길 / 7이정표 = 갈보리산에서 로마까지 이어진 경로 */
+/* 7망대·7여정·7이정표 공통: 번호 정거장이 점선으로 이어진 목록 */
 .road .p7-items, .route .p7-items { padding-inline-start: 6px; }
 .road .p7-items::before, .route .p7-items::before {
   content: ""; position: absolute; inset-inline-start: 23px; top: 14px; bottom: 14px; width: 3px; border-radius: 2px;
   background: repeating-linear-gradient(180deg, var(--cf) 0 8px, transparent 8px 14px);
 }
-.route .p7-items::before { background: var(--cf); }
 .road .p7-item summary, .route .p7-item summary { background: transparent; border: 0; padding-inline-start: 6px; }
 .road .p7-item summary .p7-no, .route .p7-item summary .p7-no { width: 30px; height: 30px; font-size: 0.9rem; box-shadow: 0 0 0 4px var(--bg); position: relative; }
-.route .p7-item summary .p7-no { border-radius: 6px 6px 6px 0; }
 .road .p7-item[open] summary, .route .p7-item[open] summary { background: var(--cs); }
 .road .p7-body, .route .p7-body { padding-inline-start: 46px; }
 
@@ -541,4 +518,4 @@ p.sub2 { margin: 2px 0 0; }
 .p7-rows.compact dt { min-width: 0; }
 .p7-rows.compact dd { flex: 1 1 auto; font-size: 0.85em; color: var(--muted); }
 
-:lang(ur) .p7-card strong { font-size: 1.3rem; line-height: 1.9; }
+:lang(ur) .p7-card strong { font-size: 1.05rem; line-height: 1.9; }

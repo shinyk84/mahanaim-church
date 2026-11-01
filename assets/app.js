@@ -242,7 +242,7 @@ async function message(type, id) {
 const rich = (s, l = lang) => (s || "").split("\n").map((x) => inline(x, l)).join("<br>");
 
 /**
- * 7망대는 탑(7층), 7여정은 앞으로 난 길(7걸음), 7이정표는 갈보리산→로마 경로(7정거장).
+ * 세 7 모두 같은 단위: 번호 정거장이 선으로 이어진 목록(7이정표는 실선 경로).
  * 각 항목은 접으면 한 줄(이름 + 요약), 펼치면 세부 내용과 해당 기도문.
  */
 async function prayer777() {
@@ -333,7 +333,7 @@ async function prayer777() {
     <p class="p7-intro">${esc(p.intro)}${sub2(p2?.intro)}</p>
     ${hero}
     <p class="hint">👆 ${esc(t.p7_hint)}</p>
-    ${section(B, 0, "tower")}
+    ${section(B, 0, "road")}
     ${section(J, 1, "road")}
     ${section(G, 2, "route")}
     ${closing}
