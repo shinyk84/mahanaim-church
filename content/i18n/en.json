@@ -10,7 +10,7 @@
   "gospel": "Gospel Message",
   "gospel_desc": "The Way of Salvation — the way to meet God",
   "prayer777": "777 Prayer",
-  "prayer777_desc": "The 777 prayer for every day",
+  "prayer777_desc": "7 Bartizans · 7 Journeys · 7 Guideposts",
   "more": "View all",
   "empty": "No messages yet.",
   "not_translated": "This message has not been translated yet, so the Korean original is shown.",
@@ -35,5 +35,14 @@
   "second_lang": "Second language",
   "none": "None",
   "swap": "Swap the two languages",
-  "denomination": "Presbyterian Church in Korea"
+  "denomination": "Presbyterian Church in Korea",
+  "p7_hint": "Tap an item to unfold its content and prayer",
+  "expand_all": "Expand all",
+  "collapse_all": "Collapse all",
+  "full_prayer": "🙏 Prayer only",
+  "chart_view": "777 chart view",
+  "p7_me": "Me",
+  "p7_behind": "Behind",
+  "p7_ahead": "Ahead",
+  "source": "Source"
 }

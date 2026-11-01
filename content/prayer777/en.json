@@ -1,0 +1,168 @@
+{
+  "title": "777 Prayer",
+  "subtitle": "7 Bartizans · 7 Journeys · 7 Guideposts",
+  "intro": "The 7 bartizans are inside of me, the 7 journeys lie ahead of me, and the 7 guideposts are my background — the prayer a Remnant holds onto every day.",
+  "groups": [
+    {
+      "id": "bartizan",
+      "name": "7 Bartizans",
+      "where": "Inside of me",
+      "items": [
+        {
+          "name": "The Triune God",
+          "sum": "God the Father, the Son and the Holy Spirit",
+          "rows": [],
+          "prayer": ["May the Triune God work inside of me.", "May You take control of my heart, my thoughts, my body and my soul."]
+        },
+        {
+          "name": "The Throne",
+          "sum": "3 transcendences · 3 lives · 3 unprecedented",
+          "rows": [
+            ["3 transcendences", "Blessing of the throne · Beyond time and space · Light to the 237 nations"],
+            ["3 lives", "Image [[GEN 1:27]] · Breath of life [[GEN 2:7]] · Blessing of Eden [[GEN 2:1-19]]"],
+            ["3 unprecedented", "Me · The church · My field"]
+          ],
+          "prayer": [
+            "May the power of the throne come upon me.",
+            "May Your kingdom be fulfilled.",
+            "May the transcendence of time and space and the power to reach the 237 nations come upon me.",
+            "May this power come upon my life.",
+            "May it come upon my soul.",
+            "May it come upon my daily life.",
+            "And in my life and in my studies, in my church and my field, may I have this unprecedented, never repeated answers."
+          ]
+        },
+        {
+          "name": "3 Eras",
+          "sum": "Me · The church · Work",
+          "rows": [
+            ["Me", "Past · Present · Future"],
+            ["The church", "Pastors · Church leaders · RT and associate ministers"],
+            ["Work", "Specialization · Globalization · Discipleship"]
+          ],
+          "prayer": ["God, may You work upon my past, my present and future in power."]
+        },
+        {
+          "name": "The Universe",
+          "sum": "Authority to defeat Satan, the ruler of the air",
+          "rows": [],
+          "prayer": ["Grant me the power to transcend time and space and to overcome the ruler of the kingdom of the air."]
+        },
+        {
+          "name": "5 Powers",
+          "sum": "Spiritual · Intellectual · Physical · Economic · Human resources",
+          "rows": [],
+          "prayer": ["At this time God, may You give me the five authorities."]
+        },
+        {
+          "name": "CVDIP in Advance",
+          "sum": "Covenant · Vision · Dream · Image · Practice",
+          "rows": [],
+          "prayer": ["Right now, grant me the blessing of seeing the CVDIP in advance."]
+        },
+        {
+          "name": "3 Courtyards",
+          "sum": "Gentiles' · Prayer · Children's courtyard",
+          "rows": [
+            ["237", "The courtyard of the Gentiles"],
+            ["Healing", "The courtyard of prayer"],
+            ["Summit", "The courtyard of children"]
+          ],
+          "prayer": ["May the power of the three courtyards come upon me."]
+        }
+      ]
+    },
+    {
+      "id": "journey",
+      "name": "7 Journeys",
+      "where": "Ahead of me",
+      "items": [
+        {
+          "name": "Blessing of the Throne",
+          "sum": "The Triune God with me, with us, with all things",
+          "rows": [["", "The Triune God with me (With), with us (Immanuel), and with all things (Oneness)"]],
+          "prayer": ["God, fill me and lead me on the path of the Triune God.", "I have many hardships."]
+        },
+        {
+          "name": "10 Mysteries",
+          "sum": "Independence · Spiritual facts · Reverse thinking · Synergy · Crisis …",
+          "rows": [["", "Independence · Spiritual facts · Reverse thinking · Synergy · Crisis · No competition · Re-creation · Summit · Wilderness · Absolute"]],
+          "prayer": ["Help me enjoy the ten mysteries so I can find the path that You are directing me on."]
+        },
+        {
+          "name": "10 Foundations",
+          "sum": "God's sovereignty · way · power · guarantee · temple …",
+          "rows": [
+            ["God's sovereignty", ""],
+            ["God's way", "JX, the main character of history"],
+            ["God's power", "The work of the Holy Spirit"],
+            ["God's guarantee", "The Bible"],
+            ["God's temple", ""],
+            ["God's plan", "Where I am is the mission field"],
+            ["God's rule", "Lord of life, death, fortune and misfortune"],
+            ["God's providence", "A life with limited time"],
+            ["God's judgment", "The life to come"],
+            ["God's reward", "The evangelist's reward"]
+          ],
+          "prayer": ["People just think whatever they want, they talk and say whatever they want, and they add things to that as well.", "God may the ten foundations be established in me."]
+        },
+        {
+          "name": "5 Assurances",
+          "sum": "Salvation · Answered prayer · Victory · Forgiveness · Guidance",
+          "rows": [
+            ["Assurance of salvation", "[[1JO 5:10-13]]"],
+            ["Assurance of answered prayer", "[[JER 33:1-3]]"],
+            ["Assurance of victory", "[[1CO 10:13]]"],
+            ["Assurance of forgiveness", "[[1JO 1:9]]"],
+            ["Assurance of guidance", "[[PRO 3:5-6]]"]
+          ],
+          "prayer": ["There is no hardship that can overcome the Gospel.", "So may the five assurances work upon me as my answer."]
+        },
+        {
+          "name": "9 Streams",
+          "sum": "Height·depth·width / above·below·beside / past·present·future",
+          "rows": [
+            ["", "Height · Depth · Width"],
+            ["", "Above · Below · Beside"],
+            ["", "Past · Present · Future"]
+          ],
+          "prayer": ["I must change America.", "By Your power, help me enjoy the nine streams."]
+        },
+        {
+          "name": "62 Lives of an Evangelist",
+          "sum": "21 lives · 5 prayer mysteries · 7 summits · 9 streams · 20 strategies",
+          "rows": [
+            ["21 lives of an evangelist", "Calvary [[ACT 1:1]] · Mount of Olives [[ACT 1:3]] God's kingdom · Mark's upper room [[ACT 1:8]] power\nCalling from heaven·calling·mission / natural·inevitable·absolute / one mind·whole heart·continuity / only·uniqueness·re-creation / 24·25·eternity / imprint·root·nature"],
+            ["5 mysteries of prayer", "Gratitude for salvation · Flow of the Word · Concentration · Healing · Future"],
+            ["7 summits", "Bible · RT 7 · 1.3.8 · Worship · Only · Uniqueness · Re-creation"],
+            ["9 streams", "Same as above"],
+            ["20 evangelism strategies", "5 foundations: Darakbang · Team ministry · Mission home · Specialized church · Branch church\n5 trainings: Retreat · Team retreat · Field (70) retreat · Specialized retreat · Intensive (evangelism) retreat\n5 organizations: Evangelism school · Evangelism seminary · Missionary training center · RTS · RU\n5 futures: Elite · Culture · Industry · Healing · Remnant"]
+          ],
+          "prayer": ["God, grant me the answer I can enjoy for the rest of my life."]
+        },
+        {
+          "name": "The Church (Worship)",
+          "sum": "World evangelization through the church and worship",
+          "rows": [["", "Because the blessing of the throne works in the church and in worship, the world is evangelized through the church and worship."]],
+          "prayer": ["I'm going to such and such a place today.", "May that become the camp."]
+        }
+      ]
+    },
+    {
+      "id": "guidepost",
+      "name": "7 Guideposts",
+      "where": "My background",
+      "items": [
+        { "name": "Calvary", "sum": "[[JOH 19:30]]", "rows": [], "prayer": ["Wherever I go, may the power of the cross, the power of the blood come."] },
+        { "name": "Mount of Olives", "sum": "[[ACT 1:3]]", "rows": [], "prayer": ["Wherever I go, may the covenant of the Mount of Olives, the things pertaining to God's kingdom, be fulfilled."] },
+        { "name": "Mark's Upper Room", "sum": "[[ACT 2:1-47]]", "rows": [], "prayer": ["May Your works that took place in Mark's upper room take place in me."] },
+        { "name": "Antioch", "sum": "[[ACT 11:19-30]]", "rows": [], "prayer": ["May Your time schedule that appeared in Antioch appear in me."] },
+        { "name": "Asia", "sum": "[[ACT 13:1-4]]", "rows": [], "prayer": ["Paul's first missions field, Asia, where he was able to find all the answers, may You grant me those works."] },
+        { "name": "Macedonia", "sum": "[[ACT 16:6-10]]", "rows": [], "prayer": ["And the life turning point that Paul's team found, may I find that."] },
+        { "name": "Rome", "sum": "[[ACT 19:21]]", "rows": [], "prayer": ["May I see Rome."] }
+      ]
+    }
+  ],
+  "closing": ["You are Remnants.", "The seven bartizans are inside of me.", "And the seven journeys lie ahead of me.", "And the seven guideposts are my background.", "Head out with this."],
+  "source": "777 Prayer (RCA ver.) — World Evangelization Evangelism Alliance"
+}

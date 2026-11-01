@@ -237,13 +237,106 @@ async function message(type, id) {
   </article>`;
 }
 
+// ---------- 777 기도 ----------
+/** "[[ACT 1:3]] 하나님 나라" 같은 문구를 성구 버튼 포함 HTML로 (줄바꿈 유지) */
+const rich = (s, l = lang) => (s || "").split("\n").map((x) => inline(x, l)).join("<br>");
+
+/**
+ * 7망대는 탑(7층), 7여정은 앞으로 난 길(7걸음), 7이정표는 갈보리산→로마 경로(7정거장).
+ * 각 항목은 접으면 한 줄(이름 + 요약), 펼치면 세부 내용과 해당 기도문.
+ */
 async function prayer777() {
-  const md = await load(`content/prayer777/${lang}.md`, "text").catch(() => load("content/prayer777/ko.md", "text"));
-  const md2 = lang2 ? await load(`content/prayer777/${lang2}.md`, "text").catch(() => null) : null;
-  return `<article class="article">
-    <h1>${esc(t.prayer777)}</h1>
-    <p class="muted">${esc(t.prayer777_desc)}</p>
-    ${md2 ? duo(renderMarkdown(md, lang), lang, renderMarkdown(md2, lang2), lang2) : `<div class="prose">${renderMarkdown(md, lang)}</div>`}
+  const p = await load(`content/prayer777/${lang}.json`);
+  const p2 = lang2 ? await load(`content/prayer777/${lang2}.json`).catch(() => null) : null;
+  const big = store.get("big") === "1";
+  document.body.classList.toggle("big", big);
+  const onlyPrayer = store.get("p7pray") === "1";
+  const [B, J, G] = p.groups;
+
+  const head = `<header class="g-hero">
+      <h1>${esc(p.title)}${p2 ? sub2(p2.title) : ""}</h1>
+      <p class="g-sub">${esc(p.subtitle)}${p2 ? sub2(p2.subtitle) : ""}</p>
+    </header>
+    <div class="toolbar">
+      <button type="button" class="toggle on" data-toggle="p7pray">${esc(onlyPrayer ? t.chart_view : t.full_prayer)}</button>
+      ${onlyPrayer ? "" : `<button type="button" class="toggle" data-p7all>${esc(t.expand_all)}</button>`}
+      <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
+    </div>`;
+  const closing = `<div class="p7-closing">${p.closing.map((c, i) => `<p>${esc(c)}${sub2(p2?.closing[i])}</p>`).join("")}</div>
+    <p class="p7-source">${esc(t.source)}: ${esc(p.source)}</p>`;
+
+  if (onlyPrayer) {
+    return `<article class="p7">${head}
+      ${p.groups
+        .map(
+          (g, gi) => `<section class="p7-pray-only p7-${g.id}">
+            <h2>${esc(g.name)} <small>${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}</h2>
+            ${g.items
+              .map(
+                (it, ii) => `<div class="p7-pl"><span class="p7-pl-name">${esc(it.name)}</span>${it.prayer
+                  .map((line, k) => `<p>${esc(line)}${sub2(p2?.groups[gi].items[ii].prayer[k])}</p>`)
+                  .join("")}</div>`,
+              )
+              .join("")}
+          </section>`,
+        )
+        .join("")}
+      ${closing}
+    </article>`;
+  }
+
+  const stripR = (s) => stripRefs(s).replace(/\s+/g, " ");
+  const item = (g, gi, it, ii) => {
+    const it2 = p2?.groups[gi].items[ii];
+    // 10발판처럼 짧은 항목이 많으면 두 칸으로 촘촘하게
+    const compact = it.rows.length > 4 && it.rows.every(([k, v]) => (k + v).length <= 45);
+    const rows = it.rows.length
+      ? `<dl class="p7-rows ${compact ? "compact" : ""}">${it.rows
+          .map(([k, v], ri) => {
+            const v2 = it2?.rows[ri]?.[1];
+            return `<div>${k ? `<dt>${esc(k)}</dt>` : ""}<dd>${rich(v)}${v2 ? sub2(stripR(v2)) : ""}</dd></div>`;
+          })
+          .join("")}</dl>`
+      : "";
+    return `<details class="p7-item">
+      <summary>
+        <span class="p7-no">${ii + 1}</span>
+        <span class="p7-txt"><span class="p7-name">${esc(it.name)}${sub2(it2?.name)}</span> <span class="p7-sum">${inline(it.sum)}</span></span>
+      </summary>
+      <div class="p7-body">
+        ${rows}
+        <div class="p7-prayer">${it.prayer.map((line, k) => `<p>${esc(line)}${sub2(it2?.prayer[k])}</p>`).join("")}</div>
+      </div>
+    </details>`;
+  };
+  const section = (g, gi, cls) => `<section class="p7-sec p7-${g.id} ${cls}" id="p7-${g.id}">
+      <h2><span class="p7-seven">7</span>${esc(g.name.replace(/^7\s*/, ""))} <small>· ${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}</h2>
+      <div class="p7-items">${g.items.map((it, ii) => item(g, gi, it, ii)).join("")}</div>
+    </section>`;
+
+  // 맨 위 777 그림: 배경(이정표) · 나(망대) · 앞(여정) — 시간 화살표 위에 놓기
+  const card = (g, gi, tag) => `<a class="p7-card p7-${g.id}" href="#p7-${g.id}" data-jump="p7-${g.id}">
+      <span class="p7-tag">${esc(tag)}</span>
+      <span class="p7-big">7</span>
+      <strong>${esc(g.name.replace(/^7\s*/, ""))}</strong>
+      <small>${esc(g.where)}</small>
+      ${sub2(p2?.groups[gi].name)}
+    </a>`;
+  const hero = `<div class="p7-hero">
+      ${card(G, 2, t.p7_behind)}
+      ${card(B, 0, t.p7_me)}
+      ${card(J, 1, t.p7_ahead)}
+      <div class="p7-arrow" aria-hidden="true"></div>
+    </div>`;
+
+  return `<article class="p7">${head}
+    <p class="p7-intro">${esc(p.intro)}${sub2(p2?.intro)}</p>
+    ${hero}
+    <p class="hint">👆 ${esc(t.p7_hint)}</p>
+    ${section(B, 0, "tower")}
+    ${section(J, 1, "road")}
+    ${section(G, 2, "route")}
+    ${closing}
   </article>`;
 }
 
@@ -479,7 +572,19 @@ function toggleInlineVerse(chip) {
 // ---------- 이벤트 ----------
 document.addEventListener("click", (e) => {
   const ref = e.target.closest(".ref");
-  if (ref) return ref.closest(".d-body") ? toggleInlineVerse(ref) : openVerse(ref.dataset.ref);
+  if (ref) {
+    if (ref.closest("summary")) e.preventDefault(); // 접힌 줄의 성구는 펼침 없이 말씀만 열기
+    return ref.closest(".d-body") ? toggleInlineVerse(ref) : openVerse(ref.dataset.ref);
+  }
+  const all = e.target.closest("[data-p7all]");
+  if (all) {
+    const items = [...document.querySelectorAll(".p7-item")];
+    const open = !items.every((d) => d.open);
+    items.forEach((d) => (d.open = open));
+    all.textContent = open ? t.collapse_all : t.expand_all;
+    all.classList.toggle("on", open);
+    return;
+  }
   const item = e.target.closest("[data-item]");
   if (item) return openDetail("item", item.dataset.item);
   const sec = e.target.closest("[data-sec]");
