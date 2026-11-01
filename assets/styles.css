@@ -421,22 +421,22 @@ p.sub2 { margin: 2px 0 0; }
 .p7-intro { margin: 4px 0 12px; color: var(--muted); font-size: 0.95rem; }
 
 /* 맨 위 777 그림: 배경 · 나 · 앞 */
-.p7-hero { position: relative; display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 10px; align-items: center; margin: 8px 0 6px; }
-.p7-arrow { position: absolute; inset-inline: 4px; top: 50%; height: 3px; background: linear-gradient(90deg, var(--amber-fill), var(--brand-navy), var(--green-fill)); border-radius: 2px; z-index: 0; }
-[dir="rtl"] .p7-arrow { background: linear-gradient(270deg, var(--amber-fill), var(--brand-navy), var(--green-fill)); }
+.p7-hero { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: center; margin: 8px 0 6px; }
+.p7-arrow { position: absolute; inset-inline: 4px; top: 50%; height: 3px; background: linear-gradient(90deg, var(--brand-navy), var(--green-fill), var(--amber-fill)); border-radius: 2px; z-index: 0; }
+[dir="rtl"] .p7-arrow { background: linear-gradient(270deg, var(--brand-navy), var(--green-fill), var(--amber-fill)); }
 .p7-arrow::after {
   content: ""; position: absolute; inset-inline-end: -4px; top: -6px; border: 7.5px solid transparent;
-  border-inline-start: 12px solid var(--green-fill); border-inline-end: 0;
+  border-inline-start: 12px solid var(--amber-fill); border-inline-end: 0;
 }
 .p7-card {
   position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
   padding: 12px 6px 10px; border-radius: 16px; text-decoration: none; background: var(--card);
   border: 2px solid var(--cf); box-shadow: var(--shadow); min-width: 0;
 }
-.p7-card.p7-bartizan { padding: 18px 6px 14px; background: linear-gradient(180deg, var(--cs), var(--card)); }
-.p7-tag { font-size: 0.72rem; font-weight: 700; color: #fff; background: var(--cf); padding: 0 10px; border-radius: 999px; font-family: var(--font); }
+.p7-card { background: linear-gradient(180deg, var(--cs), var(--card)); }
+.p7-tag { display: inline-grid; place-items: center; width: 22px; height: 22px; font-size: 0.75rem; font-weight: 800; color: #fff; background: var(--cf); border-radius: 50%; font-family: var(--font); }
 .p7-big { font-size: 2.6rem; font-weight: 900; line-height: 1.05; color: var(--c); font-family: var(--font); }
-.p7-card.p7-bartizan .p7-big { font-size: 3.2rem; }
+
 .p7-card strong { color: var(--c); font-size: 1.02rem; line-height: 1.3; }
 .p7-card small { color: var(--muted); font-size: 0.78rem; }
 .p7-card .sub2 { font-size: 0.75rem; }

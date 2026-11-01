@@ -314,7 +314,7 @@ async function prayer777() {
       <div class="p7-items">${g.items.map((it, ii) => item(g, gi, it, ii)).join("")}</div>
     </section>`;
 
-  // 맨 위 777 그림: 배경(이정표) · 나(망대) · 앞(여정) — 시간 화살표 위에 놓기
+  // 맨 위 777 그림: 기도 순서대로 7망대 → 7여정 → 7이정표
   const card = (g, gi, tag) => `<a class="p7-card p7-${g.id}" href="#p7-${g.id}" data-jump="p7-${g.id}">
       <span class="p7-tag">${esc(tag)}</span>
       <span class="p7-big">7</span>
@@ -323,9 +323,9 @@ async function prayer777() {
       ${sub2(p2?.groups[gi].name)}
     </a>`;
   const hero = `<div class="p7-hero">
-      ${card(G, 2, t.p7_behind)}
-      ${card(B, 0, t.p7_me)}
-      ${card(J, 1, t.p7_ahead)}
+      ${card(B, 0, "1")}
+      ${card(J, 1, "2")}
+      ${card(G, 2, "3")}
       <div class="p7-arrow" aria-hidden="true"></div>
     </div>`;
 
