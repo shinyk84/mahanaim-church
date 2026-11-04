@@ -13,6 +13,7 @@ GitHub Actions(.github/workflows/sync-youtube.yml)가 매일 자동 실행합니
 import json
 import re
 import sys
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -80,13 +81,23 @@ CHANNELS = {
 }
 
 
-def get(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
-        return r.read().decode("utf-8")
+def get(url, tries=3):
+    for n in range(tries):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+                return r.read().decode("utf-8")
+        except Exception:
+            if n == tries - 1:
+                raise
+            time.sleep(3 * (n + 1))
 
 
 def from_rss(ch):
-    x = get(f"https://www.youtube.com/feeds/videos.xml?channel_id={ch['id']}")
+    try:
+        x = get(f"https://www.youtube.com/feeds/videos.xml?channel_id={ch['id']}")
+    except Exception as e:  # 클라우드 서버에서는 가끔 404 → 채널 탭으로 계속
+        print(f"  ! {ch['handle']} RSS 읽기 실패: {e}", file=sys.stderr)
+        return []
     out = []
     for e in re.findall(r"<entry>(.*?)</entry>", x, re.S):
         vid = re.search(r"<yt:videoId>(.*?)<", e).group(1)
