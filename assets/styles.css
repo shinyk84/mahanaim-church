@@ -110,6 +110,35 @@ a { color: inherit; }
   background: var(--card); border: 1px solid var(--line); text-decoration: none; box-shadow: var(--shadow);
 }
 .card:hover { border-color: var(--accent); }
+
+/* 유튜브 영상 목록: 게시판형 한 줄 목록 + 카테고리 필터 */
+.chips { display: flex; gap: 6px; overflow-x: auto; padding: 14px 0 6px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; font: inherit; font-size: 0.85rem; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; white-space: nowrap; }
+.chip small { color: var(--muted); font-size: 0.78em; }
+.chip.on { background: var(--navy); border-color: var(--navy); color: var(--card); font-weight: 700; }
+.chip.on small { color: inherit; opacity: 0.8; }
+.vlist { display: flex; flex-direction: column; margin-top: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+.vrow { display: flex; gap: 12px; align-items: center; padding: 10px 12px; text-decoration: none; color: inherit; border-top: 1px solid var(--line); }
+.vrow:first-child { border-top: 0; }
+.vrow[hidden] { display: none; }
+.vrow:hover { background: var(--navy-soft); }
+.vthumb { position: relative; flex: none; width: 128px; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: var(--line); }
+.vthumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.vplay { position: absolute; inset: auto 6px 6px auto; font-size: 0.65rem; line-height: 1; padding: 4px 6px; border-radius: 6px; background: rgb(0 0 0 / 0.65); color: #fff; }
+.vtxt { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.vtxt strong { font-size: 0.98rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.vmeta { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: center; font-size: 0.78rem; color: var(--muted); }
+.vcat { padding: 0 8px; border-radius: 999px; background: var(--navy-soft); color: var(--navy); font-weight: 600; }
+.vmore { display: block; margin: 12px auto 0; font: inherit; font-size: 0.9rem; padding: 8px 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--navy); font-weight: 700; cursor: pointer; }
+.vmore[hidden] { display: none; }
+.vchannel { text-align: center; margin: 12px 0 0; font-size: 0.85rem; }
+.vchannel a { color: var(--muted); text-decoration: none; }
+.sub-title { margin: 28px 0 0; font-size: 1.05rem; }
+@media (max-width: 480px) {
+  .vthumb { width: 104px; }
+  .vtxt strong { font-size: 0.92rem; }
+}
 .card time { font-size: 0.8rem; color: var(--muted); }
 .badge { align-self: start; font-size: 0.72rem; padding: 0 8px; border-radius: 999px; background: var(--cream); color: var(--muted); font-family: var(--font); }
 .tools { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -420,6 +449,45 @@ p.sub2 { margin: 2px 0 0; }
 .p7 .p7-guidepost { --c: var(--amber); --cf: var(--amber-fill); --cs: var(--amber-soft); }
 .p7-intro { margin: 4px 0 12px; color: var(--muted); font-size: 0.95rem; }
 
+/* 한눈에 보는 777 판: 번호 + 3열(망대·여정·이정표) × 7행 */
+.p7-board { display: grid; grid-template-columns: 22px repeat(3, minmax(0, 1fr)); gap: 6px; margin: 10px 0 18px; }
+.p7b-head {
+  display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 4px 8px;
+  border-radius: 14px 14px 6px 6px; background: var(--cf); color: #fff; min-width: 0; position: relative;
+}
+.p7b-seven { font-size: 2rem; font-weight: 900; line-height: 1; font-family: var(--font); }
+.p7b-head strong { font-size: clamp(0.95rem, 3.8vw, 1.2rem); font-weight: 900; letter-spacing: -0.02em; line-height: 1.2; }
+.p7b-head small { font-size: 0.72rem; opacity: 0.85; }
+.p7b-head .sub2 { color: inherit; opacity: 0.85; font-size: 0.7rem; }
+/* 망대 → 여정 → 이정표 흐름 표시 */
+.p7b-head:not(.p7-guidepost)::after {
+  content: ""; position: absolute; inset-inline-end: -6px; top: 50%; translate: 0 -50%; z-index: 1;
+  border: 6px solid transparent; border-inline-start: 7px solid var(--cf); border-inline-end: 0;
+}
+.p7b-no { display: grid; place-items: center; font-weight: 900; font-size: 0.85rem; color: var(--muted); font-family: var(--font); }
+.p7b-cell {
+  font: inherit; text-align: center; cursor: pointer; min-width: 0; min-height: 52px; padding: 6px 4px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  border-radius: 10px; border: 1.5px solid color-mix(in srgb, var(--cf) 35%, transparent); background: var(--cs); color: var(--c);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.p7b-name { font-weight: 800; font-size: clamp(0.82rem, 3.5vw, 1rem); line-height: 1.25; word-break: keep-all; overflow-wrap: anywhere; }
+.p7b-cell .sub2 { font-size: 0.68rem; }
+.p7b-cell:hover { border-color: var(--cf); box-shadow: var(--shadow); transform: translateY(-1px); }
+.p7b-cell:active { transform: scale(0.97); }
+.p7b-cell:focus-visible { outline: 2px solid var(--cf); outline-offset: 2px; }
+
+/* 777 항목 팝업 */
+.p7-dlg { padding-bottom: 0; }
+.p7-dlg > div { display: flex; flex-direction: column; min-height: 0; max-height: 80vh; }
+.p7-dlg .v-head { border-bottom: 3px solid var(--cf); background: var(--cs); }
+.p7d-title { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-width: 0; }
+.p7d-title strong { color: var(--c); font-size: 1.2rem; }
+.p7d-group { font-size: 0.75rem; font-weight: 700; color: #fff; background: var(--cf); border-radius: 999px; padding: 1px 8px; }
+.p7-dlg .p7-no { position: static; }
+.p7d-nav { display: flex; justify-content: space-between; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--line); }
+.p7d-nav button { font: inherit; font-size: 0.85rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--c); font-weight: 700; cursor: pointer; max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* 맨 위 777 그림: 배경 · 나 · 앞 */
 .p7-hero { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; align-items: center; margin: 8px 0 6px; }
 .p7-arrow { position: absolute; inset-inline: 4px; top: 50%; height: 3px; background: linear-gradient(90deg, var(--brand-navy), var(--green-fill), var(--amber-fill)); border-radius: 2px; z-index: 0; }
@@ -467,9 +535,9 @@ p.sub2 { margin: 2px 0 0; }
 }
 .p7-name { font-weight: 800; color: var(--c); }
 .p7-name .sub2 { display: inline; margin-inline-start: 6px; }
-.p7-sum { color: var(--muted); font-size: 0.85em; min-width: 0; }
-.p7-sum .ref { font-size: 0.95em; }
 .p7-body { padding: 8px 4px 4px; }
+.p7-sum { margin: 0 0 8px; padding: 6px 10px; color: var(--muted); font-weight: 600; }
+.p7-sum .ref { font-size: 0.95em; }
 .p7-rows { margin: 0 0 8px; display: grid; gap: 6px; }
 .p7-rows > div { display: flex; flex-wrap: wrap; gap: 0 10px; padding: 6px 10px; background: var(--cs); border-radius: 10px; }
 .p7-rows dt { font-weight: 700; color: var(--c); min-width: 5.5em; }

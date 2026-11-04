@@ -44,5 +44,9 @@
   "p7_me": "Moi",
   "p7_behind": "Arrière-plan",
   "p7_ahead": "Devant",
-  "source": "Source"
+  "source": "Source",
+  "all": "Tout",
+  "show_more": "Voir plus",
+  "watch_yt": "Regarder sur YouTube",
+  "scripts": "Messages écrits"
 }

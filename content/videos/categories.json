@@ -1,0 +1,27 @@
+{
+  "pulpit": {
+    "channel": "https://www.youtube.com/@themahanaim",
+    "cats": [
+      { "id": "s1", "ko": "1부 렘넌트중직자(구역예배)", "en": "1st Service · Remnant & Leaders" },
+      { "id": "s2", "ko": "2부 장년부(학원복음화)", "en": "2nd Service · Adults (Campus Evangelization)" },
+      { "id": "dawn", "ko": "새벽예배", "en": "Dawn Service" },
+      { "id": "etc", "ko": "기타(포럼·강의)", "en": "Others (Forums · Lectures)" }
+    ]
+  },
+  "hq": {
+    "channel": "https://www.youtube.com/@rutctv",
+    "cats": [
+      { "id": "s1", "ko": "주일1부", "en": "Sunday 1st" },
+      { "id": "s2", "ko": "주일2부", "en": "Sunday 2nd" },
+      { "id": "industry", "ko": "산업선교", "en": "Industrial Mission" },
+      { "id": "remnant", "ko": "렘넌트TCK", "en": "Remnant & TCK" },
+      { "id": "core", "ko": "핵심", "en": "Core" },
+      { "id": "scattered", "ko": "흩어진제자들", "en": "Scattered Disciples" },
+      { "id": "wrc", "ko": "WRC", "en": "WRC" },
+      { "id": "newyear", "ko": "송구영신", "en": "New Year's Eve" },
+      { "id": "lesson", "ko": "구역공과", "en": "Cell Group Lesson" },
+      { "id": "news", "ko": "RUTC뉴스", "en": "RUTC News" },
+      { "id": "etc", "ko": "기타(대회)", "en": "Others (Conferences)" }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+# 매일 유튜브 채널의 새 영상을 강단/본부 메시지 목록에 추가하고, 바뀐 것이 있으면 커밋합니다.
+# (푸시되면 Vercel이 자동 배포) GitHub 저장소 > Actions 탭에서 "Run workflow"로 바로 실행할 수도 있습니다.
+name: Sync YouTube videos
+
+on:
+  schedule:
+    - cron: "0 3,12 * * *" # 매일 한국시간 12:00, 21:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/sync_youtube.py
+      - name: Commit if changed
+        run: |
+          if [ -n "$(git status --porcelain content/videos)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898783+github-actions[bot]@users.noreply.github.com"
+            git add content/videos
+            git commit -m "Sync YouTube videos"
+            git push
+          fi

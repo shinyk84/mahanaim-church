@@ -4,3 +4,4 @@ node_modules/
 구원의길책받침.webp
 *.ai
 구원의 길 (1).pdf
+__pycache__/

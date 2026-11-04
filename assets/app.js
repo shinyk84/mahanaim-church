@@ -101,6 +101,7 @@ async function route() {
     const view = { "": home, pulpit: list, hq: list, gospel, prayer777 }[page];
     if (!view) return location.replace(href());
     app.innerHTML = page === "pulpit" || page === "hq" ? (id ? await message(page, id) : await view(page)) : await view();
+    app.querySelectorAll("[data-vlist]").forEach((box) => applyVideoFilter(box, "", PAGE));
   } catch (e) {
     console.error(e);
     app.innerHTML = `<p class="pad">⚠️ ${esc(String(e.message || e))}</p>`;
@@ -158,8 +159,12 @@ const duo = (a, la, b, lb) => `<div class="duo">
 
 // ---------- 화면들 ----------
 async function home() {
-  const idx = await load("content/messages/index.json");
+  const [idx, ytP, ytH] = await Promise.all([load("content/messages/index.json"), loadVideos("pulpit"), loadVideos("hq")]);
+  const yt = { pulpit: ytP, hq: ytH };
+  // 최근 영상 3개(영상이 없으면 글 메시지)
   const cards = (type) => {
+    const vids = yt[type].videos.slice(0, 3);
+    if (vids.length) return `<div class="vlist home">${vids.map((v) => videoRow(v, yt[type].cats)).join("")}</div>`;
     const rows = (idx[type] || []).slice(0, 3);
     if (!rows.length) return `<p class="muted">${esc(t.empty)}</p>`;
     return `<div class="cards">${rows.map((m) => msgCard(type, m)).join("")}</div>`;
@@ -205,15 +210,67 @@ const msgCard = (type, m) => `
     ${m.langs.includes(lang) ? "" : `<span class="badge">${nameOf(m.langs[0])}</span>`}
   </a>`;
 
+// ---------- 유튜브 영상 목록 (영상은 유튜브에 있고 여기엔 ID·제목만: scripts/sync_youtube.py) ----------
+const PAGE = 20;
+const loadVideos = async (type) => {
+  const [cats, videos] = await Promise.all([load("content/videos/categories.json"), load(`content/videos/${type}.json`).catch(() => [])]);
+  return { ...cats[type], videos: videos.filter((v) => !v.hidden) };
+};
+const catName = (c) => (c ? c[lang] ?? c.ko : "");
+
+const videoRow = (v, cats) => {
+  const c = cats.find((x) => x.id === v.cat);
+  return `<a class="vrow" href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" target="_blank" rel="noopener" data-cat="${esc(v.cat)}">
+    <span class="vthumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/mqdefault.jpg" alt="" loading="lazy"><span class="vplay" aria-hidden="true">▶</span></span>
+    <span class="vtxt">
+      <strong>${esc(v.title)}</strong>
+      <span class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</span>
+    </span>
+  </a>`;
+};
+
 async function list(type) {
-  const idx = await load("content/messages/index.json");
+  const [idx, yt] = await Promise.all([load("content/messages/index.json"), loadVideos(type)]);
   const rows = idx[type] || [];
   const title = type === "pulpit" ? t.nav_pulpit : t.nav_hq;
   const desc = type === "pulpit" ? t.pulpit_desc : t.hq_desc;
+  const counts = {};
+  yt.videos.forEach((v) => (counts[v.cat] = (counts[v.cat] || 0) + 1));
+  const chip = (id, label, n) =>
+    `<button type="button" class="chip ${id ? "" : "on"}" data-vcat="${id}">${esc(label)} <small>${n}</small></button>`;
+  const videos = yt.videos.length
+    ? `<div class="chips" role="group">${chip("", t.all, yt.videos.length)}${yt.cats
+        .filter((c) => counts[c.id])
+        .map((c) => chip(c.id, catName(c), counts[c.id]))
+        .join("")}</div>
+      <div class="vlist" data-vlist>${yt.videos.map((v) => videoRow(v, yt.cats)).join("")}</div>
+      <button type="button" class="vmore" data-vmore>${esc(t.show_more)}</button>
+      <p class="vchannel"><a href="${esc(yt.channel)}" target="_blank" rel="noopener">▶ ${esc(t.watch_yt)} ›</a></p>`
+    : "";
+  const scripts = rows.length
+    ? `${videos ? `<h2 class="sub-title">${esc(t.scripts)}</h2>` : ""}<div class="cards list">${rows.map((m) => msgCard(type, m)).join("")}</div>`
+    : "";
   return `<section class="block">
     <h1 class="page-title">${esc(title)}</h1><p class="muted">${esc(desc)}</p>
-    ${rows.length ? `<div class="cards list">${rows.map((m) => msgCard(type, m)).join("")}</div>` : `<p class="muted">${esc(t.empty)}</p>`}
+    ${videos}${scripts}${videos || scripts ? "" : `<p class="muted">${esc(t.empty)}</p>`}
   </section>`;
+}
+
+/** 카테고리 필터 + "더 보기": 행은 모두 그려 두고 보이는 것만 고름(숨긴 썸네일은 lazy라 안 받음) */
+function applyVideoFilter(box, cat, limit) {
+  let shown = 0,
+    total = 0;
+  for (const row of box.querySelectorAll(".vrow")) {
+    const match = !cat || row.dataset.cat === cat;
+    if (match) total++;
+    const show = match && shown < limit;
+    if (show) shown++;
+    row.hidden = !show;
+  }
+  box.dataset.cat = cat;
+  box.dataset.limit = limit;
+  const more = box.parentElement.querySelector("[data-vmore]");
+  if (more) more.hidden = shown >= total;
 }
 
 async function message(type, id) {
@@ -243,8 +300,8 @@ async function message(type, id) {
 const rich = (s, l = lang) => (s || "").split("\n").map((x) => inline(x, l)).join("<br>");
 
 /**
- * 세 7 모두 같은 단위: 번호 정거장이 선으로 이어진 목록(7이정표는 실선 경로).
- * 각 항목은 접으면 한 줄(이름 + 요약), 펼치면 세부 내용과 해당 기도문.
+ * 777 그림: 7망대·7여정·7이정표를 7행 × 3열 한 판에 모두 보여 줌.
+ * 칸을 누르면 팝업으로 요약·세부 내용과 해당 기도문(‹ › 로 다음 항목).
  */
 async function prayer777() {
   const p = await load(`content/prayer777/${lang}.json`);
@@ -260,7 +317,6 @@ async function prayer777() {
     </header>
     <div class="toolbar">
       <button type="button" class="toggle on" data-toggle="p7pray">${esc(onlyPrayer ? t.chart_view : t.full_prayer)}</button>
-      ${onlyPrayer ? "" : `<button type="button" class="toggle" data-p7all>${esc(t.expand_all)}</button>`}
       <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
     </div>`;
   const closing = `<div class="p7-closing">${p.closing.map((c, i) => `<p>${esc(c)}${sub2(p2?.closing[i])}</p>`).join("")}</div>
@@ -286,8 +342,38 @@ async function prayer777() {
     </article>`;
   }
 
+  p7Data = { p, p2 };
+  // 한눈에 보는 777 판: 7행 × 3열(망대·여정·이정표). 칸을 누르면 내용과 기도문이 팝업으로 열림
+  const colHead = (g, gi) => `<div class="p7b-head p7-${g.id}">
+      <span class="p7b-seven">7</span><strong>${esc(g.name.replace(/^7\s*/, ""))}</strong><small>${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}
+    </div>`;
+  const cells = [];
+  for (let ii = 0; ii < 7; ii++) {
+    cells.push(`<span class="p7b-no">${ii + 1}</span>`);
+    p.groups.forEach((g, gi) => {
+      const it = g.items[ii];
+      cells.push(
+        it
+          ? `<button type="button" class="p7b-cell p7-${g.id}" data-p7="${gi}.${ii}"><span class="p7b-name">${esc(it.name)}</span>${sub2(p2?.groups[gi].items[ii]?.name)}</button>`
+          : "<span></span>",
+      );
+    });
+  }
+  const board = `<div class="p7-board"><span></span>${p.groups.map(colHead).join("")}${cells.join("")}</div>`;
+
+  return `<article class="p7">${head}
+    <p class="hint">👆 ${esc(t.p7_hint)}</p>
+    ${board}
+    ${closing}
+  </article>`;
+}
+
+// 777 항목 팝업 (판의 칸, 팝업 안의 ‹ › 버튼)
+let p7Data = null;
+function p7ItemBody(gi, ii) {
+  const { p, p2 } = p7Data;
+  const it = p.groups[gi].items[ii];
   const stripR = (s) => stripRefs(s).replace(/\s+/g, " ");
-  const item = (g, gi, it, ii) => {
     const it2 = p2?.groups[gi].items[ii];
     // 10비밀·10발판처럼 짧은 항목이 많으면 두 칸으로 촘촘하게
     const compact = it.rows.length > 4 && it.rows.every(([k, v]) => typeof v === "string" && (k + v).length <= 45);
@@ -311,44 +397,38 @@ async function prayer777() {
           })
           .join("")}</dl>`
       : "";
-    return `<details class="p7-item">
-      <summary>
-        <span class="p7-no">${ii + 1}</span>
-        <span class="p7-txt"><span class="p7-name">${esc(it.name)}${sub2(it2?.name)}</span> <span class="p7-sum">${inline(it.sum)}</span></span>
-      </summary>
-      <div class="p7-body">
+    // 규칙: 세부 행(rows)이 있으면 그것이 설명이므로 요약은 생략(중복 방지).
+    // 행이 없는 항목만 요약을 설명으로 표시. 이름과 똑같은 요약도 생략.
+    const sumShown = it.sum && it.sum !== it.name && !it.rows.length;
+    const sum = sumShown ? `<p class="p7-sum">${inline(it.sum)}${it2?.sum ? sub2(stripR(it2.sum)) : ""}</p>` : "";
+    return `<div class="p7-body">
+        ${sum}
         ${rows}
         <div class="p7-prayer">${it.prayer.map((line, k) => `<p>${esc(line)}${sub2(it2?.prayer[k])}</p>`).join("")}</div>
-      </div>
-    </details>`;
-  };
-  const section = (g, gi, cls) => `<section class="p7-sec p7-${g.id} ${cls}" id="p7-${g.id}">
-      <h2><span class="p7-seven">7</span>${esc(g.name.replace(/^7\s*/, ""))} <small>· ${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}</h2>
-      <div class="p7-items">${g.items.map((it, ii) => item(g, gi, it, ii)).join("")}</div>
-    </section>`;
+      </div>`;
+}
 
-  // 맨 위 777 그림: 기도 순서대로 7망대 → 7여정 → 7이정표
-  const card = (g, gi, tag) => `<a class="p7-card p7-${g.id}" href="#p7-${g.id}" data-jump="p7-${g.id}">
-      <span class="p7-tag">${esc(tag)}</span>
-      <strong class="p7-title"><span class="p7-big">7</span>${esc(g.name.replace(/^7\s*/, ""))}</strong>
-      <small>${esc(g.where)}</small>
-      ${sub2(p2?.groups[gi].name)}
-    </a>`;
-  const hero = `<div class="p7-hero">
-      ${card(B, 0, "1")}
-      ${card(J, 1, "2")}
-      ${card(G, 2, "3")}
-      <div class="p7-arrow" aria-hidden="true"></div>
-    </div>`;
-
-  return `<article class="p7">${head}
-    ${hero}
-    <p class="hint">👆 ${esc(t.p7_hint)}</p>
-    ${section(B, 0, "road")}
-    ${section(J, 1, "road")}
-    ${section(G, 2, "route")}
-    ${closing}
-  </article>`;
+function openP7(gi, ii) {
+  const { p, p2 } = p7Data;
+  const flat = p.groups.flatMap((g, a) => g.items.map((_, b) => [a, b]));
+  const at = flat.findIndex(([a, b]) => a === gi && b === ii);
+  const [pg, pi] = flat[(at - 1 + flat.length) % flat.length];
+  const [ng, ni] = flat[(at + 1) % flat.length];
+  const g = p.groups[gi];
+  const it = g.items[ii];
+  dlg.innerHTML = `<div class="v-wrap p7 p7-dlg"><div class="p7-${g.id}">
+    <div class="v-head">
+      <span class="p7d-title"><span class="p7d-group">${esc(g.name)}</span><span class="p7-no">${ii + 1}</span><strong>${esc(it.name)}</strong>${sub2(p2?.groups[gi].items[ii]?.name)}</span>
+      <button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button>
+    </div>
+    <div class="v-body d-body"><div class="d-lang" lang="${lang}" dir="${dirOf(lang)}">${p7ItemBody(gi, ii)}</div></div>
+    <div class="p7d-nav">
+      <button type="button" data-p7="${pg}.${pi}">‹ ${esc(p.groups[pg].items[pi].name)}</button>
+      <button type="button" data-p7="${ng}.${ni}">${esc(p.groups[ng].items[ni].name)} ›</button>
+    </div>
+  </div></div>`;
+  if (!dlg.open) dlg.showModal();
+  dlg.querySelector(".v-body").scrollTop = 0;
 }
 
 // ---------- 복음 메시지 ----------
@@ -586,6 +666,21 @@ document.addEventListener("click", (e) => {
   if (ref) {
     if (ref.closest("summary")) e.preventDefault(); // 접힌 줄의 성구는 펼침 없이 말씀만 열기
     return ref.closest(".d-body") ? toggleInlineVerse(ref) : openVerse(ref.dataset.ref);
+  }
+  const p7 = e.target.closest("[data-p7]");
+  if (p7 && p7Data) {
+    const [gi, ii] = p7.dataset.p7.split(".").map(Number);
+    return openP7(gi, ii);
+  }
+  const chip = e.target.closest("[data-vcat]");
+  if (chip) {
+    chip.parentElement.querySelectorAll(".chip").forEach((c) => c.classList.toggle("on", c === chip));
+    return applyVideoFilter(chip.closest(".block").querySelector("[data-vlist]"), chip.dataset.vcat, PAGE);
+  }
+  const more = e.target.closest("[data-vmore]");
+  if (more) {
+    const box = more.parentElement.querySelector("[data-vlist]");
+    return applyVideoFilter(box, box.dataset.cat, Number(box.dataset.limit) + PAGE);
   }
   const all = e.target.closest("[data-p7all]");
   if (all) {

@@ -44,5 +44,9 @@
   "p7_me": "Me",
   "p7_behind": "Behind",
   "p7_ahead": "Ahead",
-  "source": "Source"
+  "source": "Source",
+  "all": "All",
+  "show_more": "Show more",
+  "watch_yt": "Watch on YouTube",
+  "scripts": "Written messages"
 }
