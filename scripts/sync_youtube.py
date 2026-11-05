@@ -280,13 +280,14 @@ def sync(kind, since=None):
             kept.append(v)
         videos = kept
     # 퍼가기 허용 여부: 새 영상 + 막혀 있던 영상은 다시 확인(채널에서 허용으로 바꾸면 자동 반영)
-    checks = 0
+    checks = unknown = 0
     for v in videos:
         if checks >= 80 or ("noembed" not in v and v.get("embedChecked")):
             continue
         ok = embeddable(v["id"])
         checks += 1
         if ok is None:
+            unknown += 1
             continue
         v["embedChecked"] = True
         if ok:
@@ -297,6 +298,8 @@ def sync(kind, since=None):
     OUT.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(videos, ensure_ascii=False, indent=1) + "\n", "utf-8")
     print(f"{kind}: +{added}{f' -{removed}' if removed else ''} (총 {len(videos)})")
+    blocked = sum(1 for v in videos if v.get("noembed"))
+    print(f"  퍼가기 확인 {checks}개 (확인 실패 {unknown}) → 막힌 영상 {blocked}개")
     return added
 
 
