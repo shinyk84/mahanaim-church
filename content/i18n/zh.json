@@ -107,5 +107,6 @@
   "lang_hint": "本页面提供中文版。",
   "language": "语言",
   "view_lang": "显示语言",
-  "second_lang_desc": "可同时并列显示两种语言"
+  "second_lang_desc": "可同时并列显示两种语言",
+  "toc_pick": "选择章节"
 }

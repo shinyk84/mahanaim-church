@@ -107,5 +107,6 @@
   "lang_hint": "Cette page est disponible en français.",
   "language": "Langue",
   "view_lang": "Langue d'affichage",
-  "second_lang_desc": "Afficher deux langues côte à côte"
+  "second_lang_desc": "Afficher deux langues côte à côte",
+  "toc_pick": "Aller à une section"
 }

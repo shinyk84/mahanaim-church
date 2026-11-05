@@ -81,6 +81,7 @@ const href = (page = "", id = "", l = lang, l2 = lang2) =>
   `#/${l}${l2 && l2 !== l ? "+" + l2 : ""}${page ? "/" + page : ""}${id ? "/" + encodeURIComponent(id) : ""}`;
 
 async function route() {
+  if (dlg?.open) dlg.close(); // 다른 페이지로 가면 열려 있던 팝업(영상·성구·선택 창) 닫기
   const { l1, l2, page, id } = parseHash();
   if (!READY.includes(l1)) {
     const saved2 = store.get("lang2");
@@ -424,13 +425,18 @@ async function videoPage(type, vid) {
     : has2
       ? duo(renderMarkdown(md, src), src, renderMarkdown(md2, lang2), lang2)
       : `<div class="prose" lang="${src}" dir="${dirOf(src)}">${renderMarkdown(md, src)}</div>`;
-  return `<article class="article vpage">
+  // 영상은 고정, 녹취만 스크롤: 폰 = 영상이 헤더 아래 붙음 / PC = 왼쪽 영상 · 오른쪽 녹취(두 언어면 녹취 칸을 넓게)
+  return `<article class="article vpage ${md ? (has2 ? "split duo2" : "split") : ""}">
     ${backBtn(type)}
-    <div class="vpage-player">${player}</div>
-    <p class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</p>
-    <h1>${esc(vTitle(v))}${has2 && v.titles?.[lang2] ? sub2(v.titles[lang2]) : ""}</h1>
-    ${md ? `<p class="notice">📄 ${esc(t.transcript_note)}${src !== lang ? " " + esc(t.not_translated) : ""}</p><p class="hint">👆 ${esc(t.tap_hint)}</p>` : ""}
-    ${body}
+    <div class="vp-side">
+      <div class="vpage-player">${player}</div>
+      <div class="vp-info">
+        <p class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</p>
+        <h1>${esc(vTitle(v))}${has2 && v.titles?.[lang2] ? sub2(v.titles[lang2]) : ""}</h1>
+        ${md ? `<p class="notice">📄 ${esc(t.transcript_note)}${src !== lang ? " " + esc(t.not_translated) : ""}</p><p class="hint">👆 ${esc(t.tap_hint)}</p>` : ""}
+      </div>
+    </div>
+    <div class="vp-main">${body}</div>
     ${backBtn(type, "bottom")}
   </article>`;
 }
@@ -861,9 +867,12 @@ async function gospel() {
     .join("");
 
   return `<article class="gospel-page">${head}
-    <nav class="toc" aria-label="${esc(t.contents)}">${g.sections
-      .map((s, i) => `<a href="#g${i}" data-jump="g${i}">${s.no ? esc(s.no) + ". " : ""}${esc(s.short || s.title)}</a>`)
-      .join("")}</nav>
+    <label class="toc-select"><span>${esc(t.contents)}</span>
+      <select data-tocsel aria-label="${esc(t.contents)}">
+        <option value="">${esc(t.toc_pick)}</option>
+        ${g.sections.map((s, i) => `<option value="g${i}">${s.no ? esc(s.no) + ". " : ""}${esc(s.short || s.title)}</option>`).join("")}
+      </select>
+    </label>
     <p class="hint">👆 ${esc(t.tap_hint)}</p>
     <div class="intro">${intro}</div>
     ${sections}
@@ -1104,6 +1113,11 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("change", (e) => {
   if (e.target.matches("[data-vcatsel]")) return setVideoCat(e.target.closest(".block"), e.target.value);
+  if (e.target.matches("[data-tocsel]")) {
+    document.getElementById(e.target.value)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    e.target.value = "";
+    return;
+  }
   const { page, id } = parseHash();
   if (e.target.matches("[data-lang2]")) location.hash = href(page, id, lang, e.target.value || null);
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
@@ -1115,6 +1129,23 @@ document.addEventListener("change", (e) => {
 });
 
 window.addEventListener("hashchange", route);
+
+// 헤더 높이 → --hdr (영상 고정 위치에 사용)
+const setHdr = () => document.documentElement.style.setProperty("--hdr", `${document.querySelector(".top")?.offsetHeight || 56}px`);
+window.addEventListener("resize", setHdr);
+new ResizeObserver(setHdr).observe(document.querySelector(".top"));
+
+// ---------- 위로가기 버튼 (긴 페이지에서 조금 내리면 나타남) ----------
+const toTop = document.createElement("button");
+toTop.type = "button";
+toTop.className = "to-top";
+toTop.setAttribute("aria-label", "Top");
+toTop.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>';
+toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+document.body.append(toTop);
+const onScroll = () => toTop.classList.toggle("show", window.scrollY > Math.max(500, window.innerHeight * 0.8));
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("hashchange", () => setTimeout(onScroll, 50));
 
 // ---------- 성구 팝업 ----------
 const dlg = document.getElementById("verse");

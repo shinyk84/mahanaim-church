@@ -1019,3 +1019,43 @@ p.sub2 { margin: 2px 0 0; }
 .lang-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .lang-chip { text-align: center; padding: 10px 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 0.95rem; }
 .lang-chip.on { background: var(--brand-navy); border-color: var(--brand-navy); color: #fff; }
+
+/* 구원의 길 바로가기: 드롭다운 */
+.toc-select { display: flex; align-items: center; gap: 8px; margin: 6px 0 4px; font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+.toc-select select { flex: 1 1 auto; max-width: 360px; font: inherit; font-weight: 600; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--navy); background: var(--card); color: var(--ink); }
+
+/* 위로가기: PC 오른쪽 아래, 폰은 하단 메뉴바 위 오른쪽 */
+.to-top {
+  position: fixed; right: 20px; bottom: 24px; z-index: 40; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; border: 2px solid #fff; background: var(--brand-navy); color: #fff; cursor: pointer;
+  box-shadow: 0 6px 18px rgb(23 42 136 / 0.35); opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+}
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+@media (max-width: 700px) { .to-top { right: 14px; bottom: calc(84px + env(safe-area-inset-bottom)); width: 44px; height: 44px; } }
+dialog[open] ~ .to-top { display: none; }
+
+/* ---------- 영상 + 녹취: 영상은 고정, 녹취만 스크롤 ---------- */
+.vpage .vpage-player { margin: 12px 0 10px; }
+/* 폰(그리고 두 언어 보기): 영상이 헤더 바로 아래에 붙어 있음 */
+.vpage.split .vpage-player, .vpage.stick-top .vpage-player {
+  position: sticky; top: var(--hdr, 56px); z-index: 6; margin: 0 -16px 10px; border-radius: 0; box-shadow: 0 6px 14px rgb(23 42 136 / 0.12);
+}
+.vpage.stick-top .vp-side, .vpage.split .vp-side { display: contents; }
+/* PC 한 언어: 왼쪽(영상·제목) 고정, 오른쪽 녹취 */
+@media (min-width: 900px) {
+  .vpage.split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: 32px; align-items: start;
+    width: min(1180px, calc(100vw - 48px)); margin-left: 50%; transform: translateX(-50%); }
+  .vpage.split > .back-btn { grid-column: 1 / -1; justify-self: start; }
+  .vpage.split .vp-side { display: block; position: sticky; top: calc(var(--hdr, 100px) + 12px); }
+  .vpage.split .vpage-player { position: static; margin: 0 0 10px; border-radius: 14px; box-shadow: var(--shadow); }
+  .vpage.split .vp-main { grid-column: 2; min-width: 0; }
+  .vpage.split .vp-main .prose > :first-child { margin-top: 0; }
+  .vpage.split > .back-btn.bottom { grid-column: 2; }
+  /* 두 언어 보기(PC): 영상을 위에 고정하되 너무 크지 않게 */
+  .vpage.stick-top .vpage-player { margin: 0 0 10px; max-width: 560px; border-radius: 0 0 14px 14px; }
+}
+
+@media (min-width: 900px) {
+  .vpage.split.duo2 { grid-template-columns: minmax(300px, 0.62fr) minmax(0, 1.38fr); width: min(1320px, calc(100vw - 40px)); column-gap: 24px; }
+  .vpage.split.duo2 .vp-info h1 { font-size: 1.2rem; }
+}
