@@ -102,5 +102,7 @@
   "install_short": "Installer l'app",
   "view_pic": "Schéma",
   "view_text": "Texte",
-  "logo_title": "Notre logo"
+  "logo_title": "Notre logo",
+  "welcome": "Bienvenue à l'église Mahanaim",
+  "lang_hint": "Cette page est disponible en français."
 }

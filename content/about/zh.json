@@ -1,0 +1,116 @@
+{
+  "name": "玛哈念教会",
+  "denomination": "大韩耶稣教长老会",
+  "founded": "2007年9月28日创立",
+  "meaning": "“玛哈念”在希伯来语中意为“神的军队”。[[GEN 32:2]]",
+  "intro": "玛哈念教会是大韩耶稣教长老会的教会。我们是一群把解决人生一切问题的基督接到心里、享受属灵祝福的人。我们抓住 [[EZE 37:1-10]]，医治如枯骨般软弱无力的信徒，并祷告让未来的盼望——下一代——兴起成为属灵的军队。",
+  "worship": [
+    {
+      "name": "主日第一堂",
+      "time": "上午9:00",
+      "note": "余民·未来的教会领袖（小组礼拜）"
+    },
+    {
+      "name": "主日第二堂",
+      "time": "上午11:00",
+      "note": "成人（校园福音化）"
+    },
+    {
+      "name": "主日下午礼拜",
+      "time": "下午2:00",
+      "note": "总部主日第一堂信息"
+    },
+    {
+      "name": "周三礼拜",
+      "time": "晚上8:00",
+      "note": "总部主日第二堂信息"
+    },
+    {
+      "name": "周五礼拜",
+      "time": "晚上8:00"
+    },
+    {
+      "name": "晨祷礼拜",
+      "time": "早上5:30"
+    }
+  ],
+  "pastor": {
+    "role": "主任牧师",
+    "name": "郑明瑞 牧师（정명서）"
+  },
+  "missionaries": [
+    {
+      "country": "坦桑尼亚",
+      "names": "卞相泽 · 李明淑"
+    },
+    {
+      "country": "肯尼亚",
+      "names": "马炯甲 · 洪恩惠"
+    }
+  ],
+  "address": "3F, 53 Seokcheon-ro 16beon-gil, Bucheon-si, Gyeonggi-do, Korea",
+  "phone": "010-9279-5868",
+  "email": "caljms@hanmail.net",
+  "links": [
+    {
+      "label": "玛哈念 Naver Cafe",
+      "url": "https://cafe.naver.com/themahanaim"
+    },
+    {
+      "label": "玛哈念 YouTube",
+      "url": "https://www.youtube.com/@themahanaim"
+    },
+    {
+      "label": "玛哈念 KakaoTalk",
+      "url": "https://open.kakao.com/o/gXudxW8g"
+    }
+  ],
+  "offering": {
+    "text": "支持牧者与教会的十一奉献、为建造代表地方文化之教会的建堂奉献、拯救世界的宣教奉献、拯救未来的 RUTC 奉献——愿神大能的手与所有因得救而感恩奉献的人同在。",
+    "accounts": [
+      {
+        "label": "奉献账户",
+        "bank": "KB国民银行",
+        "number": "609901-01-184822",
+        "holder": "정명서"
+      },
+      {
+        "label": "RUTC 账户",
+        "bank": "Toss Bank",
+        "number": "1000-6262-0459",
+        "holder": "정명서"
+      }
+    ]
+  },
+  "landmark": "上洞和谐广场（상동어울마당）对面，富川",
+  "mapQuery": "부천 석천로16번길 53",
+  "ministries": [
+    {
+      "name": "精英余民系统",
+      "url": "https://blog.naver.com/summitlearning",
+      "desc": "Summit Learning"
+    },
+    {
+      "name": "宣教之家",
+      "desc": "仁川 富开洞",
+      "phone": "010-4471-7108",
+      "phoneLabel": "咨询"
+    }
+  ],
+  "logoNote": "剑与盾: 象征神的军队. 蓝色: 坚定不移的刚强. 绿色: 被砍伐后仍会重新发芽的树墩.",
+  "meaningEm": "“神的军队”",
+  "logoPoints": [
+    [
+      "剑与盾",
+      "象征神的军队"
+    ],
+    [
+      "蓝色",
+      "坚定不移的刚强"
+    ],
+    [
+      "绿色",
+      "被砍伐后仍会重新发芽的树墩"
+    ]
+  ]
+}

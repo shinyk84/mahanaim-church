@@ -99,7 +99,9 @@ async function route() {
   document.documentElement.lang = lang;
   document.documentElement.dir = dirOf(lang);
   document.body.classList.toggle("dual", !!lang2);
+  pageLangs = await langsFor(page, id).catch(() => READY);
   renderChrome(page, id);
+  showLangHint(page, id);
   app.innerHTML = `<p class="muted pad">${esc(t.loading)}</p>`;
   try {
     const view = { "": home, pulpit: list, hq: list, gospel, prayer777, summit, about }[page];
@@ -120,6 +122,44 @@ async function route() {
   document.title = `${t.church}`;
 }
 
+/**
+ * 이 페이지에 실제 내용이 있는 언어만 언어 선택에 보여 줌.
+ * 강단/본부: 녹취가 있는 언어(영상 페이지는 그 영상의 녹취 언어), 글 원고: 원고 언어, 나머지: 전체.
+ * 지금 보고 있는 언어는 목록에 없더라도 선택 상태를 위해 남겨 둠.
+ */
+let pageLangs = READY;
+async function langsFor(page, id) {
+  if (page === "pulpit" || page === "hq") {
+    if (id && !id.startsWith("v_")) {
+      const idx = await load("content/messages/index.json");
+      return (idx[page] || []).find((m) => m.id === id)?.langs || ["ko"];
+    }
+    const { videos } = await loadVideos(page);
+    const set = new Set(["ko"]);
+    (id ? videos.filter((v) => v.id === id.slice(2)) : videos).forEach((v) => (v.tr || []).forEach((l) => set.add(l)));
+    return READY.filter((l) => set.has(l));
+  }
+  return READY;
+}
+
+/**
+ * 공유 링크(예: #/ko/...)로 들어온 외국인을 위해: 기기 언어가 지원되는데 화면 언어와 다르면
+ * 그 사람의 언어로 "이 페이지를 ○○어로 볼 수 있습니다 [○○어 ›]" 띠를 보여 줌(닫으면 다시 안 뜸)
+ */
+async function showLangHint(page, id) {
+  const box = document.getElementById("langhint");
+  const dev = (navigator.languages || [navigator.language || ""]).map((x) => x.slice(0, 2)).find((x) => READY.includes(x));
+  if (!dev || dev === lang || store.get("langHintOff") === "1" || !pageLangs.includes(dev)) return (box.hidden = true);
+  const th = await load(`content/i18n/${dev}.json`).catch(() => null);
+  if (!th) return (box.hidden = true);
+  box.hidden = false;
+  box.setAttribute("lang", dev);
+  box.dir = dirOf(dev);
+  box.innerHTML = `<span>${esc(th.lang_hint)}</span>
+    <a href="${href(page, id, dev, null)}" data-langhint-go>${esc(nameOf(dev))} ${dirOf(dev) === "rtl" ? "‹" : "›"}</a>
+    <button type="button" data-langhint-off aria-label="${esc(th.close)}">✕</button>`;
+}
+
 function renderChrome(page, id) {
   document.getElementById("brand").innerHTML = `<a href="${href()}"><img class="logo" src="assets/logo-mark.svg" alt="">${esc(t.church)}</a>`;
   const items = [
@@ -133,16 +173,18 @@ function renderChrome(page, id) {
   nav.innerHTML =
     items.map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`).join("");
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
-  const primary = `<label class="lang1"><span aria-hidden="true">🌐</span>
+  const primary = `<label class="lang1" title="Language"><span class="lang-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h9M7.5 3v2M10 5c-.8 4-3.6 7-7 8.5M5.5 9c1.2 2 3 3.5 5.5 4.5"/><path d="M12.5 21l4-9 4 9M14 18h5"/></svg><span class="lang-word">Language</span></span>
       <select data-lang1 aria-label="Language">
-        ${READY.map((c) => `<option value="${c}" ${c === lang ? "selected" : ""}>${nameOf(c)}</option>`).join("")}
+        ${READY.filter((c) => pageLangs.includes(c) || c === lang)
+          .map((c) => `<option value="${c}" ${c === lang ? "selected" : ""}>${nameOf(c)}</option>`)
+          .join("")}
       </select>
     </label>`;
   const second = `<label class="lang2">
       <span>+ ${esc(t.second_lang)}</span>
       <select data-lang2>
         <option value="">${esc(t.none)}</option>
-        ${READY.filter((c) => c !== lang)
+        ${READY.filter((c) => c !== lang && (pageLangs.includes(c) || c === lang2))
           .map((c) => `<option value="${c}" ${c === lang2 ? "selected" : ""}>${nameOf(c)}</option>`)
           .join("")}
       </select>
@@ -207,7 +249,7 @@ function openSheet(kind) {
         `<label class="sheet-item sheet-lang"><span class="sheet-ic">🌐</span><span><b>${esc(t.second_lang)}</b>
           <select data-lang2>
             <option value="">${esc(t.none)}</option>
-            ${READY.filter((c) => c !== lang)
+            ${READY.filter((c) => c !== lang && (pageLangs.includes(c) || c === lang2))
               .map((c) => `<option value="${c}" ${c === lang2 ? "selected" : ""}>${nameOf(c)}</option>`)
               .join("")}
           </select></span></label>` +
@@ -247,11 +289,7 @@ async function home() {
   ${
     church
       ? `<section class="home-info">
-    <div class="hi-times">${church.worship
-      .slice(0, 2)
-      .concat(church.worship.slice(-1))
-      .map((w) => `<span><b>${esc(w.name)}</b> ${esc(w.time)}</span>`)
-      .join("")}</div>
+    <p class="hi-welcome">${esc(t.welcome)}</p>
     <div class="hi-actions">
       <a href="${href("about")}" data-goto="worship">⛪ ${esc(t.about_worship)}</a>
       <a href="${href("about")}" data-goto="location">📍 ${esc(t.about_location)}</a>
@@ -331,9 +369,7 @@ async function list(type) {
       <button type="button" class="vmore" data-vmore>${esc(t.show_more)}</button>
       <p class="vchannel"><a href="${esc(yt.channel)}" target="_blank" rel="noopener">▶ ${esc(t.watch_yt)} ›</a></p>`
     : "";
-  const scripts = rows.length
-    ? `${videos ? `<h2 class="sub-title">${esc(t.scripts)}</h2>` : ""}<div class="cards list">${rows.map((m) => msgCard(type, m)).join("")}</div>`
-    : "";
+  const scripts = ""; // 글 원고 목록은 표시하지 않음(영상 + 녹취로 대체)
   return `<section class="block">
     <h1 class="page-title">${esc(title)}</h1>
     ${videos}${scripts}${videos || scripts ? "" : `<p class="muted">${esc(t.empty)}</p>`}
@@ -461,8 +497,18 @@ const ext = (url) => `href="${esc(url)}" target="_blank" rel="noopener"`;
 const socialIcons = (links) =>
   links.map((l) => `<a class="s-ic t-${linkKind(l.url)}" ${ext(l.url)} title="${esc(l.label)}" aria-label="${esc(l.label)}">${AICON[linkKind(l.url)]}</a>`).join("");
 
+/** 함께 볼 언어가 있으면 두 언어를 나란히(PC 2단 / 폰 탭) — 두 번째 쪽은 소제목·라벨도 그 언어로 */
 async function about() {
-  const c = church;
+  if (!lang2) return aboutHtml(church, t, lang);
+  const [c2, t2] = await Promise.all([
+    load(`content/about/${lang2}.json`).catch(() => load("content/about/en.json")),
+    load(`content/i18n/${lang2}.json`),
+  ]);
+  return `<div class="about-duo">${duo(aboutHtml(church, t, lang), lang, aboutHtml(c2, t2, lang2), lang2)}</div>`;
+}
+
+// t·lang을 매개변수로 받아 같은 화면을 어느 언어로든 그림(바깥 t·lang을 가림)
+function aboutHtml(c, t, lang) {
   const tel = c.phone.replace(/-/g, "");
   const q = encodeURIComponent(c.mapQuery);
   const copyBtn = (text) => `<button type="button" class="copy-btn" data-copytext="${esc(text)}">${esc(t.copy)}</button>`;
@@ -976,6 +1022,10 @@ document.addEventListener("click", (e) => {
     return openPlayer(vrow);
   }
   if (e.target.closest("[data-install]")) return installApp();
+  if (e.target.closest("[data-langhint-off]") || e.target.closest("[data-langhint-go]")) {
+    store.set("langHintOff", "1");
+    document.getElementById("langhint").hidden = true;
+  }
   const g = e.target.closest("[data-goto]");
   if (g) sessionStorage.setItem("goto", g.dataset.goto);
   const sh = e.target.closest("[data-sheet]");
@@ -1041,6 +1091,7 @@ document.addEventListener("change", (e) => {
   const { page, id } = parseHash();
   if (e.target.matches("[data-lang2]")) location.hash = href(page, id, lang, e.target.value || null);
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
+  if (e.target.matches("[data-lang1]")) store.set("langHintOff", "1"); // 직접 고른 사람에게는 안내 띠 안 띄움
   if (e.target.matches("[data-lang1]")) {
     const c = e.target.value;
     location.hash = href(page, id, c, c === lang2 ? lang : lang2);

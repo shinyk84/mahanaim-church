@@ -102,5 +102,7 @@
   "install_short": "앱 설치",
   "view_pic": "그림으로 보기",
   "view_text": "글로 보기",
-  "logo_title": "로고의 의미"
+  "logo_title": "로고의 의미",
+  "welcome": "마하나임교회에 오신 것을 환영합니다",
+  "lang_hint": "이 페이지를 한국어로 볼 수 있습니다."
 }

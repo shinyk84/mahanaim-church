@@ -1,0 +1,116 @@
+{
+  "name": "Mahanaim-Gemeinde",
+  "denomination": "Presbyterianische Kirche in Korea",
+  "founded": "Gegründet am 28. September 2007",
+  "meaning": "„Mahanaim“ bedeutet auf Hebräisch „Heerlager Gottes“. [[GEN 32:2]]",
+  "intro": "Die Mahanaim-Gemeinde ist eine presbyterianische Gemeinde – eine Gemeinschaft von Menschen, die Christus, der alle Probleme des Lebens gelöst hat, in ihr Herz aufgenommen haben und geistliche Segnungen genießen. Wir halten an [[EZE 37:1-10]] fest, heilen Gläubige, die kraftlos wie verdorrte Gebeine geworden sind, und beten, dass die nächste Generation, unsere Hoffnung für die Zukunft, als geistliches Heer Gottes aufsteht.",
+  "worship": [
+    {
+      "name": "1. Sonntagsgottesdienst",
+      "time": "9:00 Uhr",
+      "note": "Remnant, künftige Gemeindeleiter (Hauskreis)"
+    },
+    {
+      "name": "2. Sonntagsgottesdienst",
+      "time": "11:00 Uhr",
+      "note": "Erwachsene (Campus-Evangelisation)"
+    },
+    {
+      "name": "Sonntagnachmittag",
+      "time": "14:00 Uhr",
+      "note": "Botschaft des 1. Gottesdienstes der Zentrale"
+    },
+    {
+      "name": "Mittwochsgottesdienst",
+      "time": "20:00 Uhr",
+      "note": "Botschaft des 2. Gottesdienstes der Zentrale"
+    },
+    {
+      "name": "Freitagsgottesdienst",
+      "time": "20:00 Uhr"
+    },
+    {
+      "name": "Frühgebet",
+      "time": "5:30 Uhr"
+    }
+  ],
+  "pastor": {
+    "role": "Hauptpastor",
+    "name": "Pastor Jeong Myeong-seo (정명서)"
+  },
+  "missionaries": [
+    {
+      "country": "Tansania",
+      "names": "Byeon Sang-taek · Lee Myeong-suk"
+    },
+    {
+      "country": "Kenia",
+      "names": "Ma Hyeong-gap · Hong Eun-hye"
+    }
+  ],
+  "address": "3F, 53 Seokcheon-ro 16beon-gil, Bucheon-si, Gyeonggi-do, Korea",
+  "phone": "010-9279-5868",
+  "email": "caljms@hanmail.net",
+  "links": [
+    {
+      "label": "Mahanaim Naver-Café",
+      "url": "https://cafe.naver.com/themahanaim"
+    },
+    {
+      "label": "Mahanaim YouTube",
+      "url": "https://www.youtube.com/@themahanaim"
+    },
+    {
+      "label": "Mahanaim KakaoTalk",
+      "url": "https://open.kakao.com/o/gXudxW8g"
+    }
+  ],
+  "offering": {
+    "text": "Der Zehnte, der Pastor und Gemeinde trägt, Bauopfer für eine Kirche, die unsere örtliche Kultur prägen soll, Missionsopfer, die die Welt retten, und RUTC-Opfer, die die Zukunft retten – wir beten, dass Gottes mächtige Hand mit allen ist, die aus Dank für die Erlösung geben.",
+    "accounts": [
+      {
+        "label": "Spendenkonto",
+        "bank": "KB Kookmin Bank",
+        "number": "609901-01-184822",
+        "holder": "정명서"
+      },
+      {
+        "label": "RUTC-Konto",
+        "bank": "Toss Bank",
+        "number": "1000-6262-0459",
+        "holder": "정명서"
+      }
+    ]
+  },
+  "landmark": "Gegenüber Sangdong Eoul Madang (Bucheon)",
+  "mapQuery": "부천 석천로16번길 53",
+  "ministries": [
+    {
+      "name": "Elite Remnant System",
+      "url": "https://blog.naver.com/summitlearning",
+      "desc": "Summit Learning"
+    },
+    {
+      "name": "Mission Home",
+      "desc": "Bugae-dong, Incheon",
+      "phone": "010-4471-7108",
+      "phoneLabel": "Anfragen"
+    }
+  ],
+  "logoNote": "Schwert und Schild: Sinnbild für Gottes Heer. Blau: Unerschütterliche Stärke. Grün: Der Wurzelstock, der auch nach dem Fällen wieder austreibt.",
+  "meaningEm": "„Heerlager Gottes“",
+  "logoPoints": [
+    [
+      "Schwert und Schild",
+      "Sinnbild für Gottes Heer"
+    ],
+    [
+      "Blau",
+      "Unerschütterliche Stärke"
+    ],
+    [
+      "Grün",
+      "Der Wurzelstock, der auch nach dem Fällen wieder austreibt"
+    ]
+  ]
+}

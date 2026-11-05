@@ -1,0 +1,116 @@
+{
+  "name": "Iglesia Mahanaim",
+  "denomination": "Iglesia Presbiteriana de Corea",
+  "founded": "Fundada el 28 de septiembre de 2007",
+  "meaning": "«Mahanaim» significa en hebreo «el campamento (ejército) de Dios». [[GEN 32:2]]",
+  "intro": "La Iglesia Mahanaim es una iglesia presbiteriana: una comunidad de personas que han recibido en su corazón a Cristo, quien resolvió todos los problemas de la vida, y que disfrutan de las bendiciones espirituales. Aferrados a [[EZE 37:1-10]], sanamos a los creyentes que se han vuelto tan débiles como huesos secos, y oramos para que la próxima generación, nuestra esperanza para el futuro, se levante como el ejército espiritual de Dios.",
+  "worship": [
+    {
+      "name": "1.er culto dominical",
+      "time": "9:00",
+      "note": "Remanente, futuros líderes (grupos de célula)"
+    },
+    {
+      "name": "2.º culto dominical",
+      "time": "11:00",
+      "note": "Adultos (evangelización universitaria)"
+    },
+    {
+      "name": "Culto dominical de la tarde",
+      "time": "14:00",
+      "note": "Mensaje del 1.er culto de la sede"
+    },
+    {
+      "name": "Culto del miércoles",
+      "time": "20:00",
+      "note": "Mensaje del 2.º culto de la sede"
+    },
+    {
+      "name": "Culto del viernes",
+      "time": "20:00"
+    },
+    {
+      "name": "Culto del alba",
+      "time": "5:30"
+    }
+  ],
+  "pastor": {
+    "role": "Pastor principal",
+    "name": "Pastor Jeong Myeong-seo (정명서)"
+  },
+  "missionaries": [
+    {
+      "country": "Tanzania",
+      "names": "Byeon Sang-taek · Lee Myeong-suk"
+    },
+    {
+      "country": "Kenia",
+      "names": "Ma Hyeong-gap · Hong Eun-hye"
+    }
+  ],
+  "address": "3F, 53 Seokcheon-ro 16beon-gil, Bucheon-si, Gyeonggi-do, Korea",
+  "phone": "010-9279-5868",
+  "email": "caljms@hanmail.net",
+  "links": [
+    {
+      "label": "Café Naver Mahanaim",
+      "url": "https://cafe.naver.com/themahanaim"
+    },
+    {
+      "label": "YouTube Mahanaim",
+      "url": "https://www.youtube.com/@themahanaim"
+    },
+    {
+      "label": "KakaoTalk Mahanaim",
+      "url": "https://open.kakao.com/o/gXudxW8g"
+    }
+  ],
+  "offering": {
+    "text": "Diezmos que sostienen al pastor y a la iglesia, ofrendas de construcción para una iglesia que represente nuestra cultura local, ofrendas misioneras que salvan al mundo y ofrendas RUTC que salvan el futuro: oramos para que la mano poderosa de Dios esté con todos los que dan en gratitud por la salvación.",
+    "accounts": [
+      {
+        "label": "Cuenta de ofrendas",
+        "bank": "KB Kookmin Bank",
+        "number": "609901-01-184822",
+        "holder": "정명서"
+      },
+      {
+        "label": "Cuenta RUTC",
+        "bank": "Toss Bank",
+        "number": "1000-6262-0459",
+        "holder": "정명서"
+      }
+    ]
+  },
+  "landmark": "Frente a Sangdong Eoul Madang (Bucheon)",
+  "mapQuery": "부천 석천로16번길 53",
+  "ministries": [
+    {
+      "name": "Elite Remnant System",
+      "url": "https://blog.naver.com/summitlearning",
+      "desc": "Summit Learning"
+    },
+    {
+      "name": "Mission Home",
+      "desc": "Bugae-dong, Incheon",
+      "phone": "010-4471-7108",
+      "phoneLabel": "Consultas"
+    }
+  ],
+  "logoNote": "Espada y escudo: Emblema del ejército de Dios. Azul: Una fortaleza inquebrantable. Verde: El tocón que vuelve a brotar aun después de ser cortado.",
+  "meaningEm": "«el campamento (ejército) de Dios»",
+  "logoPoints": [
+    [
+      "Espada y escudo",
+      "Emblema del ejército de Dios"
+    ],
+    [
+      "Azul",
+      "Una fortaleza inquebrantable"
+    ],
+    [
+      "Verde",
+      "El tocón que vuelve a brotar aun después de ser cortado"
+    ]
+  ]
+}

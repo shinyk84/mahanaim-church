@@ -102,5 +102,7 @@
   "install_short": "安装应用",
   "view_pic": "图示",
   "view_text": "文字",
-  "logo_title": "标志的含义"
+  "logo_title": "标志的含义",
+  "welcome": "欢迎来到玛哈念教会",
+  "lang_hint": "本页面提供中文版。"
 }

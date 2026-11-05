@@ -102,5 +102,7 @@
   "install_short": "App installieren",
   "view_pic": "Bild",
   "view_text": "Text",
-  "logo_title": "Unser Logo"
+  "logo_title": "Unser Logo",
+  "welcome": "Willkommen in der Mahanaim-Gemeinde",
+  "lang_hint": "Diese Seite ist auf Deutsch verfügbar."
 }

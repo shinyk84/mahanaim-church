@@ -1,0 +1,116 @@
+{
+  "name": "マハナイム教会",
+  "denomination": "大韓イエス教長老会",
+  "founded": "2007年9月28日 創立",
+  "meaning": "「マハナイム」はヘブライ語で「神の陣営（神の軍勢）」という意味です。[[GEN 32:2]]",
+  "intro": "マハナイム教会は大韓イエス教長老会の教会です。人生のすべての問題を解決されたキリストを心にお迎えし、霊的祝福を味わう人々が集い、[[EZE 37:1-10]] を握って、枯れた骨のように無力な信徒をいやし、未来の希望である次世代が霊的な兵士として立ち上がるよう祈る共同体です。",
+  "worship": [
+    {
+      "name": "主日第1部礼拝",
+      "time": "午前9時",
+      "note": "レムナント・未来の役員（家庭集会）"
+    },
+    {
+      "name": "主日第2部礼拝",
+      "time": "午前11時",
+      "note": "壮年部（学園福音化）"
+    },
+    {
+      "name": "主日午後礼拝",
+      "time": "午後2時",
+      "note": "本部 主日第1部のメッセージ"
+    },
+    {
+      "name": "水曜礼拝",
+      "time": "午後8時",
+      "note": "本部 主日第2部のメッセージ"
+    },
+    {
+      "name": "金曜礼拝",
+      "time": "午後8時"
+    },
+    {
+      "name": "早天礼拝",
+      "time": "午前5時30分"
+    }
+  ],
+  "pastor": {
+    "role": "担任牧師",
+    "name": "鄭明瑞 牧師（정명서）"
+  },
+  "missionaries": [
+    {
+      "country": "タンザニア",
+      "names": "卞相澤 · 李明淑"
+    },
+    {
+      "country": "ケニア",
+      "names": "馬炯甲 · 洪恩恵"
+    }
+  ],
+  "address": "3F, 53 Seokcheon-ro 16beon-gil, Bucheon-si, Gyeonggi-do, Korea",
+  "phone": "010-9279-5868",
+  "email": "caljms@hanmail.net",
+  "links": [
+    {
+      "label": "マハナイム Naver Cafe",
+      "url": "https://cafe.naver.com/themahanaim"
+    },
+    {
+      "label": "マハナイム YouTube",
+      "url": "https://www.youtube.com/@themahanaim"
+    },
+    {
+      "label": "マハナイム KakaoTalk",
+      "url": "https://open.kakao.com/o/gXudxW8g"
+    }
+  ],
+  "offering": {
+    "text": "牧会者と教会を生かす十一献金、地域文化を代表する教会を建てる建築献金、世界を生かす宣教献金、未来を生かす RUTC 献金 — 救いへの感謝をもって献げるすべての方に、神の力の御手が共にありますようお祈りします。",
+    "accounts": [
+      {
+        "label": "献金口座",
+        "bank": "KB国民銀行",
+        "number": "609901-01-184822",
+        "holder": "정명서"
+      },
+      {
+        "label": "RUTC 口座",
+        "bank": "Toss Bank",
+        "number": "1000-6262-0459",
+        "holder": "정명서"
+      }
+    ]
+  },
+  "landmark": "富川・上洞オウルマダン（상동어울마당）前",
+  "mapQuery": "부천 석천로16번길 53",
+  "ministries": [
+    {
+      "name": "エリート・レムナント・システム",
+      "url": "https://blog.naver.com/summitlearning",
+      "desc": "サミットラーニング"
+    },
+    {
+      "name": "ミッションホーム",
+      "desc": "仁川 富開洞",
+      "phone": "010-4471-7108",
+      "phoneLabel": "お問い合わせ"
+    }
+  ],
+  "logoNote": "剣と盾: 神の軍勢の象徴. 青: 揺るがない強さ. 緑: 切り倒されてもまた芽を出す切り株.",
+  "meaningEm": "「神の陣営（神の軍勢）」",
+  "logoPoints": [
+    [
+      "剣と盾",
+      "神の軍勢の象徴"
+    ],
+    [
+      "青",
+      "揺るがない強さ"
+    ],
+    [
+      "緑",
+      "切り倒されてもまた芽を出す切り株"
+    ]
+  ]
+}

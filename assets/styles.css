@@ -951,3 +951,49 @@ p.sub2 { margin: 2px 0 0; }
 .brand .logo { width: 30px; }
 .nav a { font-size: 0.9rem; }
 @media (max-width: 700px) { .brand a { font-size: 1.18rem; } .brand .logo { width: 26px; } }
+
+/* 홈 환영 카드: 문구 왼쪽, 짧은 버튼 오른쪽 (폰은 아래로) */
+.home-info { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.hi-welcome { margin: 0; font-size: 1.08rem; font-weight: 800; color: var(--navy); }
+.hi-actions { display: flex; gap: 8px; margin: 0; }
+.hi-actions a { padding: 8px 16px; white-space: nowrap; }
+
+/* 교회 소개 두 언어 보기: 칸이 좁으므로 예배·계좌는 한 줄씩 */
+.about-duo .duo-col { font-size: 1rem; }
+.about-duo .wlist { grid-template-columns: 1fr; grid-auto-flow: row; grid-template-rows: none; }
+.about-duo .accounts { grid-template-columns: 1fr; }
+.about-duo .loc-card { flex-direction: column; align-items: flex-start; }
+.about-duo .about-top { margin-top: 8px; }
+
+.logo-note li { grid-template-columns: minmax(5.2em, max-content) 1fr; column-gap: 12px; }
+.logo-note li span { white-space: nowrap; }
+
+/* 언어 선택 표시: 文A 아이콘 + Language */
+.lang-ic { display: inline-flex; align-items: center; gap: 4px; color: var(--navy); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.01em; }
+@media (max-width: 700px) { .lang-word { display: none; } .lang-ic svg { width: 20px; height: 20px; } }
+
+@media (min-width: 701px) { .nav { gap: 0 2px; } .nav a { padding: 6px 8px; } .top-inner { column-gap: 12px; } }
+
+/* 외국인 안내 띠 */
+.langhint { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 12px; padding: 10px 16px; background: var(--navy); color: #fff; font-size: 0.92rem; font-weight: 600; }
+.langhint[hidden] { display: none; }
+.langhint a { color: var(--navy); background: #fff; padding: 4px 14px; border-radius: 999px; text-decoration: none; font-weight: 800; white-space: nowrap; }
+.langhint button { border: 0; background: none; color: #fff; opacity: 0.8; font-size: 1rem; cursor: pointer; padding: 2px 6px; }
+
+/* 폰에서도 'Language' 글자 표시 */
+@media (max-width: 700px) {
+  .lang-word { display: inline; font-size: 0.72rem; }
+  .lang-ic { gap: 3px; }
+  .lang-ic svg { width: 18px; height: 18px; }
+}
+
+/* PC 헤더: 윗줄 = 로고 + 언어 선택(+앱 설치), 아랫줄 = 메뉴 (메뉴 이름이 긴 언어도 한 줄) */
+@media (min-width: 701px) {
+  .top { display: grid; grid-template-columns: 1fr minmax(0, 828px) 1fr; column-gap: 16px; }
+  .top::before { grid-column: 1 / -1; }
+  .top-inner { display: contents; }
+  .brand { grid-column: 2; grid-row: 2; padding-top: 10px; align-self: center; }
+  .langs { grid-column: 2; grid-row: 2; justify-self: end; align-self: center; max-width: none; margin: 0; padding: 10px 0 0; }
+  .hdr-install { margin-inline-start: 6px; }
+  .nav { grid-column: 2; grid-row: 3; flex: none; padding: 6px 0 8px; margin-inline-start: -8px; }
+}
