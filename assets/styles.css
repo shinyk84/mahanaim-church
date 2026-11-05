@@ -1059,3 +1059,10 @@ dialog[open] ~ .to-top { display: none; }
   .vpage.split.duo2 { grid-template-columns: minmax(300px, 0.62fr) minmax(0, 1.38fr); width: min(1320px, calc(100vw - 40px)); column-gap: 24px; }
   .vpage.split.duo2 .vp-info h1 { font-size: 1.2rem; }
 }
+
+/* 홈 환영 카드의 앱 설치(폰에서만; PC는 헤더에 있음) */
+.hi-install { display: none; }
+@media (max-width: 700px) {
+  .hi-install { display: inline-flex; align-items: center; gap: 4px; font: inherit; font-size: 0.9rem; font-weight: 700; padding: 8px 14px; border-radius: 10px; border: 0; background: var(--brand-navy); color: #fff; cursor: pointer; white-space: nowrap; }
+  .hi-actions { flex-wrap: wrap; }
+}

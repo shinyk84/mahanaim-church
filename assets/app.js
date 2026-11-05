@@ -310,6 +310,7 @@ async function home() {
     <div class="hi-actions">
       <a href="${href("about")}" data-goto="worship">⛪ ${esc(t.about_worship)}</a>
       <a href="${href("about")}" data-goto="location">📍 ${esc(t.about_location)}</a>
+      ${isInstalled() ? "" : `<button type="button" class="hi-install" data-install>📲 ${esc(t.install_short)}</button>`}
     </div>
   </section>`
       : ""
