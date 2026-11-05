@@ -1117,8 +1117,14 @@ document.addEventListener("click", (e) => {
 document.addEventListener("change", (e) => {
   if (e.target.matches("[data-vcatsel]")) return setVideoCat(e.target.closest(".block"), e.target.value);
   if (e.target.matches("[data-tocsel]")) {
-    document.getElementById(e.target.value)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    e.target.value = "";
+    // 폰: 선택 창이 닫히는 동안의 부드러운 스크롤은 취소되기 쉬움 → 닫힌 뒤 바로 이동, 고정 헤더만큼 아래로
+    const el = document.getElementById(e.target.value);
+    e.target.blur();
+    if (el)
+      setTimeout(() => {
+        const hdr = document.querySelector(".top")?.offsetHeight || 0;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - hdr - 10, behavior: "auto" });
+      }, 120);
     return;
   }
   const { page, id } = parseHash();
