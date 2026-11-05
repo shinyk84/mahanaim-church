@@ -1054,7 +1054,10 @@ document.addEventListener("click", (e) => {
   const g = e.target.closest("[data-goto]");
   if (g) sessionStorage.setItem("goto", g.dataset.goto);
   const sh = e.target.closest("[data-sheet]");
-  if (sh) return openSheet(sh.dataset.sheet);
+  if (sh) {
+    e.preventDefault(); // 탭의 href="#" 로 이동하지 않게(이동하면 방금 연 창이 닫힘)
+    return openSheet(sh.dataset.sheet);
+  }
   const cp = e.target.closest("[data-copytext]");
   if (cp) {
     navigator.clipboard?.writeText(cp.dataset.copytext).then(() => {
