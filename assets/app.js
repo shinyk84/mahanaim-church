@@ -131,8 +131,7 @@ function renderChrome(page, id) {
     ["summit", t.nav_summit],
   ];
   nav.innerHTML =
-    items.map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`).join("") +
-    (isInstalled() ? "" : `<button type="button" class="nav-install" data-install>📲 ${esc(t.install_app)}</button>`);
+    items.map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`).join("");
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
   const primary = `<label class="lang1"><span aria-hidden="true">🌐</span>
       <select data-lang1 aria-label="Language">
@@ -150,24 +149,29 @@ function renderChrome(page, id) {
     </label>
     ${lang2 ? `<a class="swap" href="${href(page, id, lang2, lang)}" title="${esc(t.swap)}" aria-label="${esc(t.swap)}">⇄</a>` : ""}`;
   const soon = LANGS.filter((l) => !l.ready);
-  langBar.innerHTML = `${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}`;
+  const install = isInstalled()
+    ? ""
+    : `<button type="button" class="hdr-install" data-install title="${esc(t.install_app)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8v6M9.5 11.5L12 14l2.5-2.5"/></svg>${esc(t.install_short)}</button>`;
+  langBar.innerHTML = `${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}${install}`;
   renderTabbar(page);
   const c = church;
-  footer.innerHTML = `<div class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(c?.denomination || t.denomination)} ${esc(c?.name || t.church)}</div>
-    ${
-      c
-        ? `<div class="f-info">
-      <p><b>${esc(c.pastor.role)}</b> ${esc(c.pastor.name)}</p>
-      <p><b>${esc(t.address)}</b> ${esc(c.address)}</p>
-      <p><b>${esc(t.phone)}</b> <a href="tel:${esc(c.phone.replace(/-/g, ""))}">${esc(c.phone)}</a> · <b>${esc(t.email)}</b> <a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>
-      <p class="f-links">${c.links.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(" · ")} · <a href="${href("about")}">${esc(t.nav_about)} ›</a></p>
-    </div>`
-        : ""
-    }
-    <p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
-    .filter(([c]) => c === lang || c === lang2 || c === "ko")
+  // 성경 출처: 퍼블릭 도메인(개역한글 등)은 표기 의무가 없어 생략. 출처 표기가 조건인 번역본(우르드어 등)을 볼 때만 표시
+  const credit = Object.entries(BIBLES)
+    .filter(([c, b]) => (c === lang || c === lang2) && b.license !== "Public Domain")
     .map(([, b]) => `${esc(b.name)} (${esc(b.license)})`)
-    .join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
+    .join(" · ");
+  const creditTxt = credit ? `${esc(t.bible_credit)}: ${credit}<span class="f-sep">·</span>` : "";
+  footer.innerHTML = c
+    ? `<p class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(c.name)}<span class="f-denom">${esc(c.denomination)}</span><span class="f-sep">·</span><span class="f-light">${esc(c.pastor.role)} ${esc(c.pastor.name)}</span></p>
+    <div class="f-row">
+      <span>${esc(c.address)}</span>
+      <a href="tel:${esc(c.phone.replace(/-/g, ""))}">${esc(c.phone)}</a>
+      <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>
+      <span class="f-links">${socialIcons(c.links)}</span>
+      <span class="f-copy">© ${new Date().getFullYear()} ${esc(c.name)}</span>
+    </div>
+    ${creditTxt ? `<p class="f-small">${creditTxt.replace(/<span class="f-sep">·<\/span>$/, "")}</p>` : ""}`
+    : `<p class="f-small">${creditTxt}© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
 }
 
 // ---------- 폰: 아래 고정 탭바 (PC는 위쪽 메뉴 그대로) ----------
@@ -197,7 +201,7 @@ function openSheet(kind) {
     `<a class="sheet-item" href="${href(p)}" data-close><span class="sheet-ic">${emoji}</span><span><b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</span><span class="sheet-go">›</span></a>`;
   const body =
     kind === "tools"
-      ? item("gospel", "✝️", t.gospel, t.gospel_desc) + item("prayer777", "🙏", t.prayer777, t.prayer777_desc)
+      ? item("gospel", "📖", t.gospel, t.gospel_desc) + item("prayer777", "🙏", t.prayer777, t.prayer777_desc)
       : item("about", "⛪", t.nav_about, t.about_sheet_desc) +
         item("summit", "📘", t.nav_summit) +
         `<label class="sheet-item sheet-lang"><span class="sheet-ic">🌐</span><span><b>${esc(t.second_lang)}</b>
@@ -260,7 +264,7 @@ async function home() {
   <section class="block">
     <div class="block-head"><div><h2>${esc(t.nav_tools)}</h2><p class="muted">${esc(t.tools_desc)}</p></div></div>
     <div class="tools">
-      <a class="tool gospel" href="${href("gospel")}"><span class="tool-icon"><img src="assets/logo-mark.svg" alt=""></span><strong>${esc(t.gospel)}</strong><span>${esc(t.gospel_desc)}</span></a>
+      <a class="tool gospel" href="${href("gospel")}"><span class="tool-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 4h11a2 2 0 012 2v14H7a2 2 0 01-2-2z"/><path d="M5 18a2 2 0 012-2h11"/><path d="M11.5 7v6M9.3 9.2h4.4"/></svg></span><strong>${esc(t.gospel)}</strong><span>${esc(t.gospel_desc)}</span></a>
       <a class="tool prayer" href="${href("prayer777")}"><span class="tool-icon">🙏</span><strong>${esc(t.prayer777)}</strong><span>${esc(t.prayer777_desc)}</span></a>
     </div>
   </section>`;
@@ -437,79 +441,104 @@ async function message(type, id) {
 }
 
 // ---------- 교회 소개 (content/about/<언어>.json) ----------
+// 아이콘(브랜드 로고 대신 단순한 모양 + 브랜드 색)
+const SVG = (inner, vb = "0 0 24 24") =>
+  `<svg viewBox="${vb}" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+const AICON = {
+  phone: SVG('<path d="M5 4h3.5l1.8 4.5-2.3 1.4a11 11 0 006.1 6.1l1.4-2.3L20 15.5V19a1.5 1.5 0 01-1.6 1.5A16.5 16.5 0 013.5 5.6 1.5 1.5 0 015 4z"/>'),
+  mail: SVG('<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>'),
+  cafe: SVG('<path d="M4 9h12v4a5 5 0 01-5 5H9a5 5 0 01-5-5z"/><path d="M16 10.5h1.5a2.5 2.5 0 010 5H16"/><path d="M8 4.5v2M12 4.5v2"/>'),
+  youtube: SVG('<rect x="2.5" y="6" width="19" height="12" rx="3.5" fill="currentColor" stroke="none"/><path d="M10.2 9.4l4.6 2.6-4.6 2.6z" fill="#fff" stroke="none"/>'),
+  kakao: SVG('<path d="M12 5c-4.7 0-8.5 3-8.5 6.6 0 2.3 1.5 4.3 3.9 5.5l-.9 3.4 3.9-2.6c.5.1 1 .1 1.6.1 4.7 0 8.5-3 8.5-6.6S16.7 5 12 5z" fill="currentColor" stroke="none"/>'),
+  naverMap: SVG('<rect x="3" y="3" width="18" height="18" rx="5" fill="#03c75a" stroke="none"/><path d="M8.5 7.5v9M8.5 7.5l7 9M15.5 7.5v9" stroke="#fff" stroke-width="2.2"/>'),
+  kakaoMap: SVG('<rect x="3" y="3" width="18" height="18" rx="5" fill="#fee500" stroke="none"/><path d="M12 6.5a3.8 3.8 0 00-3.8 3.8c0 2.8 3.8 6.7 3.8 6.7s3.8-3.9 3.8-6.7A3.8 3.8 0 0012 6.5z" fill="#3a1d1d" stroke="none"/><circle cx="12" cy="10.3" r="1.4" fill="#fee500" stroke="none"/>'),
+  googleMap: SVG('<rect x="3" y="3" width="18" height="18" rx="5" fill="#fff" stroke="#dadce0" stroke-width="1"/><path d="M12 6.3a4 4 0 00-4 4c0 3 4 7.2 4 7.2s4-4.2 4-7.2a4 4 0 00-4-4z" fill="#ea4335" stroke="none"/><circle cx="12" cy="10.3" r="1.5" fill="#fff" stroke="none"/>'),
+};
+const linkKind = (url) => (/youtube/.test(url) ? "youtube" : /kakao/.test(url) ? "kakao" : /cafe\.naver/.test(url) ? "cafe" : "cafe");
+const tile = (hrefAttr, kind, label) => `<a class="tile t-${kind}" ${hrefAttr}><span class="tile-ic">${AICON[kind]}</span><span class="tile-label">${esc(label)}</span></a>`;
+const ext = (url) => `href="${esc(url)}" target="_blank" rel="noopener"`;
+/** 네이버 카페·유튜브·카톡방: 아이콘만 (이름은 마우스 올리면/화면낭독기로) */
+const socialIcons = (links) =>
+  links.map((l) => `<a class="s-ic t-${linkKind(l.url)}" ${ext(l.url)} title="${esc(l.label)}" aria-label="${esc(l.label)}">${AICON[linkKind(l.url)]}</a>`).join("");
+
 async function about() {
   const c = church;
   const tel = c.phone.replace(/-/g, "");
   const q = encodeURIComponent(c.mapQuery);
   const copyBtn = (text) => `<button type="button" class="copy-btn" data-copytext="${esc(text)}">${esc(t.copy)}</button>`;
   return `<article class="about">
-    <section class="about-hero">
-      <img src="assets/logo-mark.svg" alt="">
-      <div>
-        <small>${esc(c.denomination)} · ${esc(c.founded)}</small>
-        <h1>${esc(c.name)}</h1>
-        <p class="about-meaning">${esc(c.meaning)}</p>
-      </div>
+    <section class="about-top">
+      <h1 class="about-title">${esc(c.name)} <small>${esc(c.denomination)} · ${esc(c.founded)}</small></h1>
+      <p class="about-intro">${renderInline(c.meaning, lang, { auto: true }).replace(esc(c.meaningEm || "\u0000"), (m) => `<em>${m}</em>`)} ${renderInline(c.intro, lang, { auto: true })}</p>
+      ${
+        c.logoPoints
+          ? `<div class="logo-note">
+          <p class="logo-head"><img src="assets/logo-mark.svg" alt="" width="18" height="18">${esc(t.logo_title)}</p>
+          <ul>${c.logoPoints.map(([k, v]) => `<li><span>${esc(k)}</span>${esc(v)}</li>`).join("")}</ul></div>`
+          : ""
+      }
     </section>
-    <p class="about-intro">${renderInline(c.intro, lang, { auto: true })}</p>
 
     <section class="about-sec" id="worship">
-      <h2>⛪ ${esc(t.about_worship)}</h2>
-      <ul class="worship">${c.worship
-        .map((w) => `<li><span class="w-name">${esc(w.name)}${w.note ? `<small>${esc(w.note)}</small>` : ""}</span><span class="w-time">${esc(w.time)}</span></li>`)
+      <h2>${esc(t.about_worship)}</h2>
+      <ul class="wlist">${c.worship
+        .map((w) => `<li><span class="wl-name"><b>${esc(w.name)}</b>${w.note ? `<small>${esc(w.note)}</small>` : ""}</span><span class="wl-time">${esc(w.time)}</span></li>`)
         .join("")}</ul>
     </section>
 
     <section class="about-sec">
-      <h2>🙏 ${esc(t.about_people)}</h2>
-      <dl class="people">
-        <div><dt>${esc(c.pastor.role)}</dt><dd>${esc(c.pastor.name)}</dd></div>
-        <div><dt>${esc(t.about_missionaries)}</dt><dd>${c.missionaries.map((m) => `<span><b>${esc(m.country)}</b> ${esc(m.names)}</span>`).join("")}</dd></div>
-      </dl>
+      <h2>${esc(t.about_people)}</h2>
+      <div class="people">
+        <div class="p-row"><span class="p-role">${esc(c.pastor.role)}</span><b>${esc(c.pastor.name)}</b></div>
+        <div class="p-row"><span class="p-role">${esc(t.about_missionaries)}</span>
+          <div class="msn">${c.missionaries.map((m) => `<span class="country">${esc(m.country)}</span><span>${esc(m.names)}</span>`).join("")}</div>
+        </div>
+      </div>
     </section>
 
     <section class="about-sec" id="location">
-      <h2>📍 ${esc(t.about_location)}</h2>
+      <h2>${esc(t.about_location)}</h2>
       <div class="loc-card">
-        <p class="addr">${esc(c.address)} ${copyBtn(c.address)}</p>
-        ${c.landmark ? `<p class="landmark">🚩 ${esc(c.landmark)}</p>` : ""}
-      </div>
-      <div class="map-links">
-        <a href="https://map.naver.com/p/search/${q}" target="_blank" rel="noopener">${esc(t.map_naver)}</a>
-        <a href="https://map.kakao.com/link/search/${q}" target="_blank" rel="noopener">${esc(t.map_kakao)}</a>
-        <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${esc(t.map_google)}</a>
-      </div>
-    </section>
-
-    <section class="about-sec">
-      <h2>☎️ ${esc(t.about_contact)}</h2>
-      <div class="contact">
-        <a class="contact-btn" href="tel:${esc(tel)}"><span>📞</span><b>${esc(t.phone)}</b>${esc(c.phone)}</a>
-        <a class="contact-btn" href="mailto:${esc(c.email)}"><span>✉️</span><b>${esc(t.email)}</b>${esc(c.email)}</a>
-        ${c.links.map((l) => `<a class="contact-btn" href="${esc(l.url)}" target="_blank" rel="noopener"><span>🔗</span><b>${esc(l.label)}</b>${esc(l.url.replace(/^https?:\/\/(www\.)?/, ""))}</a>`).join("")}
+        <div class="loc-text">
+          <p class="addr">${esc(c.address)} ${copyBtn(c.address)}</p>
+          ${c.landmark ? `<p class="landmark">${esc(c.landmark)}</p>` : ""}
+        </div>
+        <div class="tiles maps">
+          ${tile(ext(`https://map.naver.com/p/search/${q}`), "naverMap", t.map_naver)}
+          ${tile(ext(`https://map.kakao.com/link/search/${q}`), "kakaoMap", t.map_kakao)}
+          ${tile(ext(`https://www.google.com/maps/search/?api=1&query=${q}`), "googleMap", t.map_google)}
+        </div>
       </div>
     </section>
 
     <section class="about-sec">
-      <h2>💝 ${esc(t.about_offering)}</h2>
-      <p class="muted">${esc(c.offering.text)}</p>
+      <h2>${esc(t.about_contact)}</h2>
+      <div class="contact-row">
+        <a class="c-item t-phone" href="tel:${esc(tel)}"><span class="c-ic">${AICON.phone}</span>${esc(c.phone)}</a>
+        <a class="c-item t-mail" href="mailto:${esc(c.email)}"><span class="c-ic">${AICON.mail}</span>${esc(c.email)}</a>
+        ${c.links.map((l) => `<a class="c-item t-${linkKind(l.url)}" ${ext(l.url)}><span class="c-ic">${AICON[linkKind(l.url)]}</span>${esc(l.label)}</a>`).join("")}
+      </div>
+    </section>
+
+    <section class="about-sec">
+      <h2>${esc(t.about_offering)}</h2>
+      <p class="muted offering-text">${esc(c.offering.text)}</p>
       <div class="accounts">${c.offering.accounts
         .map(
-          (a) => `<div class="account"><span class="acc-label">${esc(a.label)}</span><span class="acc-no">${esc(a.bank)} <b>${esc(a.number)}</b></span><span class="acc-holder">${esc(t.holder)}: ${esc(a.holder)}</span>${copyBtn(`${a.bank} ${a.number}`)}</div>`,
+          (a) => `<div class="account"><span class="acc-label"><b>${esc(a.label)}</b> <span>${esc(t.holder)} ${esc(a.holder)}</span></span><span class="acc-no">${esc(a.bank)} <b>${esc(a.number)}</b></span><span class="acc-holder">${esc(t.holder)}: ${esc(a.holder)}</span>${copyBtn(`${a.bank} ${a.number}`)}</div>`,
         )
         .join("")}</div>
     </section>
 
     <section class="about-sec">
-      <h2>🌱 ${esc(t.about_ministries)}</h2>
-      <div class="ministries">${(c.ministries || [])
+      <h2>${esc(t.about_ministries)}</h2>
+      <ul class="ministries">${(c.ministries || [])
         .map(
-          (m) => `<div class="ministry"><strong>${esc(m.name)}</strong>${m.desc ? `<span class="muted">${esc(m.desc)}</span>` : ""}
-            <span class="ministry-act">${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(t.visit)} ›</a>` : ""}${
-              m.phone ? `<a href="tel:${esc(m.phone.replace(/-/g, ""))}">📞 ${esc(m.phoneLabel || t.phone)} ${esc(m.phone)}</a>` : ""
-            }</span></div>`,
+          (m) => `<li><b>${esc(m.name)}</b>${m.desc ? ` <span class="muted">(${esc(m.desc)})</span>` : ""}${
+            m.url ? `<a class="m-btn" ${ext(m.url)}>${esc(t.visit)} ›</a>` : ""
+          }${m.phone ? `<a class="m-btn" href="tel:${esc(m.phone.replace(/-/g, ""))}">${AICON.phone}${esc(m.phoneLabel || t.phone)} ${esc(m.phone)}</a>` : ""}</li>`,
         )
-        .join("")}</div>
+        .join("")}</ul>
     </section>
   </article>`;
 }
@@ -577,19 +606,17 @@ const rich = (s, l = lang) => (s || "").split("\n").map((x) => inline(x, l)).joi
 async function prayer777() {
   const p = await load(`content/prayer777/${lang}.json`);
   const p2 = lang2 ? await load(`content/prayer777/${lang2}.json`).catch(() => null) : null;
-  const big = store.get("big") === "1";
-  document.body.classList.toggle("big", big);
   const onlyPrayer = store.get("p7pray") === "1";
   const [B, J, G] = p.groups;
 
   const head = `<header class="g-hero">
       <h1>${esc(p.title)}${p2 ? sub2(p2.title) : ""}</h1>
       <p class="g-sub">${esc(p.subtitle)}${p2 ? sub2(p2.subtitle) : ""}</p>
-    </header>
-    <div class="toolbar">
-      <button type="button" class="toggle on" data-toggle="p7pray">${esc(onlyPrayer ? t.chart_view : t.full_prayer)}</button>
-      <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
-    </div>`;
+      <div class="seg" role="group">
+        <button type="button" class="${onlyPrayer ? "" : "on"}" data-toggle="p7pray" data-val="0" aria-pressed="${!onlyPrayer}">${esc(t.view_pic)}</button>
+        <button type="button" class="${onlyPrayer ? "on" : ""}" data-toggle="p7pray" data-val="1" aria-pressed="${onlyPrayer}">${esc(t.view_text)}</button>
+      </div>
+    </header>`;
   const closing = `<div class="p7-closing">${p.closing.map((c, i) => `<p>${esc(c)}${sub2(p2?.closing[i])}</p>`).join("")}</div>
     <p class="p7-source">${esc(t.source)}: ${esc(p.source)}</p>`;
 
@@ -715,18 +742,16 @@ async function gospel() {
   const g = await load(`content/gospel/${lang}.json`);
   const g2 = lang2 ? await load(`content/gospel/${lang2}.json`).catch(() => null) : null;
   gospelData = { g, g2 };
-  const big = store.get("big") === "1";
-  document.body.classList.toggle("big", big);
   const listView = store.get("glist") === "1";
 
   const head = `<header class="g-hero">
       <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
       <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
-    </header>
-    <div class="toolbar">
-      <button type="button" class="toggle on" data-toggle="glist">${esc(listView ? t.view_cross : t.view_list)}</button>
-      <button type="button" class="toggle ${big ? "on" : ""}" data-toggle="big">A+ ${esc(t.big_text)}</button>
-    </div>`;
+      <div class="seg" role="group">
+        <button type="button" class="${listView ? "" : "on"}" data-toggle="glist" data-val="0" aria-pressed="${!listView}">${esc(t.view_pic)}</button>
+        <button type="button" class="${listView ? "on" : ""}" data-toggle="glist" data-val="1" aria-pressed="${listView}">${esc(t.view_text)}</button>
+      </div>
+    </header>`;
   const intro = `<p>${esc(g.intro)}</p>${g2 ? sub2(g2.intro, "p") : ""}`;
 
   if (!listView) {
@@ -999,7 +1024,9 @@ document.addEventListener("click", (e) => {
   const tog = e.target.closest("[data-toggle]");
   if (tog) {
     const k = tog.dataset.toggle;
-    store.set(k, store.get(k) === "1" ? "0" : "1");
+    const v = tog.dataset.val ?? (store.get(k) === "1" ? "0" : "1"); // 그림/글 전환 버튼은 값을 직접 지정
+    if (store.get(k) === v && tog.dataset.val) return;
+    store.set(k, v);
     const y = window.scrollY;
     sessionStorage.setItem("keepScroll", "1");
     route().then(() => {

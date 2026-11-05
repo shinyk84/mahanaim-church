@@ -2,30 +2,32 @@
   "name": "Mahanaim Church",
   "denomination": "Presbyterian Church in Korea",
   "founded": "Founded September 28, 2007",
-  "meaning": "“Mahanaim” is Hebrew for “the camp (army) of God.”",
+  "meaning": "“Mahanaim” is Hebrew for “God’s army (camp).” Genesis 32:2",
   "intro": "Mahanaim Church is a Presbyterian church — a community of people who have received into their hearts Christ, who solved every problem of life, and who enjoy spiritual blessings. Holding on to Ezekiel 37:1-10, we heal believers who have become as powerless as dry bones, and we pray that the next generation, our hope for the future, will rise up as God’s spiritual army.",
   "worship": [
     {
       "name": "Sunday 1st Service",
-      "time": "Sunday 9:00 AM",
-      "note": "Remnant & church leaders (cell group)"
+      "time": "9:00 AM",
+      "note": "Remnant future leaders (cell group)"
     },
     {
       "name": "Sunday 2nd Service",
-      "time": "Sunday 11:00 AM",
+      "time": "11:00 AM",
       "note": "Adults (campus evangelization)"
     },
     {
       "name": "Sunday Afternoon Service",
-      "time": "Sunday 2:00 PM"
+      "time": "2:00 PM",
+      "note": "HQ Sunday 1st message"
     },
     {
       "name": "Wednesday Service",
-      "time": "Wednesday 8:00 PM"
+      "time": "8:00 PM",
+      "note": "HQ Sunday 2nd message"
     },
     {
       "name": "Friday Service",
-      "time": "Friday 8:00 PM"
+      "time": "8:00 PM"
     },
     {
       "name": "Dawn Service",
@@ -51,15 +53,15 @@
   "email": "caljms@hanmail.net",
   "links": [
     {
-      "label": "Naver Cafe",
+      "label": "Mahanaim Cafe",
       "url": "https://cafe.naver.com/themahanaim"
     },
     {
-      "label": "YouTube",
+      "label": "Mahanaim YouTube",
       "url": "https://www.youtube.com/@themahanaim"
     },
     {
-      "label": "KakaoTalk group",
+      "label": "Mahanaim KakaoTalk",
       "url": "https://open.kakao.com/o/gXudxW8g"
     }
   ],
@@ -84,8 +86,9 @@
   "mapQuery": "부천 석천로16번길 53",
   "ministries": [
     {
-      "name": "Elite Remnant System (Summit Learning)",
-      "url": "https://blog.naver.com/summitlearning"
+      "name": "Elite Remnant System",
+      "url": "https://blog.naver.com/summitlearning",
+      "desc": "Summit Learning"
     },
     {
       "name": "Mission Home",
@@ -93,5 +96,21 @@
       "phone": "010-4471-7108",
       "phoneLabel": "Inquiries"
     }
+  ],
+  "logoNote": "Our logo depicts a sword and a shield, the emblem of God’s army. Blue stands for unshakable strength, and green for the stump that sprouts new life even after it has been cut down.",
+  "meaningEm": "God’s army (camp)",
+  "logoPoints": [
+    [
+      "Sword & shield",
+      "The emblem of God’s army"
+    ],
+    [
+      "Blue",
+      "Unshakable strength"
+    ],
+    [
+      "Green",
+      "The stump that sprouts new life even after it is cut down"
+    ]
   ]
 }
