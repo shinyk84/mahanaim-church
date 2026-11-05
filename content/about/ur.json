@@ -87,8 +87,8 @@
   "ministries": [
     {
       "name": "ایلیٹ ریمننٹ سسٹم",
-      "url": "https://blog.naver.com/summitlearning",
-      "desc": "سمٹ لرننگ"
+      "desc": "سمٹ لرننگ",
+      "page": "summit"
     },
     {
       "name": "مشن ہوم",

@@ -87,8 +87,8 @@
   "ministries": [
     {
       "name": "エリート・レムナント・システム",
-      "url": "https://blog.naver.com/summitlearning",
-      "desc": "サミットラーニング"
+      "desc": "サミットラーニング",
+      "page": "summit"
     },
     {
       "name": "ミッションホーム",

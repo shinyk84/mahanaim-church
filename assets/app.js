@@ -581,7 +581,7 @@ function aboutHtml(c, t, lang) {
       <ul class="ministries">${(c.ministries || [])
         .map(
           (m) => `<li><b>${esc(m.name)}</b>${m.desc ? ` <span class="muted">(${esc(m.desc)})</span>` : ""}${
-            m.url ? `<a class="m-btn" ${ext(m.url)}>${esc(t.visit)} ›</a>` : ""
+            m.page ? `<a class="m-btn" href="${href(m.page)}">${esc(t.visit)} ›</a>` : m.url ? `<a class="m-btn" ${ext(m.url)}>${esc(t.visit)} ›</a>` : ""
           }${m.phone ? `<a class="m-btn" href="tel:${esc(m.phone.replace(/-/g, ""))}">${AICON.phone}${esc(m.phoneLabel || t.phone)} ${esc(m.phone)}</a>` : ""}</li>`,
         )
         .join("")}</ul>

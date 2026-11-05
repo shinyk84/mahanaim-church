@@ -87,8 +87,8 @@
   "ministries": [
     {
       "name": "엘리트렘넌트시스템",
-      "url": "https://blog.naver.com/summitlearning",
-      "desc": "서밋러닝"
+      "desc": "서밋러닝",
+      "page": "summit"
     },
     {
       "name": "미션홈",

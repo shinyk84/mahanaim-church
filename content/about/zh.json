@@ -87,8 +87,8 @@
   "ministries": [
     {
       "name": "精英余民系统",
-      "url": "https://blog.naver.com/summitlearning",
-      "desc": "Summit Learning"
+      "desc": "Summit Learning",
+      "page": "summit"
     },
     {
       "name": "宣教之家",

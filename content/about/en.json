@@ -87,8 +87,8 @@
   "ministries": [
     {
       "name": "Elite Remnant System",
-      "url": "https://blog.naver.com/summitlearning",
-      "desc": "Summit Learning"
+      "desc": "Summit Learning",
+      "page": "summit"
     },
     {
       "name": "Mission Home",
