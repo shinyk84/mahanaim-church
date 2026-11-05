@@ -104,5 +104,8 @@
   "view_text": "文字",
   "logo_title": "标志的含义",
   "welcome": "欢迎来到玛哈念教会",
-  "lang_hint": "本页面提供中文版。"
+  "lang_hint": "本页面提供中文版。",
+  "language": "语言",
+  "view_lang": "显示语言",
+  "second_lang_desc": "可同时并列显示两种语言"
 }

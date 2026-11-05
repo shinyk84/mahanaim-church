@@ -194,7 +194,10 @@ function renderChrome(page, id) {
   const install = isInstalled()
     ? ""
     : `<button type="button" class="hdr-install" data-install title="${esc(t.install_app)}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M12 8v6M9.5 11.5L12 14l2.5-2.5"/></svg>${esc(t.install_short)}</button>`;
-  langBar.innerHTML = `${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}${install}`;
+  const mobileBtn = `<button type="button" class="lang-btn" data-sheet="lang" aria-label="Language">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h9M7.5 3v2M10 5c-.8 4-3.6 7-7 8.5M5.5 9c1.2 2 3 3.5 5.5 4.5"/><path d="M12.5 21l4-9 4 9M14 18h5"/></svg>
+      <span>${esc(nameOf(lang))}${lang2 ? ` + ${esc(nameOf(lang2))}` : ""}</span><span aria-hidden="true">▾</span></button>`;
+  langBar.innerHTML = `${mobileBtn}${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}${install}`;
   renderTabbar(page);
   const c = church;
   // 성경 출처: 퍼블릭 도메인(개역한글 등)은 표기 의무가 없어 생략. 출처 표기가 조건인 번역본(우르드어 등)을 볼 때만 표시
@@ -236,6 +239,25 @@ function renderTabbar(page) {
     tab("more", t.tab_more, `href="#" role="button" data-sheet="more"`, page === "about" || page === "summit");
 }
 
+/** 폰 언어 선택 창: 보기 언어 / 함께 볼 언어 (이 페이지에 있는 언어만) */
+function openLangSheet(page, id) {
+  const langs = READY.filter((c) => pageLangs.includes(c) || c === lang);
+  const btn = (c, on, attrs) => `<a class="lang-chip ${on ? "on" : ""}" href="${attrs}" data-close lang="${c}" dir="${dirOf(c)}">${esc(nameOf(c))}</a>`;
+  const main = langs.map((c) => btn(c, c === lang, href(page, id, c, c === lang2 ? lang : lang2))).join("");
+  const others = READY.filter((c) => c !== lang && (pageLangs.includes(c) || c === lang2));
+  const second =
+    `<a class="lang-chip ${lang2 ? "" : "on"}" href="${href(page, id, lang, null)}" data-close>${esc(t.none)}</a>` +
+    others.map((c) => btn(c, c === lang2, href(page, id, lang, c))).join("");
+  dlg.innerHTML = `<div class="v-wrap sheet">
+    <div class="v-head"><h3>${esc(t.language)}${lang === "en" ? "" : " · Language"}</h3><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
+    <div class="lang-sheet">
+      <p class="ls-title">${esc(t.view_lang)}</p><div class="lang-chips">${main}</div>
+      ${others.length ? `<p class="ls-title">+ ${esc(t.second_lang)} <small>${esc(t.second_lang_desc)}</small></p><div class="lang-chips">${second}</div>` : ""}
+    </div>
+  </div>`;
+  if (!dlg.open) dlg.showModal();
+}
+
 /** 탭바의 '전도도구'·'더보기': 아래에서 올라오는 선택 창 */
 function openSheet(kind) {
   const { page, id } = parseHash();
@@ -246,14 +268,8 @@ function openSheet(kind) {
       ? item("gospel", "📖", t.gospel, t.gospel_desc) + item("prayer777", "🙏", t.prayer777, t.prayer777_desc)
       : item("about", "⛪", t.nav_about, t.about_sheet_desc) +
         item("summit", "📘", t.nav_summit) +
-        `<label class="sheet-item sheet-lang"><span class="sheet-ic">🌐</span><span><b>${esc(t.second_lang)}</b>
-          <select data-lang2>
-            <option value="">${esc(t.none)}</option>
-            ${READY.filter((c) => c !== lang && (pageLangs.includes(c) || c === lang2))
-              .map((c) => `<option value="${c}" ${c === lang2 ? "selected" : ""}>${nameOf(c)}</option>`)
-              .join("")}
-          </select></span></label>` +
         (isInstalled() ? "" : `<button type="button" class="sheet-item" data-install><span class="sheet-ic">📲</span><span><b>${esc(t.install_app)}</b></span><span class="sheet-go">›</span></button>`);
+  if (kind === "lang") return openLangSheet(page, id);
   dlg.innerHTML = `<div class="v-wrap sheet">
     <div class="v-head"><h3>${esc(kind === "tools" ? t.tab_tools : t.tab_more)}</h3><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
     <div class="sheet-list">${body}</div>

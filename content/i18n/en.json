@@ -104,5 +104,8 @@
   "view_text": "Text",
   "logo_title": "Our logo",
   "welcome": "Welcome to Mahanaim Church",
-  "lang_hint": "This page is available in English."
+  "lang_hint": "This page is available in English.",
+  "language": "Language",
+  "view_lang": "Display language",
+  "second_lang_desc": "Show two languages side by side"
 }

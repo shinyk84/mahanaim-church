@@ -104,5 +104,8 @@
   "view_text": "文で見る",
   "logo_title": "ロゴの意味",
   "welcome": "マハナイム教会へようこそ",
-  "lang_hint": "このページは日本語でご覧いただけます。"
+  "lang_hint": "このページは日本語でご覧いただけます。",
+  "language": "言語",
+  "view_lang": "表示言語",
+  "second_lang_desc": "2つの言語を並べて表示できます"
 }

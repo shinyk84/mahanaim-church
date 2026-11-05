@@ -104,5 +104,8 @@
   "view_text": "Text",
   "logo_title": "Unser Logo",
   "welcome": "Willkommen in der Mahanaim-Gemeinde",
-  "lang_hint": "Diese Seite ist auf Deutsch verfügbar."
+  "lang_hint": "Diese Seite ist auf Deutsch verfügbar.",
+  "language": "Sprache",
+  "view_lang": "Anzeigesprache",
+  "second_lang_desc": "Zwei Sprachen nebeneinander anzeigen"
 }

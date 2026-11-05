@@ -1005,3 +1005,17 @@ p.sub2 { margin: 2px 0 0; }
   .tab.on { color: #fff; background: rgb(255 255 255 / 0.14); }
   .tab.on::before { content: ""; position: absolute; top: -4px; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--brand-green); }
 }
+
+/* 폰 언어 버튼 + 언어 선택 창 */
+.lang-btn { display: none; }
+@media (max-width: 700px) {
+  .langs .lang1, .langs .swap { display: none; }
+  .lang-btn { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 0.86rem; font-weight: 700; padding: 6px 12px; border-radius: 999px; border: 0; background: var(--brand-navy); color: #fff; cursor: pointer; max-width: 58vw; }
+  .lang-btn span:first-of-type { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+.lang-sheet { padding: 2px 16px 20px; }
+.ls-title { margin: 10px 0 8px; font-weight: 800; color: var(--navy); font-size: 0.95rem; }
+.ls-title small { display: block; font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+.lang-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.lang-chip { text-align: center; padding: 10px 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 0.95rem; }
+.lang-chip.on { background: var(--brand-navy); border-color: var(--brand-navy); color: #fff; }
