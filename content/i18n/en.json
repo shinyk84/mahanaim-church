@@ -48,5 +48,32 @@
   "all": "All",
   "show_more": "Show more",
   "watch_yt": "Watch on YouTube",
-  "scripts": "Written messages"
+  "scripts": "Written messages",
+  "transcript": "Transcript",
+  "transcript_note": "This transcript was prepared from YouTube auto-captions and may differ slightly from the actual message.",
+  "nav_summit": "Summit Learning",
+  "summit_blog": "Summit Learning Blog",
+  "summit_youtube": "Summit Learning YouTube",
+  "install_app": "Add to Home Screen",
+  "install_ios": [
+    "Tap the Share button (□↑) at the bottom of Safari.",
+    "Choose 'Add to Home Screen'.",
+    "Tap 'Add' — the church icon appears on your home screen."
+  ],
+  "install_android": [
+    "Tap the menu (⋮) at the top right of Chrome.",
+    "Choose 'Add to Home screen' or 'Install app'.",
+    "Tap 'Install' — the church icon appears on your home screen."
+  ],
+  "install_inapp": [
+    "This can't be done inside apps like KakaoTalk or Naver.",
+    "Use the menu to 'Open in another browser'.",
+    "Then tap this button again in Chrome (Android) or Safari (iPhone)."
+  ],
+  "back_list": "Back to list",
+  "install_pc": [
+    "Click the install icon (⊕ or 🖥) at the right end of the Chrome or Edge address bar.",
+    "Click 'Install' — the church app is added to your desktop/Start menu and opens in its own window.",
+    "No icon? Open the browser menu (⋮) → 'Apps' or 'Cast, save and share' → 'Install'."
+  ]
 }

@@ -98,7 +98,7 @@ async function route() {
   renderChrome(page, id);
   app.innerHTML = `<p class="muted pad">${esc(t.loading)}</p>`;
   try {
-    const view = { "": home, pulpit: list, hq: list, gospel, prayer777 }[page];
+    const view = { "": home, pulpit: list, hq: list, gospel, prayer777, summit }[page];
     if (!view) return location.replace(href());
     app.innerHTML = page === "pulpit" || page === "hq" ? (id ? await message(page, id) : await view(page)) : await view();
     app.querySelectorAll("[data-vlist]").forEach((box) => applyVideoFilter(box, "", PAGE));
@@ -117,10 +117,11 @@ function renderChrome(page, id) {
     ["hq", t.nav_hq],
     ["gospel", t.gospel],
     ["prayer777", t.prayer777],
+    ["summit", t.nav_summit],
   ];
-  nav.innerHTML = items
-    .map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`)
-    .join("");
+  nav.innerHTML =
+    items.map(([p, label]) => `<a href="${href(p)}" class="${page === p ? "active" : ""}">${esc(label)}</a>`).join("") +
+    (isInstalled() ? "" : `<button type="button" class="nav-install" data-install>📲 ${esc(t.install_app)}</button>`);
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
   const primary = `<label class="lang1"><span aria-hidden="true">🌐</span>
       <select data-lang1 aria-label="Language">
@@ -164,25 +165,14 @@ async function home() {
   // 최근 영상 3개(영상이 없으면 글 메시지)
   const cards = (type) => {
     const vids = yt[type].videos.slice(0, 3);
-    if (vids.length) return `<div class="vlist home">${vids.map((v) => videoRow(v, yt[type].cats)).join("")}</div>`;
+    if (vids.length) return `<div class="vlist home">${vids.map((v) => videoRow(v, yt[type].cats, type)).join("")}</div>`;
     const rows = (idx[type] || []).slice(0, 3);
     if (!rows.length) return `<p class="muted">${esc(t.empty)}</p>`;
     return `<div class="cards">${rows.map((m) => msgCard(type, m)).join("")}</div>`;
   };
   return `
-  <section class="hero">
-    <div class="hero-in">
-      <img class="hero-mark" src="assets/logo-mark.svg" alt="">
-      <div>
-        <small>${esc(t.denomination)}</small>
-        <h1>${esc(t.church)}</h1>
-        <p>${esc(t.tagline)}</p>
-      </div>
-    </div>
-    <div class="split-bar"></div>
-  </section>
-  ${homeSection("pulpit", t.nav_pulpit, t.pulpit_desc, cards("pulpit"))}
-  ${homeSection("hq", t.nav_hq, t.hq_desc, cards("hq"))}
+  ${homeSection("pulpit", t.nav_pulpit, cards("pulpit"))}
+  ${homeSection("hq", t.nav_hq, cards("hq"))}
   <section class="block">
     <div class="block-head"><div><h2>${esc(t.nav_tools)}</h2><p class="muted">${esc(t.tools_desc)}</p></div></div>
     <div class="tools">
@@ -192,10 +182,10 @@ async function home() {
   </section>`;
 }
 
-const homeSection = (type, title, desc, body) => `
+const homeSection = (type, title, body) => `
   <section class="block">
     <div class="block-head">
-      <div><h2>${esc(title)}</h2><p class="muted">${esc(desc)}</p></div>
+      <h2>${esc(title)}</h2>
       <a class="more" href="${href(type)}">${esc(t.more)} ›</a>
     </div>
     ${body}
@@ -218,13 +208,19 @@ const loadVideos = async (type) => {
 };
 const catName = (c) => (c ? c[lang] ?? c.ko : "");
 
-const videoRow = (v, cats) => {
+const vTitle = (v) => v.titles?.[lang] ?? v.title;
+// 녹취가 있는 영상은 사이트 안 녹취 페이지로(영상도 그 페이지 위쪽에), 없으면 플레이어 팝업/유튜브
+const videoRow = (v, cats, type) => {
   const c = cats.find((x) => x.id === v.cat);
-  return `<a class="vrow" href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" target="_blank" rel="noopener" data-cat="${esc(v.cat)}">
+  const tr = v.tr?.length;
+  const link = tr
+    ? `href="${href(type, "v_" + v.id)}"`
+    : `href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" target="_blank" rel="noopener"${v.noembed ? "" : ` data-yt="${esc(v.id)}"`}`;
+  return `<a class="vrow" ${link} data-cat="${esc(v.cat)}">
     <span class="vthumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/mqdefault.jpg" alt="" loading="lazy"><span class="vplay" aria-hidden="true">▶</span></span>
     <span class="vtxt">
-      <strong>${esc(v.title)}</strong>
-      <span class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</span>
+      <strong>${esc(vTitle(v))}</strong>
+      <span class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}${tr ? `<span class="vtr">📄 ${esc(t.transcript)}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</span>
     </span>
   </a>`;
 };
@@ -233,17 +229,17 @@ async function list(type) {
   const [idx, yt] = await Promise.all([load("content/messages/index.json"), loadVideos(type)]);
   const rows = idx[type] || [];
   const title = type === "pulpit" ? t.nav_pulpit : t.nav_hq;
-  const desc = type === "pulpit" ? t.pulpit_desc : t.hq_desc;
   const counts = {};
   yt.videos.forEach((v) => (counts[v.cat] = (counts[v.cat] || 0) + 1));
-  const chip = (id, label, n) =>
-    `<button type="button" class="chip ${id ? "" : "on"}" data-vcat="${id}">${esc(label)} <small>${n}</small></button>`;
   const videos = yt.videos.length
-    ? `<div class="chips" role="group">${chip("", t.all, yt.videos.length)}${yt.cats
-        .filter((c) => counts[c.id])
-        .map((c) => chip(c.id, catName(c), counts[c.id]))
-        .join("")}</div>
-      <div class="vlist" data-vlist>${yt.videos.map((v) => videoRow(v, yt.cats)).join("")}</div>
+    ? `<label class="vcat-select"><select data-vcatsel aria-label="Category">
+        <option value="">${esc(t.all)} (${yt.videos.length})</option>
+        ${yt.cats
+          .filter((c) => counts[c.id])
+          .map((c) => `<option value="${esc(c.id)}">${esc(catName(c))} (${counts[c.id]})</option>`)
+          .join("")}
+      </select></label>
+      <div class="vlist" data-vlist>${yt.videos.map((v) => videoRow(v, yt.cats, type)).join("")}</div>
       <button type="button" class="vmore" data-vmore>${esc(t.show_more)}</button>
       <p class="vchannel"><a href="${esc(yt.channel)}" target="_blank" rel="noopener">▶ ${esc(t.watch_yt)} ›</a></p>`
     : "";
@@ -251,9 +247,68 @@ async function list(type) {
     ? `${videos ? `<h2 class="sub-title">${esc(t.scripts)}</h2>` : ""}<div class="cards list">${rows.map((m) => msgCard(type, m)).join("")}</div>`
     : "";
   return `<section class="block">
-    <h1 class="page-title">${esc(title)}</h1><p class="muted">${esc(desc)}</p>
+    <h1 class="page-title">${esc(title)}</h1>
     ${videos}${scripts}${videos || scripts ? "" : `<p class="muted">${esc(t.empty)}</p>`}
   </section>`;
+}
+
+/** 목록으로 돌아가는 버튼(페이지 위·아래) */
+const backBtn = (type, where = "") =>
+  `<a class="back-btn ${where}" href="${href(type)}">‹ ${esc(t.back_list)} · ${esc(type === "pulpit" ? t.nav_pulpit : t.nav_hq)}</a>`;
+
+/** 카테고리 바꾸기(드롭다운) */
+function setVideoCat(block, cat) {
+  applyVideoFilter(block.querySelector("[data-vlist]"), cat, PAGE);
+}
+
+/** 영상 + 녹취 페이지: #/<lang>/<pulpit|hq>/v_<videoId>. 녹취는 content/transcripts/<type>/<id>/<언어>.md */
+async function videoPage(type, vid) {
+  const yt = await loadVideos(type);
+  const v = yt.videos.find((x) => x.id === vid);
+  if (!v) return `<p class="pad">404</p>`;
+  const c = yt.cats.find((x) => x.id === v.cat);
+  const langs = v.tr || [];
+  const src = langs.includes(lang) ? lang : langs[0];
+  const base = `content/transcripts/${type}/${encodeURIComponent(vid)}`;
+  const md = src ? await load(`${base}/${src}.md`, "text") : "";
+  const has2 = lang2 && lang2 !== src && langs.includes(lang2);
+  const md2 = has2 ? await load(`${base}/${lang2}.md`, "text") : null;
+  const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(vid)}`;
+  // 채널이 퍼가기를 막은 영상은 썸네일을 눌러 유튜브에서 재생
+  const player = v.noembed
+    ? `<a class="player-frame player-off" href="${watch}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/${encodeURIComponent(vid)}/hqdefault.jpg" alt=""><span class="vplay big">▶ ${esc(t.watch_yt)}</span></a>`
+    : `<div class="player-frame"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(vid)}?rel=0&playsinline=1" title="${esc(vTitle(v))}"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+  const body = !md
+    ? ""
+    : has2
+      ? duo(renderMarkdown(md, src), src, renderMarkdown(md2, lang2), lang2)
+      : `<div class="prose" lang="${src}" dir="${dirOf(src)}">${renderMarkdown(md, src)}</div>`;
+  return `<article class="article vpage">
+    ${backBtn(type)}
+    <div class="vpage-player">${player}</div>
+    <p class="vmeta">${c ? `<span class="vcat">${esc(catName(c))}</span>` : ""}<time>${esc(formatDate(v.date))}</time>${v.preacher ? `<span>${esc(v.preacher)}</span>` : ""}</p>
+    <h1>${esc(vTitle(v))}${has2 && v.titles?.[lang2] ? sub2(v.titles[lang2]) : ""}</h1>
+    ${md ? `<p class="notice">📄 ${esc(t.transcript_note)}${src !== lang ? " " + esc(t.not_translated) : ""}</p><p class="hint">👆 ${esc(t.tap_hint)}</p>` : ""}
+    ${body}
+    ${backBtn(type, "bottom")}
+  </article>`;
+}
+
+/** 사이트 안 영상 플레이어(팝업). 닫으면 iframe을 지워 재생도 멈춤 */
+function openPlayer(row) {
+  const id = row.dataset.yt;
+  const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+  dlg.innerHTML = `<div class="v-wrap player">
+    <div class="v-head"><span class="vmeta">${row.querySelector(".vmeta")?.innerHTML || ""}</span><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
+    <div class="player-frame"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1" title="${esc(row.querySelector("strong")?.textContent || "")}"
+      allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+    <div class="player-info"><strong>${esc(row.querySelector("strong")?.textContent || "")}</strong>
+      <a href="${watch}" target="_blank" rel="noopener">▶ ${esc(t.watch_yt)} ›</a></div>
+    <button type="button" class="back-btn bottom player-back" data-close>‹ ${esc(t.back_list)}</button>
+  </div>`;
+  dlg.classList.add("wide");
+  if (!dlg.open) dlg.showModal();
 }
 
 /** 카테고리 필터 + "더 보기": 행은 모두 그려 두고 보이는 것만 고름(숨긴 썸네일은 lazy라 안 받음) */
@@ -274,6 +329,7 @@ function applyVideoFilter(box, cat, limit) {
 }
 
 async function message(type, id) {
+  if (id.startsWith("v_")) return videoPage(type, id.slice(2));
   const idx = await load("content/messages/index.json");
   const m = (idx[type] || []).find((x) => x.id === id);
   if (!m) return `<p class="pad">404</p>`;
@@ -285,14 +341,67 @@ async function message(type, id) {
     ? duo(renderMarkdown(md, src), src, renderMarkdown(md2, lang2), lang2)
     : `<div class="prose" lang="${src}" dir="${dirOf(src)}">${renderMarkdown(md, src)}</div>`;
   return `<article class="article">
-    <a class="back" href="${href(type)}">‹ ${esc(type === "pulpit" ? t.nav_pulpit : t.nav_hq)}</a>
+    ${backBtn(type)}
     <time>${esc(formatDate(m.date))}</time>
     <h1>${esc(pick(m.title))}${has2 ? sub2(m.title[lang2]) : ""}</h1>
     ${m.preacher ? `<p class="muted">${esc(t.preacher)}: ${esc(pick(m.preacher))}</p>` : ""}
     ${src !== lang ? `<p class="notice">${esc(t.not_translated)}</p>` : ""}
     <p class="hint">👆 ${esc(t.tap_hint)}</p>
     ${body}
+    ${backBtn(type, "bottom")}
   </article>`;
+}
+
+// ---------- 서밋러닝 (외부 블로그·유튜브로 연결) ----------
+const SUMMIT = {
+  blog: "https://blog.naver.com/summitlearning",
+  youtube: "https://www.youtube.com/@%EC%84%9C%EB%B0%8B%EB%9F%AC%EB%8B%9D",
+};
+async function summit() {
+  return `<section class="block">
+    <h1 class="page-title">${esc(t.nav_summit)}</h1>
+    <div class="links">
+      <a class="link-card blog" href="${SUMMIT.blog}" target="_blank" rel="noopener">
+        <span class="link-icon">N</span><span><strong>${esc(t.summit_blog)}</strong><small>blog.naver.com/summitlearning</small></span><span class="link-go">›</span>
+      </a>
+      <a class="link-card yt" href="${SUMMIT.youtube}" target="_blank" rel="noopener">
+        <span class="link-icon">▶</span><span><strong>${esc(t.summit_youtube)}</strong><small>youtube.com/@서밋러닝</small></span><span class="link-go">›</span>
+      </a>
+    </div>
+  </section>`;
+}
+
+// ---------- 홈 화면에 추가(앱처럼 설치) ----------
+let installPrompt = null; // 안드로이드 크롬·엣지: 설치 창을 바로 띄울 수 있음
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  installPrompt = e;
+});
+window.addEventListener("appinstalled", () => document.querySelectorAll("[data-install]").forEach((b) => (b.hidden = true)));
+const isInstalled = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
+
+async function installApp() {
+  if (installPrompt) {
+    installPrompt.prompt();
+    await installPrompt.userChoice.catch(() => null);
+    installPrompt = null;
+    return;
+  }
+  // 아이폰이나 설치 창을 띄울 수 없는 브라우저: 직접 추가하는 방법 안내
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const inApp = /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line\//i.test(ua);
+  const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || ios;
+  const steps = inApp ? t.install_inapp : ios ? t.install_ios : mobile ? t.install_android : t.install_pc;
+  dlg.innerHTML = `<div class="v-wrap">
+    <div class="v-head"><h3>📲 ${esc(t.install_app)}</h3><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
+    <div class="v-body install-help">
+      <img src="assets/icons/icon-192.png" alt="" width="64" height="64">
+      <ol>${steps.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+    </div>
+  </div>`;
+  if (!dlg.open) dlg.showModal();
 }
 
 // ---------- 777 기도 ----------
@@ -345,7 +454,7 @@ async function prayer777() {
   p7Data = { p, p2 };
   // 한눈에 보는 777 판: 7행 × 3열(망대·여정·이정표). 칸을 누르면 내용과 기도문이 팝업으로 열림
   const colHead = (g, gi) => `<div class="p7b-head p7-${g.id}">
-      <span class="p7b-seven">7</span><strong>${esc(g.name.replace(/^7\s*/, ""))}</strong><small>${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}
+      <strong class="p7b-title">${esc(g.name)}</strong><small>${esc(g.where)}</small>${sub2(p2?.groups[gi].name)}
     </div>`;
   const cells = [];
   for (let ii = 0; ii < 7; ii++) {
@@ -672,11 +781,14 @@ document.addEventListener("click", (e) => {
     const [gi, ii] = p7.dataset.p7.split(".").map(Number);
     return openP7(gi, ii);
   }
-  const chip = e.target.closest("[data-vcat]");
-  if (chip) {
-    chip.parentElement.querySelectorAll(".chip").forEach((c) => c.classList.toggle("on", c === chip));
-    return applyVideoFilter(chip.closest(".block").querySelector("[data-vlist]"), chip.dataset.vcat, PAGE);
+  // 영상: 유튜브로 나가지 않고 사이트 안 플레이어 팝업으로 재생 (새 탭/Ctrl+클릭은 그대로 유튜브)
+  // 채널이 퍼가기를 막은 영상(noembed)은 data-yt가 없어 링크대로 유튜브에서 열림
+  const vrow = e.target.closest("[data-yt]");
+  if (vrow && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
+    e.preventDefault();
+    return openPlayer(vrow);
   }
+  if (e.target.closest("[data-install]")) return installApp();
   const more = e.target.closest("[data-vmore]");
   if (more) {
     const box = more.parentElement.querySelector("[data-vlist]");
@@ -724,6 +836,7 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("change", (e) => {
+  if (e.target.matches("[data-vcatsel]")) return setVideoCat(e.target.closest(".block"), e.target.value);
   const { page, id } = parseHash();
   if (e.target.matches("[data-lang2]")) location.hash = href(page, id, lang, e.target.value || null);
   // 주 언어를 두 번째 언어와 같은 것으로 고르면 두 언어를 맞바꿉니다.
@@ -737,6 +850,13 @@ window.addEventListener("hashchange", route);
 
 // ---------- 성구 팝업 ----------
 const dlg = document.getElementById("verse");
+// 팝업을 닫으면 영상 재생을 멈추고 넓은 모드 해제
+dlg.addEventListener("close", () => {
+  if (dlg.classList.contains("wide")) {
+    dlg.classList.remove("wide");
+    dlg.innerHTML = "";
+  }
+});
 let current = null;
 let shownLang = null;
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mahanaim-church.vercel.app/sitemap.xml

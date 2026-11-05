@@ -14,6 +14,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -169,6 +170,19 @@ def walk(o, key):
             yield from walk(v, key)
 
 
+def embeddable(vid):
+    """다른 사이트(우리 사이트)에서 재생 가능한지. 401/403 = 채널이 퍼가기를 막음, 그 외 오류 = 모름(None)"""
+    try:
+        urllib.request.urlopen(
+            urllib.request.Request(f"https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v={vid}", headers=UA), timeout=15
+        ).close()
+        return True
+    except urllib.error.HTTPError as e:
+        return False if e.code in (401, 403) else None
+    except Exception:
+        return None
+
+
 def unescape(s):
     return s.replace("&amp;", "&").replace("&quot;", '"').replace("&#39;", "'").replace("&lt;", "<").replace("&gt;", ">")
 
@@ -229,6 +243,20 @@ def sync(kind, since=None):
         v["yt"] = yt  # 원래 유튜브 제목(분류 확인용)
         videos.append(v)
         added += 1
+    # 퍼가기 허용 여부: 새 영상 + 막혀 있던 영상은 다시 확인(채널에서 허용으로 바꾸면 자동 반영)
+    checks = 0
+    for v in videos:
+        if checks >= 80 or ("noembed" not in v and v.get("embedChecked")):
+            continue
+        ok = embeddable(v["id"])
+        checks += 1
+        if ok is None:
+            continue
+        v["embedChecked"] = True
+        if ok:
+            v.pop("noembed", None)
+        else:
+            v["noembed"] = True
     videos.sort(key=lambda v: (v["date"], v["id"]), reverse=True)
     OUT.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(videos, ensure_ascii=False, indent=1) + "\n", "utf-8")

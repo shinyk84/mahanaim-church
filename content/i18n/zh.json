@@ -48,5 +48,32 @@
   "all": "全部",
   "show_more": "查看更多",
   "watch_yt": "在 YouTube 观看",
-  "scripts": "讲道文稿"
+  "scripts": "讲道文稿",
+  "transcript": "文字稿",
+  "transcript_note": "本文字稿根据 YouTube 自动字幕整理，可能与实际讲道略有出入。",
+  "nav_summit": "Summit Learning",
+  "summit_blog": "Summit Learning 博客",
+  "summit_youtube": "Summit Learning YouTube",
+  "install_app": "添加到主屏幕",
+  "install_ios": [
+    "点击 Safari 底部的分享按钮 (□↑)。",
+    "选择“添加到主屏幕”。",
+    "点击“添加”，主屏幕上就会出现教会图标。"
+  ],
+  "install_android": [
+    "点击 Chrome 右上角的菜单 (⋮)。",
+    "选择“添加到主屏幕”或“安装应用”。",
+    "点击“安装”，主屏幕上就会出现教会图标。"
+  ],
+  "install_inapp": [
+    "在 KakaoTalk、Naver 等应用内无法添加。",
+    "请在菜单中选择“用其他浏览器打开”。",
+    "然后在 Chrome（安卓）或 Safari（iPhone）中再次点击此按钮。"
+  ],
+  "back_list": "返回列表",
+  "install_pc": [
+    "点击 Chrome 或 Edge 地址栏右侧的安装图标（⊕ 或 🖥）。",
+    "点击“安装”，教会应用会添加到桌面并在独立窗口中打开。",
+    "若没有图标：浏览器菜单 (⋮) → “应用” → “安装”。"
+  ]
 }

@@ -48,5 +48,32 @@
   "all": "Alle",
   "show_more": "Mehr anzeigen",
   "watch_yt": "Auf YouTube ansehen",
-  "scripts": "Predigttexte"
+  "scripts": "Predigttexte",
+  "transcript": "Mitschrift",
+  "transcript_note": "Diese Mitschrift basiert auf automatischen YouTube-Untertiteln und kann leicht von der tatsächlichen Predigt abweichen.",
+  "nav_summit": "Summit Learning",
+  "summit_blog": "Summit-Learning-Blog",
+  "summit_youtube": "Summit Learning auf YouTube",
+  "install_app": "Zum Startbildschirm hinzufügen",
+  "install_ios": [
+    "Tippen Sie unten in Safari auf Teilen (□↑).",
+    "Wählen Sie „Zum Home-Bildschirm“.",
+    "Tippen Sie auf „Hinzufügen“ – das Kirchen-Symbol erscheint."
+  ],
+  "install_android": [
+    "Tippen Sie oben rechts in Chrome auf das Menü (⋮).",
+    "Wählen Sie „Zum Startbildschirm hinzufügen“ oder „App installieren“.",
+    "Tippen Sie auf „Installieren“ – das Kirchen-Symbol erscheint."
+  ],
+  "install_inapp": [
+    "In Apps wie KakaoTalk oder Naver ist das nicht möglich.",
+    "Wählen Sie im Menü „In anderem Browser öffnen“.",
+    "Tippen Sie dann in Chrome (Android) oder Safari (iPhone) erneut auf diese Schaltfläche."
+  ],
+  "back_list": "Zur Liste",
+  "install_pc": [
+    "Klicken Sie rechts in der Adressleiste von Chrome oder Edge auf das Installationssymbol (⊕ oder 🖥).",
+    "Auf „Installieren“ klicken – die App öffnet sich in einem eigenen Fenster.",
+    "Kein Symbol? Browsermenü (⋮) → „Apps“ → „Installieren“."
+  ]
 }

@@ -48,5 +48,32 @@
   "all": "Tout",
   "show_more": "Voir plus",
   "watch_yt": "Regarder sur YouTube",
-  "scripts": "Messages écrits"
+  "scripts": "Messages écrits",
+  "transcript": "Transcription",
+  "transcript_note": "Transcription établie à partir des sous-titres automatiques de YouTube ; elle peut différer légèrement du message réel.",
+  "nav_summit": "Summit Learning",
+  "summit_blog": "Blog Summit Learning",
+  "summit_youtube": "YouTube Summit Learning",
+  "install_app": "Ajouter à l'écran d'accueil",
+  "install_ios": [
+    "Touchez le bouton Partager (□↑) en bas de Safari.",
+    "Choisissez « Sur l'écran d'accueil ».",
+    "Touchez « Ajouter » : l'icône de l'église apparaît."
+  ],
+  "install_android": [
+    "Touchez le menu (⋮) en haut à droite de Chrome.",
+    "Choisissez « Ajouter à l'écran d'accueil » ou « Installer l'application ».",
+    "Touchez « Installer » : l'icône de l'église apparaît."
+  ],
+  "install_inapp": [
+    "Impossible depuis une application comme KakaoTalk ou Naver.",
+    "Dans le menu, choisissez « Ouvrir dans un autre navigateur ».",
+    "Puis touchez de nouveau ce bouton dans Chrome (Android) ou Safari (iPhone)."
+  ],
+  "back_list": "Retour à la liste",
+  "install_pc": [
+    "Cliquez sur l'icône d'installation (⊕ ou 🖥) à droite de la barre d'adresse de Chrome ou Edge.",
+    "Cliquez sur « Installer » : l'application s'ouvre dans sa propre fenêtre.",
+    "Pas d'icône ? Menu du navigateur (⋮) → « Applications » → « Installer »."
+  ]
 }
