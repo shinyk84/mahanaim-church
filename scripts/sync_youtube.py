@@ -14,6 +14,7 @@ import json
 import re
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -251,18 +252,33 @@ def sync(kind, since=None):
         cat = ch["classify"](yt)
         if cat is None:
             continue
-        if ch.get("noShorts") and is_short(vid):
-            continue  # 본부 채널의 쇼츠는 넣지 않음
+        if ch.get("noShorts"):
+            if is_short(vid):
+                continue  # 본부 채널의 쇼츠는 넣지 않음
         date = date_in_title(yt) or pub
         if not date or (since and date < since):
             continue  # 날짜를 알 수 없으면 다음 RSS 때 추가
+        yt = unicodedata.normalize("NFC", yt)  # 자모가 분리된 제목(NFD)도 일반 형태로
         title, preacher = clean(yt)
         v = {"id": vid, "date": date, "cat": cat, "title": title}
+        if ch.get("noShorts"):
+            v["shortChecked"] = True
         if preacher:
             v["preacher"] = preacher
         v["yt"] = yt  # 원래 유튜브 제목(분류 확인용)
         videos.append(v)
         added += 1
+    # 쇼츠 제외(본부): 이미 들어간 영상도 한 번씩 검사해서 빼기
+    if ch.get("noShorts"):
+        kept = []
+        for v in videos:
+            if not v.get("shortChecked"):
+                if is_short(v["id"]):
+                    removed += 1
+                    continue
+                v["shortChecked"] = True
+            kept.append(v)
+        videos = kept
     # 퍼가기 허용 여부: 새 영상 + 막혀 있던 영상은 다시 확인(채널에서 허용으로 바꾸면 자동 반영)
     checks = 0
     for v in videos:
