@@ -997,3 +997,11 @@ p.sub2 { margin: 2px 0 0; }
   .hdr-install { margin-inline-start: 6px; }
   .nav { grid-column: 2; grid-row: 3; flex: none; padding: 6px 0 8px; margin-inline-start: -8px; }
 }
+
+/* 폰 하단 탭바: 남색 바탕으로 눈에 띄게 */
+@media (max-width: 700px) {
+  .tabbar { background: var(--brand-navy); border-top: 0; backdrop-filter: none; box-shadow: 0 -4px 18px rgb(23 42 136 / 0.25); }
+  .tab { color: rgb(255 255 255 / 0.72); position: relative; }
+  .tab.on { color: #fff; background: rgb(255 255 255 / 0.14); }
+  .tab.on::before { content: ""; position: absolute; top: -4px; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--brand-green); }
+}
