@@ -78,7 +78,7 @@ def cat_hq(title):
 
 CHANNELS = {
     "pulpit": {"handle": "themahanaim", "id": "UCi_T8LTlNPYaSSJcxaIEnUQ", "classify": cat_pulpit},
-    "hq": {"handle": "rutctv", "id": "UCquoY7mZYzen5TDY3Bep8uA", "classify": cat_hq},
+    "hq": {"handle": "rutctv", "id": "UCquoY7mZYzen5TDY3Bep8uA", "classify": cat_hq, "noShorts": True},
 }
 
 
@@ -170,6 +170,24 @@ def walk(o, key):
             yield from walk(v, key)
 
 
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *a, **k):
+        return None
+
+
+def is_short(vid):
+    """쇼츠면 youtube.com/shorts/<id> 가 그대로 열리고(200), 일반 영상이면 watch 로 넘겨짐(303)"""
+    try:
+        r = urllib.request.build_opener(_NoRedirect).open(
+            urllib.request.Request(f"https://www.youtube.com/shorts/{vid}", headers=UA), timeout=15
+        )
+        return r.status == 200
+    except urllib.error.HTTPError as e:
+        return e.code == 200
+    except Exception:
+        return False  # 확인 못 하면 일반 영상으로 취급
+
+
 def embeddable(vid):
     """다른 사이트(우리 사이트)에서 재생 가능한지. 401/403 = 채널이 퍼가기를 막음, 그 외 오류 = 모름(None)"""
     try:
@@ -233,6 +251,8 @@ def sync(kind, since=None):
         cat = ch["classify"](yt)
         if cat is None:
             continue
+        if ch.get("noShorts") and is_short(vid):
+            continue  # 본부 채널의 쇼츠는 넣지 않음
         date = date_in_title(yt) or pub
         if not date or (since and date < since):
             continue  # 날짜를 알 수 없으면 다음 RSS 때 추가
