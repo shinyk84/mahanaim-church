@@ -108,5 +108,6 @@
   "language": "Sprache",
   "view_lang": "Anzeigesprache",
   "second_lang_desc": "Zwei Sprachen nebeneinander anzeigen",
-  "toc_pick": "Abschnitt wählen"
+  "toc_pick": "Abschnitt wählen",
+  "analytics_note": "Diese Website nutzt Google Analytics für Besuchsstatistiken"
 }

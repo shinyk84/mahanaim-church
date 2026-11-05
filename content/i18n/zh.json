@@ -108,5 +108,6 @@
   "language": "语言",
   "view_lang": "显示语言",
   "second_lang_desc": "可同时并列显示两种语言",
-  "toc_pick": "选择章节"
+  "toc_pick": "选择章节",
+  "analytics_note": "本网站使用 Google Analytics 统计访问数据"
 }

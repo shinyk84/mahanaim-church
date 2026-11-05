@@ -108,5 +108,6 @@
   "language": "言語",
   "view_lang": "表示言語",
   "second_lang_desc": "2つの言語を並べて表示できます",
-  "toc_pick": "項目を選ぶ"
+  "toc_pick": "項目を選ぶ",
+  "analytics_note": "アクセス統計のため Google Analytics を使用しています"
 }

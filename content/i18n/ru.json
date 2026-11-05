@@ -108,5 +108,6 @@
   "language": "Язык",
   "view_lang": "Язык отображения",
   "second_lang_desc": "Показать два языка рядом",
-  "toc_pick": "Перейти к разделу"
+  "toc_pick": "Перейти к разделу",
+  "analytics_note": "Сайт использует Google Analytics для статистики посещений"
 }

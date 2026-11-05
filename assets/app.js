@@ -120,7 +120,13 @@ async function route() {
     sessionStorage.removeItem("goto");
     document.getElementById(goto)?.scrollIntoView();
   }
-  document.title = `${t.church}`;
+  // 탭 제목·방문 통계: 페이지별로 구분 (주소의 # 뒤가 바뀌어도 페이지 조회로 기록)
+  const pageName = { about: t.nav_about, pulpit: t.nav_pulpit, hq: t.nav_hq, gospel: t.gospel, prayer777: t.prayer777, summit: t.nav_summit }[page];
+  document.title = pageName ? `${pageName} · ${t.church}` : t.church;
+  if (window.gtag && !/^(localhost|127\.)/.test(location.hostname)) {
+    const path = `/${page}${id ? "/" + id : ""}`;
+    gtag("event", "page_view", { page_title: document.title, page_location: location.origin + path, page_path: path, content_language: lang + (lang2 ? "+" + lang2 : "") });
+  }
 }
 
 /**
@@ -215,6 +221,7 @@ function renderChrome(page, id) {
       <a href="mailto:${esc(c.email)}">${esc(c.email)}</a>
       <span class="f-links">${socialIcons(c.links)}</span>
       <span class="f-copy">© ${new Date().getFullYear()} ${esc(c.name)}</span>
+      <span class="f-copy">${esc(t.analytics_note)}</span>
     </div>
     ${creditTxt ? `<p class="f-small">${creditTxt.replace(/<span class="f-sep">·<\/span>$/, "")}</p>` : ""}`
     : `<p class="f-small">${creditTxt}© ${new Date().getFullYear()} ${esc(t.church)}</p>`;

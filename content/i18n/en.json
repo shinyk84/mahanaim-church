@@ -108,5 +108,6 @@
   "language": "Language",
   "view_lang": "Display language",
   "second_lang_desc": "Show two languages side by side",
-  "toc_pick": "Jump to a section"
+  "toc_pick": "Jump to a section",
+  "analytics_note": "This site uses Google Analytics for visit statistics"
 }
