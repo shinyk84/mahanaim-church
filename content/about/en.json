@@ -1,0 +1,97 @@
+{
+  "name": "Mahanaim Church",
+  "denomination": "Presbyterian Church in Korea",
+  "founded": "Founded September 28, 2007",
+  "meaning": "“Mahanaim” is Hebrew for “the camp (army) of God.”",
+  "intro": "Mahanaim Church is a Presbyterian church — a community of people who have received into their hearts Christ, who solved every problem of life, and who enjoy spiritual blessings. Holding on to Ezekiel 37:1-10, we heal believers who have become as powerless as dry bones, and we pray that the next generation, our hope for the future, will rise up as God’s spiritual army.",
+  "worship": [
+    {
+      "name": "Sunday 1st Service",
+      "time": "Sunday 9:00 AM",
+      "note": "Remnant & church leaders (cell group)"
+    },
+    {
+      "name": "Sunday 2nd Service",
+      "time": "Sunday 11:00 AM",
+      "note": "Adults (campus evangelization)"
+    },
+    {
+      "name": "Sunday Afternoon Service",
+      "time": "Sunday 2:00 PM"
+    },
+    {
+      "name": "Wednesday Service",
+      "time": "Wednesday 8:00 PM"
+    },
+    {
+      "name": "Friday Service",
+      "time": "Friday 8:00 PM"
+    },
+    {
+      "name": "Dawn Service",
+      "time": "5:30 AM"
+    }
+  ],
+  "pastor": {
+    "role": "Senior Pastor",
+    "name": "Rev. Jeong Myeong-seo (정명서)"
+  },
+  "missionaries": [
+    {
+      "country": "Tanzania",
+      "names": "Byeon Sang-taek · Lee Myeong-suk"
+    },
+    {
+      "country": "Kenya",
+      "names": "Ma Hyeong-gap · Hong Eun-hye"
+    }
+  ],
+  "address": "3F, 53 Seokcheon-ro 16beon-gil, Bucheon-si, Gyeonggi-do, Korea",
+  "phone": "010-9279-5868",
+  "email": "caljms@hanmail.net",
+  "links": [
+    {
+      "label": "Naver Cafe",
+      "url": "https://cafe.naver.com/themahanaim"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@themahanaim"
+    },
+    {
+      "label": "KakaoTalk group",
+      "url": "https://open.kakao.com/o/gXudxW8g"
+    }
+  ],
+  "offering": {
+    "text": "Tithes that support the pastor and the church, building offerings for a church that will represent our local culture, mission offerings that save the world, and RUTC offerings that save the future — we pray that God’s powerful hand will be with everyone who gives in thanks for salvation.",
+    "accounts": [
+      {
+        "label": "Offering account",
+        "bank": "KB Kookmin Bank",
+        "number": "609901-01-184822",
+        "holder": "정명서"
+      },
+      {
+        "label": "RUTC account",
+        "bank": "Toss Bank",
+        "number": "1000-6262-0459",
+        "holder": "정명서"
+      }
+    ]
+  },
+  "landmark": "In front of Sangdong Eoul Madang (Bucheon)",
+  "mapQuery": "부천 석천로16번길 53",
+  "ministries": [
+    {
+      "name": "Elite Remnant System (Summit Learning)",
+      "url": "https://blog.naver.com/summitlearning"
+    },
+    {
+      "name": "Mission Home",
+      "desc": "Bugae-dong, Incheon",
+      "phone": "010-4471-7108",
+      "phoneLabel": "Inquiries"
+    }
+  ]
+}

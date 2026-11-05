@@ -6,6 +6,7 @@ const app = document.getElementById("app");
 const nav = document.getElementById("nav");
 const langBar = document.getElementById("langs");
 const footer = document.getElementById("footer");
+const tabbar = document.getElementById("tabbar");
 
 const store = {
   get: (k, d) => {
@@ -25,6 +26,7 @@ const store = {
 let lang = "ko"; // 주 언어 (화면 문구도 이 언어)
 let lang2 = null; // 함께 볼 언어 (전도 대상자 또는 전도자용)
 let t = {};
+let church = null; // content/about/<언어>.json
 
 // ---------- 데이터 로딩 ----------
 const jsonCache = new Map();
@@ -92,13 +94,15 @@ async function route() {
     store.set("lang", lang);
     t = await load(`content/i18n/${lang}.json`);
   }
+  // 교회 정보(소개 페이지·하단): 이 언어 파일이 없으면 영어, 그것도 없으면 한국어
+  church = await load(`content/about/${lang}.json`).catch(() => load(`content/about/${lang === "ko" ? "ko" : "en"}.json`));
   document.documentElement.lang = lang;
   document.documentElement.dir = dirOf(lang);
   document.body.classList.toggle("dual", !!lang2);
   renderChrome(page, id);
   app.innerHTML = `<p class="muted pad">${esc(t.loading)}</p>`;
   try {
-    const view = { "": home, pulpit: list, hq: list, gospel, prayer777, summit }[page];
+    const view = { "": home, pulpit: list, hq: list, gospel, prayer777, summit, about }[page];
     if (!view) return location.replace(href());
     app.innerHTML = page === "pulpit" || page === "hq" ? (id ? await message(page, id) : await view(page)) : await view();
     app.querySelectorAll("[data-vlist]").forEach((box) => applyVideoFilter(box, "", PAGE));
@@ -107,12 +111,19 @@ async function route() {
     app.innerHTML = `<p class="pad">⚠️ ${esc(String(e.message || e))}</p>`;
   }
   if (!sessionStorage.getItem("keepScroll")) window.scrollTo(0, 0);
+  // 다른 페이지의 특정 위치로 가는 링크(예: 홈 → 교회 소개 · 오시는 길)
+  const goto = sessionStorage.getItem("goto");
+  if (goto) {
+    sessionStorage.removeItem("goto");
+    document.getElementById(goto)?.scrollIntoView();
+  }
   document.title = `${t.church}`;
 }
 
 function renderChrome(page, id) {
   document.getElementById("brand").innerHTML = `<a href="${href()}"><img class="logo" src="assets/logo-mark.svg" alt="">${esc(t.church)}</a>`;
   const items = [
+    ["about", t.nav_about],
     ["pulpit", t.nav_pulpit],
     ["hq", t.nav_hq],
     ["gospel", t.gospel],
@@ -140,10 +151,68 @@ function renderChrome(page, id) {
     ${lang2 ? `<a class="swap" href="${href(page, id, lang2, lang)}" title="${esc(t.swap)}" aria-label="${esc(t.swap)}">⇄</a>` : ""}`;
   const soon = LANGS.filter((l) => !l.ready);
   langBar.innerHTML = `${primary}${second}${soon.length ? `<span class="soon">${soon.map((l) => l.name).join(" · ")} — ${esc(t.soon)}</span>` : ""}`;
-  footer.innerHTML = `<div class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(t.denomination)} ${esc(t.church)}</div><p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
+  renderTabbar(page);
+  const c = church;
+  footer.innerHTML = `<div class="f-brand"><img src="assets/logo-mark.svg" alt="">${esc(c?.denomination || t.denomination)} ${esc(c?.name || t.church)}</div>
+    ${
+      c
+        ? `<div class="f-info">
+      <p><b>${esc(c.pastor.role)}</b> ${esc(c.pastor.name)}</p>
+      <p><b>${esc(t.address)}</b> ${esc(c.address)}</p>
+      <p><b>${esc(t.phone)}</b> <a href="tel:${esc(c.phone.replace(/-/g, ""))}">${esc(c.phone)}</a> · <b>${esc(t.email)}</b> <a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>
+      <p class="f-links">${c.links.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join(" · ")} · <a href="${href("about")}">${esc(t.nav_about)} ›</a></p>
+    </div>`
+        : ""
+    }
+    <p>${esc(t.bible_credit)}: ${Object.entries(BIBLES)
     .filter(([c]) => c === lang || c === lang2 || c === "ko")
     .map(([, b]) => `${esc(b.name)} (${esc(b.license)})`)
     .join(" · ")}</p><p>© ${new Date().getFullYear()} ${esc(t.church)}</p>`;
+}
+
+// ---------- 폰: 아래 고정 탭바 (PC는 위쪽 메뉴 그대로) ----------
+const ICON = {
+  home: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+  pulpit: '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M10 9l5 2-5 2z" fill="currentColor"/><path d="M8 21h8"/>',
+  hq: '<circle cx="12" cy="11" r="2"/><path d="M8.5 7.5a5 5 0 000 7M15.5 7.5a5 5 0 010 7M5.6 4.6a9 9 0 000 12.8M18.4 4.6a9 9 0 010 12.8"/><path d="M12 13v8"/>',
+  tools: '<path d="M12 3v18M7 8h10"/>',
+  more: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+};
+const icon = (k) => `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
+
+function renderTabbar(page) {
+  const tab = (key, label, attrs, on) => `<a ${attrs} class="tab ${on ? "on" : ""}">${icon(key)}<span>${esc(label)}</span></a>`;
+  tabbar.innerHTML =
+    tab("home", t.tab_home, `href="${href()}"`, page === "") +
+    tab("pulpit", t.tab_pulpit, `href="${href("pulpit")}"`, page === "pulpit") +
+    tab("hq", t.tab_hq, `href="${href("hq")}"`, page === "hq") +
+    tab("tools", t.tab_tools, `href="#" role="button" data-sheet="tools"`, page === "gospel" || page === "prayer777") +
+    tab("more", t.tab_more, `href="#" role="button" data-sheet="more"`, page === "about" || page === "summit");
+}
+
+/** 탭바의 '전도도구'·'더보기': 아래에서 올라오는 선택 창 */
+function openSheet(kind) {
+  const { page, id } = parseHash();
+  const item = (p, emoji, label, sub = "") =>
+    `<a class="sheet-item" href="${href(p)}" data-close><span class="sheet-ic">${emoji}</span><span><b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ""}</span><span class="sheet-go">›</span></a>`;
+  const body =
+    kind === "tools"
+      ? item("gospel", "✝️", t.gospel, t.gospel_desc) + item("prayer777", "🙏", t.prayer777, t.prayer777_desc)
+      : item("about", "⛪", t.nav_about, t.about_sheet_desc) +
+        item("summit", "📘", t.nav_summit) +
+        `<label class="sheet-item sheet-lang"><span class="sheet-ic">🌐</span><span><b>${esc(t.second_lang)}</b>
+          <select data-lang2>
+            <option value="">${esc(t.none)}</option>
+            ${READY.filter((c) => c !== lang)
+              .map((c) => `<option value="${c}" ${c === lang2 ? "selected" : ""}>${nameOf(c)}</option>`)
+              .join("")}
+          </select></span></label>` +
+        (isInstalled() ? "" : `<button type="button" class="sheet-item" data-install><span class="sheet-ic">📲</span><span><b>${esc(t.install_app)}</b></span><span class="sheet-go">›</span></button>`);
+  dlg.innerHTML = `<div class="v-wrap sheet">
+    <div class="v-head"><h3>${esc(kind === "tools" ? t.tab_tools : t.tab_more)}</h3><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
+    <div class="sheet-list">${body}</div>
+  </div>`;
+  if (!dlg.open) dlg.showModal();
 }
 
 /** 두 언어 본문: 넓은 화면은 좌우 2단, 좁은 화면은 탭으로 전환 */
@@ -171,6 +240,21 @@ async function home() {
     return `<div class="cards">${rows.map((m) => msgCard(type, m)).join("")}</div>`;
   };
   return `
+  ${
+    church
+      ? `<section class="home-info">
+    <div class="hi-times">${church.worship
+      .slice(0, 2)
+      .concat(church.worship.slice(-1))
+      .map((w) => `<span><b>${esc(w.name)}</b> ${esc(w.time)}</span>`)
+      .join("")}</div>
+    <div class="hi-actions">
+      <a href="${href("about")}" data-goto="worship">⛪ ${esc(t.about_worship)}</a>
+      <a href="${href("about")}" data-goto="location">📍 ${esc(t.about_location)}</a>
+    </div>
+  </section>`
+      : ""
+  }
   ${homeSection("pulpit", t.nav_pulpit, cards("pulpit"))}
   ${homeSection("hq", t.nav_hq, cards("hq"))}
   <section class="block">
@@ -349,6 +433,84 @@ async function message(type, id) {
     <p class="hint">👆 ${esc(t.tap_hint)}</p>
     ${body}
     ${backBtn(type, "bottom")}
+  </article>`;
+}
+
+// ---------- 교회 소개 (content/about/<언어>.json) ----------
+async function about() {
+  const c = church;
+  const tel = c.phone.replace(/-/g, "");
+  const q = encodeURIComponent(c.mapQuery);
+  const copyBtn = (text) => `<button type="button" class="copy-btn" data-copytext="${esc(text)}">${esc(t.copy)}</button>`;
+  return `<article class="about">
+    <section class="about-hero">
+      <img src="assets/logo-mark.svg" alt="">
+      <div>
+        <small>${esc(c.denomination)} · ${esc(c.founded)}</small>
+        <h1>${esc(c.name)}</h1>
+        <p class="about-meaning">${esc(c.meaning)}</p>
+      </div>
+    </section>
+    <p class="about-intro">${renderInline(c.intro, lang, { auto: true })}</p>
+
+    <section class="about-sec" id="worship">
+      <h2>⛪ ${esc(t.about_worship)}</h2>
+      <ul class="worship">${c.worship
+        .map((w) => `<li><span class="w-name">${esc(w.name)}${w.note ? `<small>${esc(w.note)}</small>` : ""}</span><span class="w-time">${esc(w.time)}</span></li>`)
+        .join("")}</ul>
+    </section>
+
+    <section class="about-sec">
+      <h2>🙏 ${esc(t.about_people)}</h2>
+      <dl class="people">
+        <div><dt>${esc(c.pastor.role)}</dt><dd>${esc(c.pastor.name)}</dd></div>
+        <div><dt>${esc(t.about_missionaries)}</dt><dd>${c.missionaries.map((m) => `<span><b>${esc(m.country)}</b> ${esc(m.names)}</span>`).join("")}</dd></div>
+      </dl>
+    </section>
+
+    <section class="about-sec" id="location">
+      <h2>📍 ${esc(t.about_location)}</h2>
+      <div class="loc-card">
+        <p class="addr">${esc(c.address)} ${copyBtn(c.address)}</p>
+        ${c.landmark ? `<p class="landmark">🚩 ${esc(c.landmark)}</p>` : ""}
+      </div>
+      <div class="map-links">
+        <a href="https://map.naver.com/p/search/${q}" target="_blank" rel="noopener">${esc(t.map_naver)}</a>
+        <a href="https://map.kakao.com/link/search/${q}" target="_blank" rel="noopener">${esc(t.map_kakao)}</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">${esc(t.map_google)}</a>
+      </div>
+    </section>
+
+    <section class="about-sec">
+      <h2>☎️ ${esc(t.about_contact)}</h2>
+      <div class="contact">
+        <a class="contact-btn" href="tel:${esc(tel)}"><span>📞</span><b>${esc(t.phone)}</b>${esc(c.phone)}</a>
+        <a class="contact-btn" href="mailto:${esc(c.email)}"><span>✉️</span><b>${esc(t.email)}</b>${esc(c.email)}</a>
+        ${c.links.map((l) => `<a class="contact-btn" href="${esc(l.url)}" target="_blank" rel="noopener"><span>🔗</span><b>${esc(l.label)}</b>${esc(l.url.replace(/^https?:\/\/(www\.)?/, ""))}</a>`).join("")}
+      </div>
+    </section>
+
+    <section class="about-sec">
+      <h2>💝 ${esc(t.about_offering)}</h2>
+      <p class="muted">${esc(c.offering.text)}</p>
+      <div class="accounts">${c.offering.accounts
+        .map(
+          (a) => `<div class="account"><span class="acc-label">${esc(a.label)}</span><span class="acc-no">${esc(a.bank)} <b>${esc(a.number)}</b></span><span class="acc-holder">${esc(t.holder)}: ${esc(a.holder)}</span>${copyBtn(`${a.bank} ${a.number}`)}</div>`,
+        )
+        .join("")}</div>
+    </section>
+
+    <section class="about-sec">
+      <h2>🌱 ${esc(t.about_ministries)}</h2>
+      <div class="ministries">${(c.ministries || [])
+        .map(
+          (m) => `<div class="ministry"><strong>${esc(m.name)}</strong>${m.desc ? `<span class="muted">${esc(m.desc)}</span>` : ""}
+            <span class="ministry-act">${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(t.visit)} ›</a>` : ""}${
+              m.phone ? `<a href="tel:${esc(m.phone.replace(/-/g, ""))}">📞 ${esc(m.phoneLabel || t.phone)} ${esc(m.phone)}</a>` : ""
+            }</span></div>`,
+        )
+        .join("")}</div>
+    </section>
   </article>`;
 }
 
@@ -789,6 +951,18 @@ document.addEventListener("click", (e) => {
     return openPlayer(vrow);
   }
   if (e.target.closest("[data-install]")) return installApp();
+  const g = e.target.closest("[data-goto]");
+  if (g) sessionStorage.setItem("goto", g.dataset.goto);
+  const sh = e.target.closest("[data-sheet]");
+  if (sh) return openSheet(sh.dataset.sheet);
+  const cp = e.target.closest("[data-copytext]");
+  if (cp) {
+    navigator.clipboard?.writeText(cp.dataset.copytext).then(() => {
+      cp.textContent = t.copied;
+      setTimeout(() => (cp.textContent = t.copy), 1500);
+    });
+    return;
+  }
   const more = e.target.closest("[data-vmore]");
   if (more) {
     const box = more.parentElement.querySelector("[data-vlist]");

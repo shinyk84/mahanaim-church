@@ -682,3 +682,100 @@ p.sub2 { margin: 2px 0 0; }
 .p7-rows.compact dd { flex: none; }
 .p7-table tr:has(td:nth-child(2):last-child) td:first-child { font-weight: 700; }
 .p7-title { white-space: normal; flex-wrap: wrap; justify-content: center; gap: 0 4px; }
+
+/* ---------- 교회 소개 ---------- */
+.about { padding: 8px 0 24px; }
+.about-hero { display: flex; gap: 16px; align-items: center; margin: 20px 0 8px; }
+.about-hero img { width: 56px; flex: none; }
+.about-hero small { color: var(--muted); font-size: 0.8rem; }
+.about-hero h1 { margin: 0; font-size: 1.5rem; color: var(--navy); }
+.about-meaning { margin: 2px 0 0; color: var(--green-ink); font-weight: 700; font-size: 0.95rem; }
+.about-intro { line-height: 1.8; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin: 12px 0 8px; }
+.about-sec { margin: 26px 0; scroll-margin-top: 120px; }
+.about-sec h2 { font-size: 1.15rem; color: var(--navy); margin: 0 0 10px; }
+.worship { list-style: none; margin: 0; padding: 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.worship li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.worship li:first-child { border-top: 0; }
+.w-name { font-weight: 700; display: flex; flex-direction: column; }
+.w-name small { font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+.w-time { color: var(--navy); font-weight: 800; white-space: nowrap; }
+.people { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.people > div { display: flex; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.people > div:first-child { border-top: 0; }
+.people dt { flex: 0 0 6.5em; color: var(--muted); font-size: 0.88rem; padding-top: 1px; }
+.people dd { margin: 0; display: flex; flex-direction: column; gap: 2px; font-weight: 600; }
+.people dd b { color: var(--green-ink); margin-inline-end: 6px; }
+.addr { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-weight: 700; margin: 0 0 10px; }
+.copy-btn { font: inherit; font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--navy); cursor: pointer; }
+.loc-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.loc-card .addr { margin: 0; }
+.landmark { margin: 6px 0 0; font-weight: 700; color: var(--green-ink); }
+.map-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.map-links a { text-align: center; text-decoration: none; padding: 10px 6px; border-radius: 12px; font-weight: 700; font-size: 0.88rem; background: var(--card); border: 1px solid var(--line); color: var(--ink); }
+.map-links a:nth-child(1) { border-color: #03c75a; color: #029c47; }
+.map-links a:nth-child(2) { border-color: #f7c600; color: #8a6d00; }
+.contact { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.contact-btn { display: grid; grid-template-columns: auto 1fr; column-gap: 10px; align-items: center; text-decoration: none; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: 0.9rem; overflow-wrap: anywhere; }
+.contact-btn span { grid-row: span 2; font-size: 1.3rem; }
+.contact-btn b { color: var(--navy); font-size: 0.8rem; }
+.accounts { display: grid; gap: 8px; margin-top: 10px; }
+.account { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.acc-label { font-size: 0.8rem; color: var(--muted); grid-column: 1; }
+.acc-no { grid-column: 1; }
+.acc-no b { font-size: 1.05rem; letter-spacing: 0.02em; }
+.acc-holder { grid-column: 1; font-size: 0.8rem; color: var(--muted); }
+.account .copy-btn { grid-column: 2; grid-row: 1 / span 3; }
+.ministries { display: grid; gap: 8px; }
+.ministry { display: flex; flex-direction: column; gap: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.ministry-act { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.ministry-act a { color: var(--navy); font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+
+/* 하단 교회 정보 */
+.footer .f-info { margin: 4px 0 10px; line-height: 1.7; font-size: 0.8rem; }
+.footer .f-info p { margin: 0; }
+.footer .f-info b { color: var(--ink); font-weight: 600; margin-inline-end: 4px; }
+.footer a { color: inherit; }
+.footer .f-links a { color: var(--navy); text-decoration: none; font-weight: 600; }
+
+/* ---------- 홈: 교회 안내 카드 ---------- */
+.home-info { margin: 18px 0 4px; padding: 14px 16px; border-radius: 16px; background: linear-gradient(135deg, var(--navy-soft), var(--card)); border: 1px solid var(--line); }
+.hi-times { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 0.88rem; }
+.hi-times b { color: var(--navy); }
+.hi-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.hi-actions a { text-align: center; text-decoration: none; padding: 9px 6px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); color: var(--navy); font-weight: 700; font-size: 0.9rem; }
+
+/* ---------- 폰 레이아웃: 위는 로고+언어 한 줄, 메뉴는 아래 고정 탭바 ---------- */
+.tabbar { display: none; }
+@media (max-width: 700px) {
+  .nav { display: none; }
+  .top { position: sticky; top: 0; }
+  .top-inner { padding: 8px 12px; flex-wrap: nowrap; justify-content: space-between; }
+  .langs { padding: 0; margin: 0; }
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 8px; padding-inline-end: 12px; }
+  .top::before { flex: 0 0 100%; }
+  .top .top-inner { flex: 1 1 auto; min-width: 0; }
+  .langs .lang2, .langs .soon { display: none; }
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .tabbar {
+    display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; inset: auto 0 0 0; z-index: 50;
+    background: color-mix(in srgb, var(--card) 96%, transparent); backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line); padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+    box-shadow: 0 -4px 16px rgb(23 42 136 / 0.06);
+  }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0 4px; text-decoration: none; color: var(--muted); font-size: 0.7rem; font-weight: 600; border-radius: 12px; }
+  .tab.on { color: var(--navy); }
+  .tab.on svg { stroke-width: 2.4; }
+  .tab.on span { font-weight: 800; }
+  .footer { padding-bottom: 16px; }
+}
+/* 선택 창(전도도구·더보기) */
+.sheet-list { display: flex; flex-direction: column; padding: 4px 12px 18px; gap: 6px; }
+.sheet-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; text-decoration: none; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--line); font: inherit; text-align: start; cursor: pointer; width: 100%;
+}
+.sheet-item b { display: block; font-size: 1rem; }
+.sheet-item small { color: var(--muted); font-size: 0.8rem; }
+.sheet-ic { font-size: 1.4rem; width: 36px; text-align: center; flex: none; }
+.sheet-go { margin-inline-start: auto; color: var(--muted); font-size: 1.3rem; }
+.sheet-lang select { margin-top: 4px; font: inherit; padding: 4px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
