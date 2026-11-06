@@ -1,10 +1,10 @@
-# 매일 유튜브 채널의 새 영상을 강단/본부 메시지 목록에 추가하고, 바뀐 것이 있으면 커밋합니다.
+# 매시간 유튜브 채널의 새 영상을 강단/본부 메시지 목록에 추가하고, 바뀐 것이 있으면 커밋합니다.
 # (푸시되면 Vercel이 자동 배포) GitHub 저장소 > Actions 탭에서 "Run workflow"로 바로 실행할 수도 있습니다.
 name: Sync YouTube videos
 
 on:
   schedule:
-    - cron: "0 3,12 * * *" # 매일 한국시간 12:00, 21:00
+    - cron: "23 * * * *" # 매시간 23분 (정각은 GitHub가 늦게 실행하는 경우가 많아 피함)
   workflow_dispatch:
 
 permissions:
