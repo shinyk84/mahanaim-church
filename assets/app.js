@@ -353,8 +353,15 @@ const msgCard = (type, m) => `
 
 // ---------- 유튜브 영상 목록 (영상은 유튜브에 있고 여기엔 ID·제목만: scripts/sync_youtube.py) ----------
 const PAGE = 20;
+// 영상 목록은 매시간 자동으로 늘어나므로, 사이트를 오래 열어 둬도 5분마다 새로 받음
+const videoFetchedAt = {};
 const loadVideos = async (type) => {
-  const [cats, videos] = await Promise.all([load("content/videos/categories.json"), load(`content/videos/${type}.json`).catch(() => [])]);
+  const path = `content/videos/${type}.json`;
+  if (Date.now() - (videoFetchedAt[type] || 0) > 5 * 60 * 1000) {
+    jsonCache.delete(`json:${path}`);
+    videoFetchedAt[type] = Date.now();
+  }
+  const [cats, videos] = await Promise.all([load("content/videos/categories.json"), load(path).catch(() => [])]);
   return { ...cats[type], videos: videos.filter((v) => !v.hidden) };
 };
 const catName = (c) => (c ? c[lang] ?? c.ko : "");
