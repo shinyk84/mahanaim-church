@@ -367,14 +367,11 @@ const loadVideos = async (type) => {
 const catName = (c) => (c ? c[lang] ?? c.ko : "");
 
 const vTitle = (v) => v.titles?.[lang] ?? v.title;
-// 녹취가 있는 영상은 사이트 안 녹취 페이지로(영상도 그 페이지 위쪽에), 없으면 플레이어 팝업/유튜브
+// 녹취가 있든 없든 사이트 안 영상 페이지로(녹취가 있으면 영상 아래·옆에 녹취)
 const videoRow = (v, cats, type) => {
   const c = cats.find((x) => x.id === v.cat);
   const tr = v.tr?.length;
-  const link = tr
-    ? `href="${href(type, "v_" + v.id)}"`
-    : `href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" target="_blank" rel="noopener"${v.noembed ? "" : ` data-yt="${esc(v.id)}"`}`;
-  return `<a class="vrow" ${link} data-cat="${esc(v.cat)}">
+  return `<a class="vrow" href="${href(type, "v_" + v.id)}" data-cat="${esc(v.cat)}">
     <span class="vthumb"><img src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/mqdefault.jpg" alt="" loading="lazy"><span class="vplay" aria-hidden="true">▶</span></span>
     <span class="vtxt">
       <strong>${esc(vTitle(v))}</strong>
@@ -441,7 +438,8 @@ async function videoPage(type, vid) {
       ? duo(renderMarkdown(md, src), src, renderMarkdown(md2, lang2), lang2)
       : `<div class="prose" lang="${src}" dir="${dirOf(src)}">${renderMarkdown(md, src)}</div>`;
   // 영상은 고정, 녹취만 스크롤: 폰 = 영상이 헤더 아래 붙음 / PC = 왼쪽 영상 · 오른쪽 녹취(두 언어면 녹취 칸을 넓게)
-  return `<article class="article vpage ${md ? (has2 ? "split duo2" : "split") : ""}">
+  // 녹취가 없으면 폰은 같은 모양, PC는 영상을 넓게 한 칸으로
+  return `<article class="article vpage ${md ? (has2 ? "split duo2" : "split") : "solo"}">
     ${backBtn(type)}
     <div class="vp-side">
       <div class="vpage-player">${player}</div>
@@ -454,22 +452,6 @@ async function videoPage(type, vid) {
     <div class="vp-main">${body}</div>
     ${backBtn(type, "bottom")}
   </article>`;
-}
-
-/** 사이트 안 영상 플레이어(팝업). 닫으면 iframe을 지워 재생도 멈춤 */
-function openPlayer(row) {
-  const id = row.dataset.yt;
-  const watch = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
-  dlg.innerHTML = `<div class="v-wrap player">
-    <div class="v-head"><span class="vmeta">${row.querySelector(".vmeta")?.innerHTML || ""}</span><button type="button" class="v-close" data-close aria-label="${esc(t.close)}">✕</button></div>
-    <div class="player-frame"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&playsinline=1" title="${esc(row.querySelector("strong")?.textContent || "")}"
-      allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-    <div class="player-info"><strong>${esc(row.querySelector("strong")?.textContent || "")}</strong>
-      <a href="${watch}" target="_blank" rel="noopener">▶ ${esc(t.watch_yt)} ›</a></div>
-    <button type="button" class="back-btn bottom player-back" data-close>‹ ${esc(t.back_list)}</button>
-  </div>`;
-  dlg.classList.add("wide");
-  if (!dlg.open) dlg.showModal();
 }
 
 /** 카테고리 필터 + "더 보기": 행은 모두 그려 두고 보이는 것만 고름(숨긴 썸네일은 lazy라 안 받음) */
@@ -1054,13 +1036,6 @@ document.addEventListener("click", (e) => {
     const [gi, ii] = p7.dataset.p7.split(".").map(Number);
     return openP7(gi, ii);
   }
-  // 영상: 유튜브로 나가지 않고 사이트 안 플레이어 팝업으로 재생 (새 탭/Ctrl+클릭은 그대로 유튜브)
-  // 채널이 퍼가기를 막은 영상(noembed)은 data-yt가 없어 링크대로 유튜브에서 열림
-  const vrow = e.target.closest("[data-yt]");
-  if (vrow && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
-    e.preventDefault();
-    return openPlayer(vrow);
-  }
   if (e.target.closest("[data-install]")) return installApp();
   if (e.target.closest("[data-langhint-off]") || e.target.closest("[data-langhint-go]")) {
     store.set("langHintOff", "1");
@@ -1173,13 +1148,6 @@ window.addEventListener("hashchange", () => setTimeout(onScroll, 50));
 
 // ---------- 성구 팝업 ----------
 const dlg = document.getElementById("verse");
-// 팝업을 닫으면 영상 재생을 멈추고 넓은 모드 해제
-dlg.addEventListener("close", () => {
-  if (dlg.classList.contains("wide")) {
-    dlg.classList.remove("wide");
-    dlg.innerHTML = "";
-  }
-});
 let current = null;
 let shownLang = null;
 

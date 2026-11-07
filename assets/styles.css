@@ -187,7 +187,6 @@ a { color: inherit; }
   background: var(--navy); color: #fff; font-weight: 700; font-size: 0.92rem; text-decoration: none; box-shadow: var(--shadow);
 }
 .back-btn:hover { filter: brightness(1.15); }
-.player-back { font: inherit; border: 0; cursor: pointer; margin: 0 16px 16px !important; }
 .back-btn.bottom { display: flex; justify-content: center; margin: 32px 0 8px; padding: 13px 16px; font-size: 1rem; }
 
 .notice { background: var(--cream); padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; }
@@ -271,16 +270,8 @@ h3 .sub2, h4 .sub2 { flex-basis: 100%; }
 .player-off img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .vplay.big { inset: 50% auto auto 50%; translate: -50% -50%; font-size: 1rem; padding: 10px 18px; border-radius: 999px; background: rgb(204 0 0 / 0.9); white-space: nowrap; }
 
-/* 영상 플레이어 팝업 */
-.verse.wide { width: min(960px, calc(100vw - 24px)); max-height: 92vh; }
-.verse.wide::backdrop { background: rgb(0 0 0 / 0.75); }
-.player { max-height: 92vh; }
-.player .v-head { padding: 10px 12px 10px 16px; }
 .player-frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
 .player-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.player-info { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; padding: 12px 16px 16px; }
-.player-info strong { font-size: 1.05rem; line-height: 1.4; }
-.player-info a { font-size: 0.85rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
 .v-wrap { display: flex; flex-direction: column; max-height: 80vh; }
 .v-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 14px 16px 8px; }
 .v-head h3 { margin: 0; color: var(--navy); font-size: 1.15rem; }
@@ -1036,11 +1027,11 @@ dialog[open] ~ .to-top { display: none; }
 
 /* ---------- 영상 + 녹취: 영상은 고정, 녹취만 스크롤 ---------- */
 .vpage .vpage-player { margin: 12px 0 10px; }
-/* 폰(그리고 두 언어 보기): 영상이 헤더 바로 아래에 붙어 있음 */
-.vpage.split .vpage-player, .vpage.stick-top .vpage-player {
+/* 폰(그리고 두 언어 보기): 영상이 헤더 바로 아래에 붙어 있음. 녹취 없는 영상(solo)도 같은 모양 */
+.vpage.split .vpage-player, .vpage.stick-top .vpage-player, .vpage.solo .vpage-player {
   position: sticky; top: var(--hdr, 56px); z-index: 6; margin: 0 -16px 10px; border-radius: 0; box-shadow: 0 6px 14px rgb(23 42 136 / 0.12);
 }
-.vpage.stick-top .vp-side, .vpage.split .vp-side { display: contents; }
+.vpage.stick-top .vp-side, .vpage.split .vp-side, .vpage.solo .vp-side { display: contents; }
 /* PC 한 언어: 왼쪽(영상·제목) 고정, 오른쪽 녹취 */
 @media (min-width: 900px) {
   .vpage.split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); column-gap: 32px; align-items: start;
@@ -1051,6 +1042,10 @@ dialog[open] ~ .to-top { display: none; }
   .vpage.split .vp-main { grid-column: 2; min-width: 0; }
   .vpage.split .vp-main .prose > :first-child { margin-top: 0; }
   .vpage.split > .back-btn.bottom { grid-column: 2; }
+  /* 녹취 없는 영상(PC): 녹취 페이지와 같은 너비로 영상을 크게 */
+  .vpage.solo { width: min(960px, calc(100vw - 48px)); margin-left: 50%; transform: translateX(-50%); }
+  .vpage.solo .vp-side { display: block; }
+  .vpage.solo .vpage-player { position: static; margin: 0 0 10px; border-radius: 14px; box-shadow: var(--shadow); }
   /* 두 언어 보기(PC): 영상을 위에 고정하되 너무 크지 않게 */
   .vpage.stick-top .vpage-player { margin: 0 0 10px; max-width: 560px; border-radius: 0 0 14px 14px; }
 }

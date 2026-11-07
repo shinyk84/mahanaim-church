@@ -5,6 +5,8 @@
 - 영상 파일은 저장하지 않고 영상 ID·제목·날짜·분류만 저장합니다(썸네일·재생은 유튜브).
 - 분류는 영상 제목의 표시(주일1부, 평일새벽, 산업선교 …)로 자동 판단합니다.
 - 이미 있는 영상은 건드리지 않으므로, JSON에서 손으로 고친 분류(cat)·제목은 유지됩니다.
+- 넣지 않는 영상: 전체예배, 쇼츠, 생중계(방송 중·예정인 라이브, 제목에 LIVE가 붙은 대회 생중계).
+  단, 강단의 평일새벽 라이브 녹화본은 방송이 끝난 뒤 새벽예배로 넣습니다.
 - 목록에서 빼고 싶은 영상은 JSON의 "hidden": true 로 숨깁니다(지우면 다음 동기화 때 다시 들어옴).
 - 출처: 채널 RSS(최근 15개) + 채널 동영상/라이브 탭(최근 약 30개씩). 탭 읽기가 실패해도 RSS만으로 동작.
 GitHub Actions(.github/workflows/sync-youtube.yml)가 매일 자동 실행합니다.
@@ -39,9 +41,15 @@ def skipped(title, extra=()):
     return any(k.lower() in s for k in COMMON_SKIP + extra)
 
 
+def live_title(title):
+    return re.search(r"(?<![A-Za-z])LIVE(?![A-Za-z])", title, re.I) is not None
+
+
 def cat_pulpit(title):
     s = squash(title)
     if skipped(title) or "헌신예배전체" in s:
+        return None
+    if live_title(title) and "새벽" not in s:  # 평일새벽 라이브 녹화본만 받음
         return None
     if "새벽" in s:
         return "dawn"
@@ -57,7 +65,7 @@ HQ_SKIP = ()
 
 def cat_hq(title):
     s = squash(title)
-    if skipped(title, HQ_SKIP):
+    if skipped(title, HQ_SKIP) or live_title(title):  # 대회 생중계
         return None
     for key, cat in (
         ("RUTC뉴스", "news"),
@@ -78,7 +86,7 @@ def cat_hq(title):
 
 
 CHANNELS = {
-    "pulpit": {"handle": "themahanaim", "id": "UCi_T8LTlNPYaSSJcxaIEnUQ", "classify": cat_pulpit},
+    "pulpit": {"handle": "themahanaim", "id": "UCi_T8LTlNPYaSSJcxaIEnUQ", "classify": cat_pulpit, "noShorts": True},
     "hq": {"handle": "rutctv", "id": "UCquoY7mZYzen5TDY3Bep8uA", "classify": cat_hq, "noShorts": True},
 }
 
@@ -189,6 +197,15 @@ def is_short(vid):
         return False  # 확인 못 하면 일반 영상으로 취급
 
 
+def live_now(vid):
+    """방송 중이거나 예정인 라이브면 True. 끝난 라이브(녹화본)·일반 영상은 False, 확인 실패는 None"""
+    try:
+        x = get(f"https://www.youtube.com/watch?v={vid}", tries=2)
+    except Exception:
+        return None
+    return '"isLiveNow":true' in x or '"isUpcoming":true' in x
+
+
 def embeddable(vid):
     """다른 사이트(우리 사이트)에서 재생 가능한지. 401/403 = 채널이 퍼가기를 막음, 그 외 오류 = 모름(None)"""
     try:
@@ -254,7 +271,7 @@ def sync(kind, since=None):
             continue
         if ch.get("noShorts"):
             if is_short(vid):
-                continue  # 본부 채널의 쇼츠는 넣지 않음
+                continue  # 쇼츠는 넣지 않음
         date = date_in_title(yt) or pub
         if not date or (since and date < since):
             continue  # 날짜를 알 수 없으면 다음 RSS 때 추가
@@ -268,7 +285,7 @@ def sync(kind, since=None):
         v["yt"] = yt  # 원래 유튜브 제목(분류 확인용)
         videos.append(v)
         added += 1
-    # 쇼츠 제외(본부): 이미 들어간 영상도 한 번씩 검사해서 빼기
+    # 쇼츠 제외: 이미 들어간 영상도 한 번씩 검사해서 빼기
     if ch.get("noShorts"):
         kept = []
         for v in videos:
@@ -279,6 +296,18 @@ def sync(kind, since=None):
                 v["shortChecked"] = True
             kept.append(v)
         videos = kept
+    # 방송 중·예정인 라이브 제외: 방송이 끝나면(녹화본) 다음 동기화 때 다시 들어옴
+    kept = []
+    for v in videos:
+        if not v.get("liveChecked"):
+            live = live_now(v["id"])
+            if live:
+                removed += 1
+                continue
+            if live is False:
+                v["liveChecked"] = True
+        kept.append(v)
+    videos = kept
     # 퍼가기 허용 여부: 새 영상 + 막혀 있던 영상은 다시 확인(채널에서 허용으로 바꾸면 자동 반영)
     checks = unknown = 0
     for v in videos:

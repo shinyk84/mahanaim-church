@@ -1,20 +1,52 @@
 [
  {
-  "id": "hqVNX27kBFs",
+  "id": "wgMLwK2NcFU",
   "date": "2026-11-07",
-  "cat": "core",
-  "title": "토요핵심 - 핵심 (제48차 치유사명자대회)",
+  "cat": "news",
+  "title": "RUTC 뉴스",
   "shortChecked": true,
-  "yt": "[ RUTC TV LIVE ] 2026.11.07. 토요핵심 - 핵심 (제48차 치유사명자대회)",
+  "yt": "2026.11.07. RUTC 뉴스",
+  "liveChecked": true,
   "embedChecked": true
  },
  {
-  "id": "eILKd2EGo2E",
+  "id": "ufoe_ZcECjc",
+  "date": "2026-11-07",
+  "cat": "scattered",
+  "title": "다민족 치유 (행 2:9-11)",
+  "shortChecked": true,
+  "yt": "[ 4K ] 2026.11.07. 흩어진 제자들 「다민족 치유」 (행 2:9-11)",
+  "liveChecked": true,
+  "embedChecked": true
+ },
+ {
+  "id": "SEipGaAqMU4",
+  "date": "2026-11-07",
+  "cat": "remnant",
+  "title": "근원 치유의 기회 (창 3:15)",
+  "shortChecked": true,
+  "yt": "[ 4K ] 2026.11.07. 렘넌트와 TCK 전도학 「근원 치유의 기회」 (창 3:15)",
+  "liveChecked": true,
+  "embedChecked": true
+ },
+ {
+  "id": "KrfhNWQEwFA",
   "date": "2026-11-07",
   "cat": "industry",
-  "title": "토요핵심 - 산업선교 (제48차 치유사명자대회)",
+  "title": "생각 치유 (빌 4:7-8)",
   "shortChecked": true,
-  "yt": "[ 4K LIVE ] 2026.11.07. 토요핵심 - 산업선교 (제48차 치유사명자대회)",
+  "yt": "[ 4K ] 2026.11.07. 산업선교 「생각 치유」 (빌 4:7-8)",
+  "liveChecked": true,
+  "embedChecked": true
+ },
+ {
+  "id": "8L4Is4mlBLc",
+  "date": "2026-11-07",
+  "cat": "core",
+  "title": "질병 치유 (행 19:1-21)",
+  "shortChecked": true,
+  "yt": "[ 4K ] 2026.11.07. 핵심 「질병 치유」 (행 19:1-21)",
+  "liveChecked": true,
   "embedChecked": true
  },
  {
@@ -24,7 +56,8 @@
   "title": "도단성을 건축하라 (왕하 6:14-17)",
   "yt": "[ 4K ] 2026.11.01. 주일2부 「도단성을 건축하라」 (왕하 6:14-17)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "hFGCXAMGDKI",
@@ -33,7 +66,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.11.01. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "YELbDVmfNt8",
@@ -42,7 +76,8 @@
   "title": "그리스도의 계보를 이은 언약적 선택 (창 38:1-30)",
   "yt": "[ 4K ] 2026.11.01. 구역공과 44주차 「그리스도의 계보를 이은 언약적 선택」 (창 38:1-30)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "LaReFQslN2w",
@@ -51,7 +86,8 @@
   "title": "고3 수험생을 위한 메시지 - 세 가지 준비",
   "shortChecked": true,
   "yt": "2026.11.01 고3 수험생을 위한 메시지 - 세 가지 준비",
-  "embedChecked": true
+  "embedChecked": true,
+  "liveChecked": true
  },
  {
   "id": "8MRbx5wmd4E",
@@ -60,7 +96,8 @@
   "title": "상황 따라가는 제자, 언약 따라가는 제자 (왕하 2:9-11)",
   "yt": "[ 4K ] 2026.11.01. 주일1부 「상황 따라가는 제자, 언약 따라가는 제자」 (왕하 2:9-11)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "qURoQw7pb40",
@@ -69,7 +106,8 @@
   "title": "유럽을 살릴 산업인 (롬 1:16-17)",
   "yt": "[ 4K ] 2026.10.31. 산업선교 「유럽을 살릴 산업인」 (롬 1:16-17)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "65L-BNbyKlA",
@@ -78,7 +116,8 @@
   "title": "5000종족 살릴 유럽 렘넌트 (행 17:1, 18:4, 19:8)",
   "yt": "[ 4K ] 2026.10.31. 렘넌트와 TCK 전도학 「5000종족 살릴 유럽 렘넌트」 (행 17:1, 18:4, 19:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "4vK1eWTGGbw",
@@ -87,7 +126,8 @@
   "title": "유럽 살린 흩어진 제자들",
   "yt": "[ 4K ] 2026.10.31. 흩어진 제자들 「유럽 살린 흩어진 제자들」",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "3Yh4_lHsEwA",
@@ -96,7 +136,8 @@
   "title": "유럽 살린 전도자들 (행 9:15)",
   "yt": "[ 4K ] 2026.10.31. 핵심 「유럽 살린 전도자들」 (행 9:15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "-uiAMeIaeCM",
@@ -105,7 +146,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.31. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "lBIDBJpHuZU",
@@ -114,7 +156,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.25. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "VK2dBfELlF8",
@@ -123,7 +166,8 @@
   "title": "절망은 참된 시작이다 (왕상 19:1-8)",
   "yt": "[ 4K ] 2026.10.25. 주일2부 「절망은 참된 시작이다」 (왕상 19:1-8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "FSK3dcZG-y8",
@@ -132,7 +176,8 @@
   "title": "꿈을 가진 요셉 (창 37:1-11)",
   "yt": "[ 4K ] 2026.10.25. 구역공과 43주차 「꿈을 가진 요셉」 (창 37:1-11)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "03TEXM6R4Dg",
@@ -141,7 +186,8 @@
   "title": "오바댜의 망대 (왕상 18:1-15)",
   "yt": "[ 4K ] 2026.10.25. 주일1부 「오바댜의 망대」 (왕상 18:1-15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "vkvDquDgQsU",
@@ -150,7 +196,8 @@
   "title": "흩어진 제자들의 망대 (행 11:19)",
   "yt": "[ 4K ] 2026.10.24. 흩어진 제자들 「흩어진 제자들의 망대」 (행 11:19)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "fvgFOyXnZJI",
@@ -159,7 +206,8 @@
   "title": "렘넌트와 TCK의 망대 (행 1:8)",
   "yt": "[ 4K ] 2026.10.24. 렘넌트와 TCK 전도학 「렘넌트와 TCK의 망대」 (행 1:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "W4rIc7gX14o",
@@ -168,7 +216,8 @@
   "title": "핵심 [RT-DAY 11월 학원복음화]",
   "yt": "[ 4K ] 2026.10.24. 핵심 [RT-DAY 11월 학원복음화]",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "Q1XZ6JbJS-U",
@@ -177,7 +226,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.24. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "IyID2GbWF5w",
@@ -186,7 +236,8 @@
   "title": "중직자 산업인의 망대 (행 1:1-14)",
   "yt": "[ 4K ] 2026.10.24. 산업선교 「중직자 산업인의 망대」 (행 1:1-14)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "_d0_FrPSmYE",
@@ -195,7 +246,8 @@
   "title": "현장을 정탐하라 (민 14:1-10)",
   "yt": "[ 4K ] 2026.10.18. 주일2부 「현장을 정탐하라」 (민 14:1-10)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "LrfoWFZtDkg",
@@ -204,7 +256,8 @@
   "title": "세계 망대를 세우라 (대상 29:10-14)",
   "yt": "[ 4K ] 2026.10.18. 주일1부 「세계 망대를 세우라」 (대상 29:10-14)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "JyA8g1odWkQ",
@@ -213,7 +266,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.18. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "2NqCwPDeglg",
@@ -222,7 +276,8 @@
   "title": "벧엘로 올라가자 (창 35:1-8)",
   "yt": "[ 4K ] 2026.10.18. 구역공과 42주차 「벧엘로 올라가자」 (창 35:1-8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "k4vqvQZyuD0",
@@ -231,7 +286,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.17. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "QS9DeFJdLhA",
@@ -240,7 +296,8 @@
   "title": "RTS RLS RGS를 위한 기도 (행 19:1-21)",
   "yt": "[ 4K ] 2026.10.17. 산업선교 「RTS RLS RGS를 위한 기도」 (행 19:1-21)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "J5YoEVmj8ps",
@@ -249,7 +306,8 @@
   "title": "RTS RGS RLS의 문화 (행 1:8)",
   "yt": "[ 4K ] 2026.10.17. 핵심 「RTS RGS RLS의 문화」 (행 1:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "AtdET51Zf-Q",
@@ -258,7 +316,8 @@
   "title": "RTS RGS RLS의 후원자가 되라",
   "yt": "[ 4K ] 2026.10.17. 렘넌트와 TCK 전도학 「RTS RGS RLS의 후원자가 되라」",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "5mqA6itg8f0",
@@ -267,7 +326,8 @@
   "title": "새로운 문화를 살리는 전도제자 (몬 1:1-25)",
   "yt": "[ 4K ] 2026.10.17. 흩어진 제자들 「새로운 문화를 살리는 전도제자」 (몬 1:1-25)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "zPxpSRoDDIg",
@@ -276,7 +336,8 @@
   "title": "고넬료에서 로마로 가는 군 선교 여정 (행 27:10-25)",
   "yt": "[ 4K ] 2026.10.11. 주일1부 「고넬료에서 로마로 가는 군 선교 여정」 (행 27:10-25)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "fvVAOadWIPc",
@@ -285,7 +346,8 @@
   "title": "복음 아는 자들이 선교할 수 있다 (행 1:1-14)",
   "yt": "[ 4K ] 2026.10.11. 주일2부 「복음 아는 자들이 선교할 수 있다」 (행 1:1-14)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "M_OABGRFTTs",
@@ -294,7 +356,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.11. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "MTzNQNpMsDE",
@@ -303,7 +366,8 @@
   "title": "홀로 남은 야곱 (창 32:24-32)",
   "yt": "[ 4K ] 2026.10.11. 구역공과 41주차 「홀로 남은 야곱」 (창 32:24-32)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "jLzwvhrkcHY",
@@ -312,7 +376,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.10. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "dKeHyyMhqEU",
@@ -321,7 +386,8 @@
   "title": "군 선교할 고넬료를 찾으라 (행 10:45)",
   "yt": "[ 4K ] 2026.10.10. 핵심 「군 선교할 고넬료를 찾으라」 (행 10:45)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ZLY3uqcGRHk",
@@ -330,7 +396,8 @@
   "title": "렘넌트의 군 선교 준비 (시 78:70-72)",
   "yt": "[ 4K ] 2026.10.10. 렘넌트와 TCK 전도학 「렘넌트의 군 선교 준비」 (시 78:70-72)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "UOVVd69Pj7A",
@@ -339,7 +406,8 @@
   "title": "흩어진 제자들의 군 선교 (행 27:24)",
   "yt": "[ 4K ] 2026.10.10. 흩어진 제자들 「흩어진 제자들의 군 선교」 (행 27:24)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "T4ay8UJWbuw",
@@ -348,7 +416,8 @@
   "title": "전쟁 재앙을 막은 군 선교 (단 1:8-9)",
   "yt": "[ 4K ] 2026.10.10. 산업선교 「전쟁 재앙을 막은 군 선교」 (단 1:8-9)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "mOxn2pzWq1w",
@@ -357,7 +426,8 @@
   "title": "중직자의 시대 역할 (삼상 16:1-13)",
   "yt": "[ 4K ] 2026.10.04. 주일2부 「중직자의 시대 역할」 (삼상 16:1-13)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "hiDkUUx8hOY",
@@ -366,7 +436,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.04. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ewzMFrbEcqU",
@@ -375,7 +446,8 @@
   "title": "미스바 운동과 세계 망대 (삼상 7:1-15)",
   "yt": "[ 4K ] 2026.10.04. 주일1부 「미스바 운동과 세계 망대」 (삼상 7:1-15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "LnNPR2ECqLM",
@@ -384,7 +456,8 @@
   "title": "라반의 계략과 하나님의 축복 (창 30:25-31:16)",
   "yt": "[ 4K ] 2026.10.04. 구역공과 40주차 「라반의 계략과 하나님의 축복」 (창 30:25-31:16)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "rd7n_hGNh1w",
@@ -393,7 +466,8 @@
   "title": "중직자 산업인이 가져야 할 영원한 것 (고후 12:1-10)",
   "yt": "[ 4K ] 2026.10.03. 산업선교 「중직자 산업인이 가져야 할 영원한 것」 (고후 12:1-10)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ZvRd9X6t-FY",
@@ -402,7 +476,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.10.03. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ZuOAPb1HoW4",
@@ -411,7 +486,8 @@
   "title": "전도제자가 가질 영원한 것",
   "yt": "[ 4K ] 2026.10.03. 핵심 「전도제자가 가질 영원한 것」",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "RKbrmFwYSb0",
@@ -420,7 +496,8 @@
   "title": "렘넌트가 가져야 할 영원한 것 (행 1:8)",
   "yt": "[ 4K ] 2026.10.03. 렘넌트와 TCK 전도학 「렘넌트가 가져야 할 영원한 것」 (행 1:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "9QA6s6zxkb0",
@@ -429,7 +506,8 @@
   "title": "내 안에 절대망대 (행 1:8)",
   "yt": "[ 4K ] 2026.10.03. 흩어진 제자들 「내 안에 절대망대」 (행 1:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "qJ5ww4J9szo",
@@ -438,7 +516,8 @@
   "title": "축복을 향한 피난의 길 (창 28:10-22)",
   "yt": "[ 4K ] 2026.09.27. 구역공과 39주차 「축복을 향한 피난의 길」 (창 28:10-22)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "jyIral7q7C0",
@@ -447,7 +526,8 @@
   "title": "광야에서 로마까지 성전을 세운 사람들 (행 4:32-37)",
   "yt": "[ 4K ] 2026.09.27. 주일2부 「광야에서 로마까지 성전을 세운 사람들」 (행 4:32-37)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "bbkWsjaurdc",
@@ -456,7 +536,8 @@
   "title": "광야에서 보좌의 망대를 가지면 (수 10:12-14)",
   "yt": "[ 4K ] 2026.09.27. 주일1부 「광야에서 보좌의 망대를 가지면」 (수 10:12-14)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "aICF4AOxKAU",
@@ -465,7 +546,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.27. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "q9FJdqQvw4k",
@@ -474,7 +556,8 @@
   "title": "초대교회의 주역 (행 6:1-7)",
   "yt": "[ 4K ] 2026.09.20. 주일2부 「초대교회의 주역」 (행 6:1-7)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "pB6pjAAZsHo",
@@ -483,7 +566,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.20. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "Q3d4kZN3R_g",
@@ -492,7 +576,8 @@
   "title": "야곱의 영적 욕심과 육신주의자의 분노 (창 27:1-46)",
   "yt": "[ 4K ] 2026.09.20. 구역공과 38주차 「야곱의 영적 욕심과 육신주의자의 분노」 (창 27:1-46)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "HlFqnUjkUfA",
@@ -501,7 +586,8 @@
   "title": "광야에서 만든 망대 (신 6:4-9)",
   "yt": "[ 4K ] 2026.09.20. 주일1부 「광야에서 만든 망대」 (신 6:4-9)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "qAnTeDa1kXI",
@@ -510,7 +596,8 @@
   "title": "금토일 망대의 나의 것 (행 18:1-4)",
   "yt": "[ 4K ] 2026.09.19. 산업선교 「금토일 망대의 나의 것」 (행 18:1-4)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "iDKa8ApSMuM",
@@ -519,7 +606,8 @@
   "title": "흩어진 제자들의 삶 (행 11:19)",
   "yt": "[ 4K ] 2026.09.19. 흩어진 제자들 「흩어진 제자들의 삶」 (행 11:19)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "Zw21CdM56bQ",
@@ -528,7 +616,8 @@
   "title": "렘넌트의 학업 기준 (행 9:15)",
   "yt": "[ 4K ] 2026.09.19. 렘넌트와 TCK 전도학 「렘넌트의 학업 기준」 (행 9:15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "P5Mbgo3npkM",
@@ -537,7 +626,8 @@
   "title": "핵심 [RT-DAY 10월 학원복음화]",
   "yt": "[ 4K ] 2026.09.19. 핵심 [RT-DAY 10월 학원복음화]",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "74w0CPYZMN0",
@@ -546,7 +636,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.19. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "lvxoFURMl6c",
@@ -555,7 +646,8 @@
   "title": "복을 받고 누린 이삭 (창 26:12-33)",
   "yt": "[ 4K ] 2026.09.13. 구역공과 37주차 「복을 받고 누린 이삭」 (창 26:12-33)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ZKBWbTnO7hM",
@@ -564,7 +656,8 @@
   "title": "후대를 위하여 (수 4:1-18)",
   "yt": "[ 4K ] 2026.09.13. 주일2부 「후대를 위하여」 (수 4:1-18)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "YPl65klvsfk",
@@ -573,7 +666,8 @@
   "title": "하나님이 원하시는 목회자 양성 (행 18:1-4)",
   "yt": "[ 4K ] 2026.09.13. 주일1부 「하나님이 원하시는 목회자 양성」 (행 18:1-4)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "47lo4S-ntwI",
@@ -582,7 +676,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.13. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "zRzkfYY8Qbs",
@@ -591,7 +686,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.12. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "qWdFZioO49Y",
@@ -600,7 +696,8 @@
   "title": "도단성 주일 (왕하 6:8-23)",
   "yt": "[ 4K ] 2026.09.12. 핵심 「도단성 주일」 (왕하 6:8-23)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "oJ5zIlo2W9o",
@@ -609,7 +706,8 @@
   "title": "산업인이 키우는 RTS (왕상 18:1-15)",
   "yt": "[ 4K ] 2026.09.12. 산업선교 「산업인이 키우는 RTS」 (왕상 18:1-15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "ZEgrTEUguIU",
@@ -618,7 +716,8 @@
   "title": "흩어진 제자들의 RTS 준비 (행 1:8)",
   "yt": "[ 4K ] 2026.09.12. 흩어진 제자들 「흩어진 제자들의 RTS 준비」 (행 1:8)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "U4mk5zuWjgI",
@@ -627,7 +726,8 @@
   "title": "목회해야 할 렘넌트 (행 9:1-15)",
   "yt": "[ 4K ] 2026.09.12. 렘넌트와 TCK 전도학 「목회해야 할 렘넌트」 (행 9:1-15)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "guQSqs8rpyQ",
@@ -636,7 +736,8 @@
   "title": "언약을 성취시킨 여제자들 (수 2:1-16)",
   "yt": "[ 4K ] 2026.09.06. 주일2부 「언약을 성취시킨 여제자들」 (수 2:1-16)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "Kho0Ih_8Cto",
@@ -645,7 +746,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.06. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "6n9DPPvPAPM",
@@ -654,7 +756,8 @@
   "title": "광야를 이긴 망대 (출 23:14-17)",
   "yt": "[ 4K ] 2026.09.06. 주일1부 「광야를 이긴 망대」 (출 23:14-17)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "40PNoJAVLF0",
@@ -663,7 +766,8 @@
   "title": "응답이 늦은 이삭 (창 25:19-26)",
   "yt": "[ 4K ] 2026.09.06. 구역공과 36주차 「응답이 늦은 이삭」 (창 25:19-26)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "dqP983hmuYs",
@@ -672,7 +776,8 @@
   "title": "교회 살리는 제자 (행 1:8) (🇺🇸미국 뉴저지 현지녹화)",
   "yt": "[ 4K ] 2026.09.05. 핵심 「교회 살리는 제자」 (행 1:8) (🇺🇸미국 뉴저지 현지녹화)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "V_tI9zuZd0I",
@@ -681,7 +786,8 @@
   "title": "RUTC 뉴스",
   "yt": "2026.09.05. RUTC 뉴스",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "R-sq_ROBZ5s",
@@ -690,7 +796,8 @@
   "title": "현실 속에서 오늘 얻는 응답 (창 22:1-23) (🇺🇸미국 뉴저지 현지녹화)",
   "yt": "[ 4K ] 2026.09.05. 산업선교 「현실 속에서 오늘 얻는 응답」 (창 22:1-23) (🇺🇸미국 뉴저지 현지녹화)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "Br5yj888iz0",
@@ -699,7 +806,8 @@
   "title": "300% 시간을 따로 가져라 (시 78:70-72) (🇺🇸미국 뉴저지 현지녹화)",
   "yt": "[ 4K ] 2026.09.05. 렘넌트와 TCK 전도학 「300% 시간을 따로 가져라」 (시 78:70-72) (🇺🇸미국 뉴저지 현지녹화)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  },
  {
   "id": "1Qy07cKOolQ",
@@ -708,6 +816,7 @@
   "title": "제자를 삼으라 (마 28:16-20) (🇺🇸미국 뉴저지 현지녹화)",
   "yt": "[ 4K ] 2026.09.05. 흩어진 제자들 「제자를 삼으라」 (마 28:16-20) (🇺🇸미국 뉴저지 현지녹화)",
   "embedChecked": true,
-  "shortChecked": true
+  "shortChecked": true,
+  "liveChecked": true
  }
 ]
