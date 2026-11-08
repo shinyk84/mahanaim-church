@@ -34,7 +34,7 @@ This is truly our answer. We must raise those people. (…) We must get ready.
 
 If this stands in our hearts, it is possible. A person who knows what their problem is, who knows what "Christ" means, and who knows why they fall into it, that is enough. "Isn't it because you didn't know Christ that you fell into it?" They cannot interpret a sentence properly. They don't understand the words. That is what I mean.
 
-Last time I caught a Shincheonji lecturer and talked with him. "What does John 14 say? It says He will give another Helper. So is this other Helper the same as Jesus, or different?" If they say that the Helper, the Holy Spirit, came only on Lee Man-hee, and that the Spirit who came on Mark's Upper Room was just an "ordinary spirit," then is the "another Helper" Jesus spoke of in John 14:16-17 the same as Jesus or different? (Congregation: "The same.") The same. Then what does "another" mean? Now the lecturer starts getting confused, because He is the same. What is different about "another Helper"? It means, "I am here in the flesh, and this Helper, the Holy Spirit, comes as Spirit." In whose name? "In My name." These people don't know even the basics. So the Lee Man-hee side says something else: that a different, ordinary spirit came at Mark's Upper Room.
+Last time I caught a Shincheonji lecturer and talked with him. "What does John 14 say? It says He will give another Helper. So is this other Helper the same as Jesus, or different?" If they say that the Helper, the Holy Spirit, came only on Lee Man-hee, and that the Spirit who came on Mark's Upper Room was just an "ordinary spirit," then is the "another Helper" Jesus spoke of in John 14:16-17 the same as Jesus or different? (Congregation: "The same.") The same. Then what does "another" mean? Now that's smart (the "other Helper" means God of the same essence). Now the lecturer starts getting confused, because He is the same. What is different about "another Helper"? It means, "I am here in the flesh, and this Helper, the Holy Spirit, comes as Spirit." In whose name? "In My name." These people don't know even the basics. So the Lee Man-hee side says something else: that a different, ordinary spirit came at Mark's Upper Room.
 
 The Jehovah's Witnesses say Jesus returned invisibly in the air in 1914. But Matthew 28:18 says all authority in heaven and on earth has been given to Me by the Father. Then was Jesus not on the heavenly Throne at that time? Where was He, and has He only now come? Where was He wandering all that long time? People have no discernment, so they are deceived.
 
@@ -60,7 +60,7 @@ That's enough. The reality of our life looks like hardship. Don't be mistaken. D
 
 Even unbelievers, with things like "The Secret" or R=VD, dream vivid dreams, but ours are faint. That's the problem. This must be vivid. What God has given, the true CVDIP, must be clear. Christ and world evangelization are clear. The 24 dream is given. When this happens, the Absolute Journey will surely take place. The work of conquering the world with the image of God takes place.
 
-The image of God must be imprinted within you. Do you understand? "Jesus is the Christ." That is what the image of God means. "You are the Son of God." The phrase "Son of God" is the image. "You are that very image of God." Do you understand?
+The image of God must be imprinted within you. Do you understand? "Jesus is the Christ." That is what the image of God means. "You are not God's 'son.'" The word "son" means "image." "You are that very image of God." Do you understand?
 
 This must be clear. You are the footsteps that conquer the world with Christ. That is why, even before you go, the work of having already conquered takes place. You go holding the eternal goal in advance. I hope you win. There is nothing to worry about. So even if it looks like hardship, do not be deceived. Do you understand? Do not be deceived by your reality.
 
@@ -82,7 +82,7 @@ People can face all kinds of problems, but being tormented by those problems is 
 
 God's perfect plan is sending missionaries who will save the 237 and the 5,000 tribes. This answer must come to you. So you must see this hardship with the eyes of the covenant. Then what do you see? "God simply sent me ahead to save the lives of many people." He did it through the hands of the brothers. So don't lament, "My brothers sold me, now I'm dead." It's fine.
 
-It is true they sold him, but through it God... It may seem that people treat you with evil, but God turns it into good. In all things God is absolutely there. What does Romans 8:28 say? "All things work together for good." Do you understand?
+It is true they sold him, but through it God... It may seem that God is using you for evil, but He turns it into good. In all things God is absolutely there. What does Romans 8:28 say? "All things work together for good." Do you understand?
 
 So if this true answer is right within me, it is not a problem. God turns everything that happens to His children into good. So don't worry. This is the reality of our life today, but if you have eyes to see God's plan in reality, it is not a problem. Let us enjoy this blessing.
 

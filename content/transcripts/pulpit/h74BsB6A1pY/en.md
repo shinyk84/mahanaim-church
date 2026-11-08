@@ -158,7 +158,7 @@ Do you know what the Fri-Sat-Sun Era is? Jesus died on Friday, then Saturday, an
 
 So what did God say? Look forward to God's kingdom being fulfilled. The era of focused meditation, right? So change your thoughts. Healing of thoughts. Whatever happens, whatever is praiseworthy, think about these things.
 
-Someone said to me, "Pastor, you are Christ." So what did I say? Discipline that woman. I am the one who had her disciplined. Calling me Christ? Whether that person is mentally ill or not, this is absolutely unacceptable. She is the only person I have ever disciplined. I feel very sorry for her, but this is not right. A person in their right mind must not call me Christ. Healing of thoughts, understand? If you idolize people, it is a disaster. I'm not talking about liking someone. When this gets turned around, it's a headache. Christ is One. Understand? We only proclaim the gospel.
+Someone said to me, "Pastor, you are Christ." So what did I say? Discipline that woman. I am the one who had her disciplined. Calling me Christ? She was not in her right mind. This is absolutely unacceptable. She is the only person I have ever disciplined. I feel very sorry for her, but wrong is wrong. No one must call me Christ. Healing of thoughts, understand? If you idolize people, it is a disaster. I'm not talking about liking someone. When this gets turned around, it's a headache. Christ is One. Understand? We only proclaim the gospel.
 
 So we hold precisely to this answer. Now truly, Philippians 4:8, right? Whatever is excellent, whatever is praiseworthy, whatever you do, think about these things. In this time when the last generation is approaching, what must we do?
 
@@ -166,7 +166,7 @@ So we hold precisely to this answer. Now truly, Philippians 4:8, right? Whatever
 
 Now, and continuing this is the era of focused worship, right? Focused worship, this is the answer. The Word must be properly planted.
 
-Shincheonji does this, doesn't it? They go with Matthew 13. The parable of the sower. The seed is the Word. The seed is sown and sprouts. Seed, field, tree, bird: they match everything up like that. [laughter] They call the seed the Word of God, and nothing else matters. Even the mustard seed, they just drop the mustard and it's just a seed. But what is the mustard seed? The smallest thing is sown and grows into a huge tree, growing rapidly. External growth. Then what is yeast? Yeast is invisible, but it causes qualitative change. So every parable has its own reason, but they crush it all and turn it into their own doctrine. That's how ignorant people are dragged in (…) they just go.
+Shincheonji does this, doesn't it? They go with Matthew 13. The parable of the sower. The seed is the Word. The seed is sown and sprouts. Seed, field, tree, bird: they match everything up like that. [laughter] They call the seed the Word of God, and nothing else matters. Even the mustard seed, they just drop the mustard and it's just a seed. But what is the mustard seed? The smallest thing is sown and grows into a huge tree, growing rapidly. External growth. Then what is yeast? Yeast is invisible, but it causes qualitative change. So every parable has its own reason, but they crush it all and turn it into their own doctrine. That's how ignorant people are dragged in. They say they give them 2,800 dollars. [laughter] So they just go.
 
 We must worship properly, and we must understand the Word correctly. The core of the Word is Christ. Understand?
 
@@ -258,7 +258,7 @@ Why is President Park Chung-hee important? He built expressways. He built highwa
 
 To make a highway, what must you do? You must remove the stones. You must cut down the mountains. Mountains are pride, aren't they? Cut down these proud mountains, fill in the valleys of wounds, and remove the stones. Wounds and pride are serious. It's the same thing. The things that get in the way are the problem. Quickly remove the stones completely. Where do we go? For what? "Raise a banner for the world so that the whole world returns," it says. We must have this in our hearts.
 
-So now what do we say? Each church should choose one nation. Each church chooses one nation and focuses missions there. We're saying that, but they say 2,800 (…) has already gone into Shincheonji. Good grief. We're on a different level. In your heart: "God, let me find disciples, not money." I hope we become people who pray to find disciples who will stake their lives.
+So now what do we say? Each church should choose one nation. Each church chooses one nation and focuses missions there. We're saying that, but they say Shincheonji is already giving 2,800 dollars (to people who come to their Bible studies), and that's how people have flowed in. Good grief. We're on a different level. In your heart: "God, let me find disciples, not money." I hope we become people who pray to find disciples who will stake their lives.
 
 ## Conclusion: Hold a Dream and Walk the 24 Life
 
