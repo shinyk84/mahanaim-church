@@ -19,7 +19,16 @@
   "preacher": "정명서 목사",
   "yt": "2026년 11월 8일 📖 절대여정의 목표 (마28:16-20) | 주일2부 | 부천마하나임교회 | 정명서 목사",
   "liveChecked": true,
-  "embedChecked": true
+  "embedChecked": true,
+  "tr": [
+   "ko",
+   "en",
+   "ur"
+  ],
+  "titles": {
+   "en": "The Goal of the Absolute Journey (Matthew 28:16-20)",
+   "ur": "مطلق سفر کا مقصد (متی 28:16-20)"
+  }
  },
  {
   "id": "IOtrW71gJgM",
@@ -30,7 +39,16 @@
   "preacher": "정명서 목사",
   "yt": "2026년 11월 8일 📖 노예로 팔린 요셉 (창39:1-6) | 주일1부 | 부천마하나임교회 | 정명서 목사",
   "liveChecked": true,
-  "embedChecked": true
+  "embedChecked": true,
+  "tr": [
+   "ko",
+   "en",
+   "ur"
+  ],
+  "titles": {
+   "en": "Joseph Sold as a Slave (Genesis 39:1-6)",
+   "ur": "غلام بنا کر بیچا گیا یوسف (پیدائش 39:1-6)"
+  }
  },
  {
   "id": "FPDmuLBLWUc",
