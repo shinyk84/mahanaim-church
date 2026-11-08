@@ -36,7 +36,7 @@ That's why Acts 13, 16, and 19 deal with this. People pray through divination, s
 
 So these people have set the frame. Study all the religions of the world. What is every religion? Struggling to succeed. Praying with only myself at the center. Then what happens? They are caught by this being. People don't know this.
 
-So Karl Marx was right. Religion is weak humans praying to the Almighty to give them something. So it's always "kudasai" (please give me). It's begging. So religion is the opium of the people and must be abolished. Why? Because it keeps you from thinking properly. Karl Marx's critique is right. So not that; our life and destiny must be changed. Through Christ our life and destiny must change. And the Holy Spirit dwells in me, and I live for what God wants, for God's kingdom. This is what we must do.
+So Karl Marx was right. Religion is weak humans praying to the Almighty to give them something. So it's always "kudasai" (please give me). It's begging. So religion is the opium of the people and must be abolished. Why? Because it keeps you from thinking properly. Karl Marx's critique is right. But we must not stay at that level of religion; our life and destiny must be changed. Through Christ our life and destiny must change. And the Holy Spirit dwells in me, and I live for what God wants, for God's kingdom. This is what we must do.
 
 ## The Six States of Unbelievers: A Life Bound in a Snare
 
