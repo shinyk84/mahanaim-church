@@ -5,3 +5,4 @@ node_modules/
 *.ai
 구원의 길 (1).pdf
 __pycache__/
+.transcript-work/
