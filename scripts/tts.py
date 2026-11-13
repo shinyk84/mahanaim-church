@@ -171,7 +171,7 @@ def synth(lang, body):
         headers={
             "Ocp-Apim-Subscription-Key": key,
             "Content-Type": "application/ssml+xml",
-            "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",  # 목소리용, 1분 ≈ 0.35MB
+            "X-Microsoft-OutputFormat": "audio-16khz-32kbitrate-mono-mp3",  # 목소리용, 1분 ≈ 0.24MB
             "User-Agent": "mahanaim-church-tts",
         },
     )
@@ -214,7 +214,7 @@ def main():
             manifest.setdefault(page, [])
             if lang not in manifest[page]:
                 manifest[page].append(lang)
-            print(f"{page:9} {lang}: {len(audio) / 1e6:.1f}MB, 약 {len(audio) / 6000 / 60:.0f}분")
+            print(f"{page:9} {lang}: {len(audio) / 1e6:.1f}MB, 약 {len(audio) / 4000 / 60:.0f}분")
     if not dry:
         MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", "utf-8")
     print(f"총 {total} 글자")
