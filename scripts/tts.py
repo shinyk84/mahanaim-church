@@ -94,8 +94,11 @@ def speak_text(lang, s, with_verses=True):
 
 
 def gospel_text_script(lang):
-    """전도지 원고(content/gospel-text/<lang>.md)를 읽음. 성구는 읽지 않고 건너뜀."""
-    md = (ROOT / "content" / "gospel-text" / f"{lang}.md").read_text("utf-8")
+    """전도지 원고를 읽음. 성구는 읽지 않고 건너뜀.
+    낭독용 원고(content/narration/gospel-<lang>.tts.md)가 있으면 그것을 씀:
+    ' / ' = 의미 단위로 짧게 쉼, ' // ' = 조금 길게 쉼 (음성이 엉뚱한 곳에서 끊지 않도록)"""
+    tts = ROOT / "content" / "narration" / f"gospel-{lang}.tts.md"
+    md = (tts if tts.exists() else ROOT / "content" / "gospel-text" / f"{lang}.md").read_text("utf-8")
     parts = []
     for line in md.splitlines():
         line = line.strip()
@@ -168,7 +171,10 @@ def chunks(lang, parts, limit=2500):
     buf, size = [], 0
     for text, pause in parts:
         clean = re.sub(r"\[\[[^\]]+\]\]", "", text).strip()
-        piece = (escape(clean) if clean else "") + f'<break time="{pause}"/>'
+        spoken = escape(clean) if clean else ""
+        spoken = spoken.replace(" // ", '<break time="650ms"/>').replace("// ", '<break time="650ms"/>')
+        spoken = spoken.replace(" / ", '<break time="280ms"/>')
+        piece = spoken + f'<break time="{pause}"/>'
         if size + len(piece) > limit and buf:
             yield buf
             buf, size = [], 0
