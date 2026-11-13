@@ -1085,3 +1085,9 @@ dialog[open] ~ .to-top { display: none; }
 .ab-close { border: 0; background: var(--bg); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--ink); flex: none; }
 @media (max-width: 700px) { .audio-bar { bottom: calc(72px + env(safe-area-inset-bottom)); } .ab-title { display: none; } }
 body:has(.audio-bar) .to-top { display: none; }
+
+/* 구원의 길 '글로 보기' 전도지 원고 */
+.gtext { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 6px 18px 16px; margin-top: 10px; }
+.gtext h2 { font-size: 1.3rem; color: var(--navy); margin: 0.9em 0 0.4em; }
+.gtext h3 { color: var(--navy); scroll-margin-top: 90px; border-top: 1px solid var(--line); padding-top: 0.9em; }
+.gtext p { line-height: 1.9; }

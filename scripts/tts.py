@@ -93,7 +93,30 @@ def speak_text(lang, s, with_verses=True):
     return out
 
 
+def gospel_text_script(lang):
+    """전도지 원고(content/gospel-text/<lang>.md)를 읽음. 성구는 읽지 않고 건너뜀."""
+    md = (ROOT / "content" / "gospel-text" / f"{lang}.md").read_text("utf-8")
+    parts = []
+    for line in md.splitlines():
+        line = line.strip()
+        if not line:
+            parts.append(("", PAUSE_S))
+            continue
+        # 성구만 든 괄호 '( [[GEN 1:27]], [[ROM 3:23]] )' 통째로 지우고, 남은 표기도 지움
+        line = re.sub(r"\s*[(（]\s*(\[\[[^\]]+\]\][\s,、，;]*)+[)）]", "", line)
+        line = re.sub(r"\[\[[^\]]+\]\]", "", line).strip()
+        if line.startswith("#"):
+            parts.append((line.lstrip("#").strip(), PAUSE_L))
+        elif line.startswith("- "):
+            parts.append((line[2:].strip(), PAUSE_S))
+        else:
+            parts.append((line, PAUSE_M))
+    return parts
+
+
 def gospel_script(lang):
+    if (ROOT / "content" / "gospel-text" / f"{lang}.md").exists():
+        return gospel_text_script(lang)
     g = json.loads((ROOT / "content" / "gospel" / f"{lang}.json").read_text("utf-8"))
     parts = [(g["title"], PAUSE_S), (g.get("subtitle", ""), PAUSE_M), (g.get("intro", ""), PAUSE_L)]
 

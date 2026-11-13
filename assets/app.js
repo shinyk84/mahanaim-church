@@ -848,6 +848,31 @@ async function gospel() {
     </article>`;
   }
 
+  // 글로 보기: 전도지 원고(content/gospel-text/<언어>.md). 없으면 아래 예전 목록 화면
+  const gtext = await load(`content/gospel-text/${lang}.md`, "text").catch(() => null);
+  if (gtext) {
+    const gtext2 = lang2 ? await load(`content/gospel-text/${lang2}.md`, "text").catch(() => null) : null;
+    // 소제목(##)에 id를 달아 목차 드롭다운으로 이동
+    const withIds = (html) => {
+      let n = 0;
+      return html.replace(/<h3>/g, () => `<h3 id="gt${n++}">`);
+    };
+    const heads = gtext.split(/\r?\n/).filter((l) => /^##\s/.test(l)).map((l) => l.replace(/^##\s+/, ""));
+    const body = gtext2
+      ? duo(withIds(renderMarkdown(gtext, lang)), lang, renderMarkdown(gtext2, lang2), lang2)
+      : `<div class="prose gtext" lang="${lang}" dir="${dirOf(lang)}">${withIds(renderMarkdown(gtext, lang))}</div>`;
+    return `<article class="gospel-page">${head}
+      <label class="toc-select"><span>${esc(t.contents)}</span>
+        <select data-tocsel aria-label="${esc(t.contents)}">
+          <option value="">${esc(t.toc_pick)}</option>
+          ${heads.map((h, i) => `<option value="gt${i}">${esc(h)}</option>`).join("")}
+        </select>
+      </label>
+      <p class="hint">👆 ${esc(t.tap_hint)}</p>
+      ${body}
+    </article>`;
+  }
+
   const itemHtml = (it, it2, n) => {
     const [refs, ...rest] = (it.body || "").split("\n");
     const text2 = it2 ? stripRefs(it2.body.split("\n").slice(1).join(" ")) : "";
