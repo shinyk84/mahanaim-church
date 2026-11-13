@@ -1061,3 +1061,27 @@ dialog[open] ~ .to-top { display: none; }
   .hi-install { display: inline-flex; align-items: center; gap: 4px; font: inherit; font-size: 0.9rem; font-weight: 700; padding: 8px 14px; border-radius: 10px; border: 0; background: var(--brand-navy); color: #fff; cursor: pointer; white-space: nowrap; }
   .hi-actions { flex-wrap: wrap; }
 }
+
+/* 크메르어: 글꼴과 줄 간격(위아래 기호가 많아 넉넉하게) */
+:lang(km) { font-family: "Noto Sans Khmer", var(--font); line-height: 1.9; }
+.v-ext { display: inline-block; margin-inline-start: 8px; font-size: 0.82rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+
+/* 777 판 머리: 이름이 긴 언어(크메르어 등)는 칸 안에서 줄바꿈 */
+.p7b-head strong { white-space: normal; overflow-wrap: anywhere; }
+:lang(km) .p7b-head strong { font-size: clamp(0.74rem, 3vw, 1rem); line-height: 1.4; }
+.p7b-head > * { max-width: 100%; min-width: 0; }
+:lang(km) .p7b-head strong, :lang(km) .p7b-head small { word-break: break-word; overflow-wrap: anywhere; }
+
+/* 듣기 버튼 + 재생 막대 (폰은 하단 메뉴바 위) */
+.listen-btn { align-self: center; display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 0.86rem; font-weight: 700; padding: 6px 14px; border-radius: 999px; border: 0; background: var(--brand-green); color: #fff; cursor: pointer; white-space: nowrap; margin-inline-start: auto; }
+.listen-btn + .seg { margin-inline-start: 8px; }
+.audio-bar {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 45; width: min(640px, calc(100vw - 24px));
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 16px; border-radius: 16px;
+  background: var(--card); border: 1px solid var(--line); box-shadow: 0 10px 30px rgb(23 42 136 / 0.25);
+}
+.ab-title { font-weight: 800; color: var(--navy); font-size: 0.9rem; white-space: nowrap; }
+.audio-bar audio { flex: 1; min-width: 0; height: 40px; }
+.ab-close { border: 0; background: var(--bg); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--ink); flex: none; }
+@media (max-width: 700px) { .audio-bar { bottom: calc(72px + env(safe-area-inset-bottom)); } .ab-title { display: none; } }
+body:has(.audio-bar) .to-top { display: none; }

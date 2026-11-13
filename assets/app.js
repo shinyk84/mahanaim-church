@@ -1,4 +1,4 @@
-import { LANGS, BIBLES } from "./config.js";
+import { LANGS, BIBLES, EXTERNAL_BIBLES } from "./config.js";
 import { parseRef, refLabel, refLabelHtml, renderInline, renderMarkdown, getVerses, esc } from "./scripture.js";
 
 const READY = LANGS.filter((l) => l.ready).map((l) => l.code);
@@ -55,7 +55,7 @@ const inline = (s, l = lang) => renderInline(s || "", l);
 const sub2 = (s, tag = "span") => (s && lang2 ? `<${tag} class="sub2" lang="${lang2}" dir="${dirOf(lang2)}">${esc(s)}</${tag}>` : "");
 
 function formatDate(d) {
-  const locale = { ko: "ko-KR", en: "en-US", ur: "ur-PK", zh: "zh-CN", ja: "ja-JP", fr: "fr-FR", de: "de-DE", es: "es-ES", ru: "ru-RU" }[lang] || "en-US";
+  const locale = { ko: "ko-KR", en: "en-US", ur: "ur-PK", zh: "zh-CN", ja: "ja-JP", fr: "fr-FR", de: "de-DE", es: "es-ES", ru: "ru-RU", km: "km-KH" }[lang] || "en-US";
   try {
     return new Date(d + "T00:00:00").toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" });
   } catch {
@@ -81,6 +81,7 @@ const href = (page = "", id = "", l = lang, l2 = lang2) =>
   `#/${l}${l2 && l2 !== l ? "+" + l2 : ""}${page ? "/" + page : ""}${id ? "/" + encodeURIComponent(id) : ""}`;
 
 async function route() {
+  document.querySelector(".audio-bar")?.remove();
   if (dlg?.open) dlg.close(); // 다른 페이지로 가면 열려 있던 팝업(영상·성구·선택 창) 닫기
   const { l1, l2, page, id } = parseHash();
   if (!READY.includes(l1)) {
@@ -660,6 +661,24 @@ async function installApp() {
   if (!dlg.open) dlg.showModal();
 }
 
+// ---------- 듣기 (scripts/tts.py 로 만든 audio/<page>/<lang>.mp3, 목록은 content/audio.json) ----------
+async function listenBtn(page) {
+  const au = await load("content/audio.json").catch(() => ({}));
+  if (!(au[page] || []).includes(lang)) return "";
+  return `<button type="button" class="listen-btn" data-listen="${page}"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a3.5 3.5 0 010 6M18.5 6.5a7 7 0 010 11"/></svg>${esc(t.listen)}</button>`;
+}
+function toggleListen(page) {
+  const old = document.querySelector(".audio-bar");
+  if (old) return old.remove();
+  const bar = document.createElement("div");
+  bar.className = "audio-bar";
+  bar.innerHTML = `<span class="ab-title">${esc(page === "gospel" ? t.gospel : t.prayer777)}</span>
+    <audio controls autoplay preload="none" src="audio/${page}/${lang}.mp3"></audio>
+    <button type="button" class="ab-close" aria-label="${esc(t.close)}">✕</button>`;
+  bar.querySelector(".ab-close").addEventListener("click", () => bar.remove());
+  document.body.append(bar);
+}
+
 // ---------- 777 기도 ----------
 /** "[[ACT 1:3]] 하나님 나라" 같은 문구를 성구 버튼 포함 HTML로 (줄바꿈 유지) */
 const rich = (s, l = lang) => (s || "").split("\n").map((x) => inline(x, l)).join("<br>");
@@ -677,6 +696,7 @@ async function prayer777() {
   const head = `<header class="g-hero">
       <h1>${esc(p.title)}${p2 ? sub2(p2.title) : ""}</h1>
       <p class="g-sub">${esc(p.subtitle)}${p2 ? sub2(p2.subtitle) : ""}</p>
+      ${await listenBtn("prayer777")}
       <div class="seg" role="group">
         <button type="button" class="${onlyPrayer ? "" : "on"}" data-toggle="p7pray" data-val="0" aria-pressed="${!onlyPrayer}">${esc(t.view_pic)}</button>
         <button type="button" class="${onlyPrayer ? "on" : ""}" data-toggle="p7pray" data-val="1" aria-pressed="${onlyPrayer}">${esc(t.view_text)}</button>
@@ -812,6 +832,7 @@ async function gospel() {
   const head = `<header class="g-hero">
       <h1>${esc(g.title)}${g2 ? sub2(g2.title) : ""}</h1>
       <p class="g-sub">${esc(g.subtitle)}${g2 ? sub2(g2.subtitle) : ""}</p>
+      ${await listenBtn("gospel")}
       <div class="seg" role="group">
         <button type="button" class="${listView ? "" : "on"}" data-toggle="glist" data-val="0" aria-pressed="${!listView}">${esc(t.view_pic)}</button>
         <button type="button" class="${listView ? "on" : ""}" data-toggle="glist" data-val="1" aria-pressed="${listView}">${esc(t.view_text)}</button>
@@ -1012,7 +1033,7 @@ function toggleInlineVerse(chip) {
       while (after.nextElementSibling?.classList.contains("d-verse")) after = after.nextElementSibling; // 누른 순서대로 쌓기
       after.after(box);
     }
-    getVerses(r, BIBLES[l] ? l : "ko")
+    getVerses(r, BIBLES[l] ? l : "en")
       .then((vs) => {
         box.querySelector(".v-text").innerHTML = vs.length
           ? vs.map((v) => `<p><sup>${v.v}</sup>${esc(v.text)}</p>`).join("")
@@ -1036,6 +1057,8 @@ document.addEventListener("click", (e) => {
     const [gi, ii] = p7.dataset.p7.split(".").map(Number);
     return openP7(gi, ii);
   }
+  const ls = e.target.closest("[data-listen]");
+  if (ls) return toggleListen(ls.dataset.listen);
   if (e.target.closest("[data-install]")) return installApp();
   if (e.target.closest("[data-langhint-off]") || e.target.closest("[data-langhint-go]")) {
     store.set("langHintOff", "1");
@@ -1155,7 +1178,7 @@ async function openVerse(key) {
   const r = parseRef(key);
   if (!r) return;
   current = r;
-  shownLang = BIBLES[lang] ? lang : "ko";
+  shownLang = BIBLES[lang] ? lang : "en";
   if (!dlg.open) dlg.showModal();
   await paintVerse();
 }
@@ -1188,6 +1211,10 @@ async function paintVerse() {
       .join("")}</div>
     <div class="v-foot">
       <small class="muted">${dual ? "" : esc(BIBLES[l].name)}</small>
+      ${[lang, lang2]
+        .filter((c) => c && EXTERNAL_BIBLES[c])
+        .map((c) => `<a class="v-ext" href="${EXTERNAL_BIBLES[c].url(r)}" target="_blank" rel="noopener" lang="${c}">📖 ${esc(EXTERNAL_BIBLES[c].name)} ›</a>`)
+        .join("")}
       <button type="button" class="v-copy" data-copy>${esc(t.copy)}</button>
     </div>
   </div>`;

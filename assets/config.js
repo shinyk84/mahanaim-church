@@ -12,6 +12,7 @@ export const LANGS = [
   { code: "de", name: "Deutsch", dir: "ltr", ready: true },
   { code: "es", name: "Español", dir: "ltr", ready: true },
   { code: "ru", name: "Русский", dir: "ltr", ready: true },
+  { code: "km", name: "ខ្មែរ", dir: "ltr", ready: true },
 ];
 
 // 성경 본문 (bible/<code>/<BOOK>.json). 모두 공개 또는 비상업 무료 배포 허용 번역본.
@@ -25,6 +26,16 @@ export const BIBLES = {
   de: { name: "Lutherbibel 1912", license: "Public Domain" },
   es: { name: "Reina-Valera 1909", license: "Public Domain" },
   ru: { name: "Синодальный перевод", license: "Public Domain" },
+};
+
+// 본문을 사이트에 실을 수 없는 번역본(저작권): 성구를 누르면 영어 본문을 보여 주고 무료 성경 앱(YouVersion) 링크를 함께 제공
+// 크메르어: ព្រះគម្ពីរខ្មែរបច្ចុប្បន្ន (គខប, Khmer Standard Version, © Bible Society in Cambodia) — bible.com 버전 85
+const USFM = { SOL: "SNG", EZE: "EZK", JOE: "JOL", NAH: "NAM", MAR: "MRK", JOH: "JHN", PHI: "PHP", JAM: "JAS", "1JO": "1JN", "2JO": "2JN", "3JO": "3JN" };
+export const EXTERNAL_BIBLES = {
+  km: {
+    name: "ព្រះគម្ពីរខ្មែរបច្ចុប្បន្ន (គខប)",
+    url: (r) => `https://www.bible.com/bible/85/${USFM[r.book] || r.book}.${r.ch}.${r.v1}${r.v2 > r.v1 ? "-" + r.v2 : ""}`,
+  },
 };
 
 // [eBible 코드, 한국어, 한국어 약어, English, English 약어들, اردو]
