@@ -145,10 +145,10 @@ def post(model, body, timeout=300):
             raise SystemExit(f"[{model}] 오류 {e.code}: {msg[:300]}")
 
 
-def synth(text):
+def synth(text, seed=None):
     d = post(MODEL, {
         "contents": [{"parts": [{"text": text}]}],
-        "generationConfig": {"responseModalities": ["AUDIO"], "seed": SEED, "temperature": 0.3, "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}}},
+        "generationConfig": {"responseModalities": ["AUDIO"], "seed": SEED if seed is None else seed, "temperature": 0.3, "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}}},
     })
     pcm = pcm_only(base64.b64decode(d["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]))
     print(f"      (받은 소리 {len(pcm) / 2 / RATE:.0f}초)", flush=True)
@@ -174,7 +174,7 @@ def soften(pcm, cutoff=7500.0):
     import math
 
     n = len(pcm) // 2
-    x = struct.unpack(f"<{n}h", pcm[: n * 2])
+    x = array("h", pcm[: n * 2])
     w0 = 2 * math.pi * cutoff / RATE
     alpha = math.sin(w0) / (2 * 0.7071)
     cw = math.cos(w0)
@@ -193,7 +193,7 @@ def soften(pcm, cutoff=7500.0):
 def normalize(pcm, peak=27000):
     """찌그러짐(클리핑) 방지: 가장 큰 소리가 peak를 넘지 않게 낮춤"""
     n = len(pcm) // 2
-    s = struct.unpack(f"<{n}h", pcm[: n * 2])
+    s = array("h", pcm[: n * 2])
     m = max((abs(x) for x in s), default=0)
     if m <= peak:
         return pcm
@@ -204,7 +204,7 @@ def normalize(pcm, peak=27000):
 def trim(pcm):
     """앞뒤 무음과, 끝에 따로 떨어져 붙은 짧은 잡음(치직)을 잘라 내고 끝을 부드럽게"""
     n = len(pcm) // 2
-    s = struct.unpack(f"<{n}h", pcm[: n * 2])
+    s = array("h", pcm[: n * 2])
     fr = RATE // 50  # 20ms
     rms = [(sum(x * x for x in s[i:i + fr]) / fr) ** 0.5 for i in range(0, n - fr, fr)]
     if not rms:
@@ -247,7 +247,7 @@ def to_mp3(pcm):
 def pitch(pcm):
     """목소리 높낮이(Hz)의 중간값. 소리 나는 구간 일부만 골라 자기상관으로 계산(8kHz로 줄여서)"""
     n = len(pcm) // 2
-    s = struct.unpack(f"<{n}h", pcm[: n * 2])[::3]  # 24k → 8k
+    s = array("h", pcm[: n * 2])[::3]  # 24k → 8k
     W, lo, hi = 320, 20, 100  # 40ms 창, 80~400Hz
     frames = [i for i in range(0, len(s) - W - hi, 400) if sum(abs(x) for x in s[i:i + W:4]) / (W / 4) > 1500]
     step = max(1, len(frames) // 200)
@@ -264,6 +264,40 @@ def pitch(pcm):
             f0.append(8000 / lag)
     f0.sort()
     return f0[len(f0) // 2] if f0 else None
+
+
+def steadiness(pcm, win=10):
+    """한 번에 길게 만든 녹음 안에서 목소리가 바뀌는지: 10초마다 음높이를 재서 중간값과 가장 많이 다른 정도(0~1)"""
+    R = RATE * win
+    f0 = [pitch(pcm[2 * k:2 * (k + R)]) for k in range(0, len(pcm) // 2 - RATE * 5, R)]
+    f0 = sorted(x for x in f0 if x)
+    if len(f0) < 3:
+        return 0
+    mid = f0[len(f0) // 2]
+    return max(abs(x / mid - 1) for x in f0)
+
+
+def widen(pcm, long_gap=0.65, add_long=0.45, add_short=0.12):
+    """쉬는 곳을 늘림: 항목 사이처럼 길게 쉰 곳(0.65초 이상)은 0.45초 더, 줄 사이 짧은 쉼은 0.12초 더 → 뒤로 갈수록 급해지는 느낌을 줄임"""
+    s = array("h", pcm[: len(pcm) // 2 * 2])
+    fr = RATE // 50
+    quiet = [max(abs(x) for x in s[i:i + fr:4]) < 900 for i in range(0, len(s) - fr, fr)]
+    out, last, i = array("h"), 0, 0
+    while i < len(quiet):
+        if quiet[i]:
+            j = i
+            while j < len(quiet) and quiet[j]:
+                j += 1
+            d = (j - i) * 0.02
+            if 0.2 <= d and j < len(quiet):
+                mid = (i + j) // 2 * fr
+                out += s[last:mid] + array("h", bytes(2 * int(RATE * (add_long if d >= long_gap else add_short))))
+                last = mid
+            i = j
+        else:
+            i += 1
+    out += s[last:]
+    return out.tobytes()
 
 
 def similarity(pcm, text):
@@ -288,19 +322,27 @@ def make(page, lang, chunks):
     work.mkdir(parents=True, exist_ok=True)
     pcm, ref = b"", None
     for i, text in enumerate(chunks):
-        key = hashlib.sha1(f"{MODEL}|{VOICE}|{SEED}|{text}".encode()).hexdigest()[:12]
+        key = hashlib.sha1(f"{MODEL}|{VOICE}|{SEED}|v2|{text}".encode()).hexdigest()[:12]
         saved = work / f"{i + 1:02d}-{key}.pcm"
         if saved.exists():
             piece = saved.read_bytes()
             print(f"    조각 {i + 1}/{len(chunks)}: 저장해 둔 것 사용", flush=True)
         else:
             best = None
+            whole = len(chunks) == 1
             for attempt in range(3):
-                piece = trim(normalize(soften(synth(text))))
+                raw = work / f"{i + 1:02d}-{key}-try{attempt + 1}.raw"  # 받은 소리는 바로 저장(뒤에서 멈춰도 횟수 낭비 없게)
+                if not raw.exists():
+                    raw.write_bytes(synth(text, SEED + attempt))
+                piece = trim(normalize(soften(raw.read_bytes())))
                 score, heard = similarity(piece, text)
                 f0 = pitch(piece)
-                diff = abs(f0 / ref - 1) if (ref and f0) else 0
-                ok_voice = diff <= 0.10  # 음높이가 10% 넘게 다르면 다른 사람처럼 들림
+                if whole:  # 한 번에 만든 녹음: 중간에 목소리가 바뀌는지(10초마다 음높이) 확인
+                    diff = steadiness(piece)
+                    ok_voice = diff <= 0.04
+                else:  # 조각: 첫 조각과 비교
+                    diff = abs(f0 / ref - 1) if (ref and f0) else 0
+                    ok_voice = diff <= 0.10  # 음높이가 10% 넘게 다르면 다른 사람처럼 들림
                 rank = (ok_voice, score or 0, -diff)
                 if best is None or rank > best[0]:
                     best = (rank, piece, score, f0)
@@ -334,6 +376,8 @@ def main():
             if "--whole" in args:  # 조각 이음새마다 목소리가 바뀌는 것을 피하려고 원고 전체를 한 번에
                 chunks = ["\n\n".join(chunks)]
             pcm = make(page, lang, chunks)
+            if page == "prayer777":  # 항목 사이를 조금 더 쉬게
+                pcm = widen(pcm)
             mp3 = to_mp3(pcm)
             if "--draft" in args:
                 dest = OUT / "drafts" / f"{page}-{lang}-gemini.mp3"

@@ -661,19 +661,25 @@ async function installApp() {
   if (!dlg.open) dlg.showModal();
 }
 
-// ---------- 듣기 (scripts/tts.py 로 만든 audio/<page>/<lang>.mp3, 목록은 content/audio.json) ----------
+// ---------- 듣기 (scripts/tts_gemini.py 로 만든 audio/<page>/<lang>.mp3, 목록은 content/audio.json) ----------
+// content/audio.json 의 "youtube": { page: { lang: 영상ID } } 가 있으면 그 언어는 MP3 대신 유튜브 영상을 작은 창으로 재생
+let audioList = null;
 async function listenBtn(page) {
-  const au = await load("content/audio.json").catch(() => ({}));
-  if (!(au[page] || []).includes(lang)) return "";
+  audioList = await load("content/audio.json").catch(() => ({}));
+  if (!(audioList[page] || []).includes(lang) && !audioList.youtube?.[page]?.[lang]) return "";
   return `<button type="button" class="listen-btn" data-listen="${page}"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a3.5 3.5 0 010 6M18.5 6.5a7 7 0 010 11"/></svg>${esc(t.listen)}</button>`;
 }
 function toggleListen(page) {
   const old = document.querySelector(".audio-bar");
   if (old) return old.remove();
   const bar = document.createElement("div");
-  bar.className = "audio-bar";
+  const yt = audioList?.youtube?.[page]?.[lang];
+  bar.className = "audio-bar" + (yt ? " yt" : "");
+  const player = yt
+    ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(yt)}?autoplay=1&rel=0&playsinline=1" title="${esc(page === "gospel" ? t.gospel : t.prayer777)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`
+    : `<audio controls autoplay preload="none" src="audio/${page}/${lang}.mp3"></audio>`;
   bar.innerHTML = `<span class="ab-title">${esc(page === "gospel" ? t.gospel : t.prayer777)}</span>
-    <audio controls autoplay preload="none" src="audio/${page}/${lang}.mp3"></audio>
+    ${player}
     <button type="button" class="ab-close" aria-label="${esc(t.close)}">✕</button>`;
   bar.querySelector(".ab-close").addEventListener("click", () => bar.remove());
   document.body.append(bar);

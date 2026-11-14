@@ -1082,6 +1082,9 @@ dialog[open] ~ .to-top { display: none; }
 }
 .ab-title { font-weight: 800; color: var(--navy); font-size: 0.9rem; white-space: nowrap; }
 .audio-bar audio { flex: 1; min-width: 0; height: 40px; }
+.audio-bar.yt { width: min(420px, calc(100vw - 24px)); align-items: flex-start; }
+.audio-bar.yt .ab-title { display: none; }
+.audio-bar.yt iframe { flex: 1; min-width: 0; aspect-ratio: 16 / 9; min-height: 200px; border: 0; border-radius: 10px; background: #000; }
 .ab-close { border: 0; background: var(--bg); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--ink); flex: none; }
 @media (max-width: 700px) { .audio-bar { bottom: calc(72px + env(safe-area-inset-bottom)); } .ab-title { display: none; } }
 body:has(.audio-bar) .to-top { display: none; }
