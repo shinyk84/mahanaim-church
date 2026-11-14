@@ -13,9 +13,16 @@
 - 조각마다 받아쓰기(gemini-3.5-transcribe)로 원고와 비교해 많이 다르면 그 조각만 다시 만듦
 - 조각 앞뒤 무음과 끝에 붙는 짧은 잡음을 잘라 내고 끝을 부드럽게 줄임
 - 지시문은 보내지 않음(원고 앞에 붙이면 지시문까지 소리로 읽음)
+- 조각마다 목소리가 달라지지 않게: 매번 같은 seed·낮은 temperature로 만들고,
+  목소리 높낮이(음높이)가 첫 조각과 많이 다르면 그 조각만 다시 만듦
+- 만든 조각은 .transcript-work/tts/에 저장 → 하루 한도에 걸려 멈춰도 다음날 이어서 만듦
+
+    python scripts/tts_gemini.py gospel ko --draft  # 시험본: audio/drafts/에만 저장(사이트는 그대로)
+    python scripts/tts_gemini.py gospel ko --whole  # 조각으로 나누지 않고 한 번에(목소리 이음새 없음)
 """
 
 import base64
+from array import array
 import difflib
 import json
 import os
@@ -30,11 +37,17 @@ from pathlib import Path
 import lameenc
 
 ROOT = Path(__file__).resolve().parent.parent
+for _l in (ROOT / ".env").read_text("utf-8").splitlines() if (ROOT / ".env").exists() else []:
+    if "=" in _l and not _l.lstrip().startswith("#"):
+        _k, _v = _l.split("=", 1)
+        os.environ.setdefault(_k.strip(), _v.strip().strip('"'))
+WORK = ROOT / ".transcript-work" / "tts"
 OUT = ROOT / "audio"
 MANIFEST = ROOT / "content" / "audio.json"
 MODEL = os.environ.get("GEMINI_TTS_MODEL", "gemini-3.8-flash-tts")  # 무료 한도: flash 하루 10번 → 막히면 gemini-3.8-flash-lite-tts
 CHECK_MODEL = "gemini-3.5-transcribe"
 VOICE = os.environ.get("GEMINI_TTS_VOICE", "Sulafat")  # 따뜻한 여성 음성. 다른 후보: Kore, Aoede, Achernar, Charon(남성)
+SEED = 7  # 매번 같은 seed → 조각마다 목소리가 덜 달라짐
 RATE = 24000  # 출력: 24kHz 16비트 모노 PCM
 LANGS = ["ko", "en", "ur", "zh", "ja", "fr", "de", "es", "ru", "km"]
 
@@ -80,16 +93,29 @@ def gospel_chunks(lang):
     return chunks
 
 
+STOP = {"zh": "。", "ja": "。", "ur": "۔", "km": "។"}
+SAY = {"ko": {"237": "이삼칠", "5력": "오력", "CVDIP": "씨브이디아이피", "10가지": "열 가지", "5가지": "다섯 가지",
+              "9가지": "아홉 가지", "7망대": "칠망대", "7여정": "칠여정", "7이정표": "칠이정표"}}
+
+
 def prayer777_chunks(lang):
+    """기도 문구만 읽음(제목·소제목·항목 이름은 읽지 않음). 항목마다 조각을 나눠 그 사이에서 잠깐 쉬게 함.
+    문구 끝에 마침표가 없으면 붙여서 줄마다 끊어 읽게 함"""
     p = json.loads((ROOT / "content" / "prayer777" / f"{lang}.json").read_text("utf-8"))
+    end = lambda x: x if re.search(r"[.!?。！？۔។]$", x) else x + STOP.get(lang, ".")
+    def say(x):  # 숫자·약어를 교회에서 부르는 대로 읽게
+        for a, b in SAY.get(lang, {}).items():
+            x = x.replace(a, b)
+        return x
+
     chunks = []
-    for gi, g in enumerate(p["groups"]):
-        lines = ([p["title"], p.get("subtitle", "")] if gi == 0 else []) + [f'{g["name"]}, {g.get("where", "")}'.strip(", ")]
+    for g in p["groups"]:
         for it in g["items"]:
-            lines.append(it["name"])
-            lines += [clean(lang, x) for x in it.get("prayer", [])]
-        chunks.append("\n".join(x for x in lines if x))
-    chunks.append("\n".join(p.get("closing", [])))
+            lines = [say(end(clean(lang, x))) for x in it.get("prayer", []) if clean(lang, x)]
+            if lines:
+                chunks.append("\n".join(lines))
+    if p.get("closing"):
+        chunks.append("\n".join(say(end(x)) for x in p["closing"]))
     return chunks
 
 
@@ -122,9 +148,11 @@ def post(model, body, timeout=300):
 def synth(text):
     d = post(MODEL, {
         "contents": [{"parts": [{"text": text}]}],
-        "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}}},
+        "generationConfig": {"responseModalities": ["AUDIO"], "seed": SEED, "temperature": 0.3, "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": VOICE}}}},
     })
-    return pcm_only(base64.b64decode(d["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]))
+    pcm = pcm_only(base64.b64decode(d["candidates"][0]["content"]["parts"][0]["inlineData"]["data"]))
+    print(f"      (받은 소리 {len(pcm) / 2 / RATE:.0f}초)", flush=True)
+    return pcm
 
 
 def pcm_only(data):
@@ -153,13 +181,13 @@ def soften(pcm, cutoff=7500.0):
     b0, b1, b2 = (1 - cw) / 2, 1 - cw, (1 - cw) / 2
     a0, a1, a2 = 1 + alpha, -2 * cw, 1 - alpha
     b0, b1, b2, a1, a2 = b0 / a0, b1 / a0, b2 / a0, a1 / a0, a2 / a0
-    y = [0] * n
+    y = array("h", bytes(2 * n))
     x1 = x2 = y1 = y2 = 0.0
     for i in range(n):
         v = b0 * x[i] + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2
         x2, x1, y2, y1 = x1, x[i], y1, v
         y[i] = max(-32768, min(32767, int(v)))
-    return struct.pack(f"<{n}h", *y)
+    return y.tobytes()
 
 
 def normalize(pcm, peak=27000):
@@ -170,7 +198,7 @@ def normalize(pcm, peak=27000):
     if m <= peak:
         return pcm
     k = peak / m
-    return struct.pack(f"<{n}h", *(int(x * k) for x in s))
+    return array("h", (int(x * k) for x in s)).tobytes()
 
 
 def trim(pcm):
@@ -197,14 +225,14 @@ def trim(pcm):
         segs.pop()
     a = max(0, segs[0][0] - 5) * fr  # 앞 0.1초 여유
     b = min(n, (segs[-1][1] + 12) * fr)  # 뒤 0.24초 여유
-    out = list(s[a:b])
+    out = array("h", s[a:b])
     fin = min(len(out), RATE // 50)  # 시작 20ms 페이드인(이어 붙인 자리 '틱' 방지)
     for i in range(fin):
         out[i] = int(out[i] * i / fin)
     fade = min(len(out), RATE // 12)  # 끝 80ms 페이드아웃
     for i in range(fade):
         out[-fade + i] = int(out[-fade + i] * (1 - i / fade))
-    return struct.pack(f"<{len(out)}h", *out)
+    return out.tobytes()
 
 
 def to_mp3(pcm):
@@ -214,6 +242,28 @@ def to_mp3(pcm):
     enc.set_channels(1)
     enc.set_quality(2)
     return enc.encode(pcm) + enc.flush()
+
+
+def pitch(pcm):
+    """목소리 높낮이(Hz)의 중간값. 소리 나는 구간 일부만 골라 자기상관으로 계산(8kHz로 줄여서)"""
+    n = len(pcm) // 2
+    s = struct.unpack(f"<{n}h", pcm[: n * 2])[::3]  # 24k → 8k
+    W, lo, hi = 320, 20, 100  # 40ms 창, 80~400Hz
+    frames = [i for i in range(0, len(s) - W - hi, 400) if sum(abs(x) for x in s[i:i + W:4]) / (W / 4) > 1500]
+    step = max(1, len(frames) // 200)
+    f0 = []
+    for i in frames[::step]:
+        x = s[i:i + W + hi]
+        e = sum(x[j] * x[j] for j in range(0, W, 2)) or 1
+        best, lag = 0, 0
+        for L in range(lo, hi):
+            c = sum(x[j] * x[j + L] for j in range(0, W, 2))
+            if c > best:
+                best, lag = c, L
+        if best / e > 0.5:
+            f0.append(8000 / lag)
+    f0.sort()
+    return f0[len(f0) // 2] if f0 else None
 
 
 def similarity(pcm, text):
@@ -229,21 +279,43 @@ def similarity(pcm, text):
     return difflib.SequenceMatcher(None, norm(text), norm(heard)).ratio(), heard
 
 
-def make(lang, chunks):
-    gap = b"\x00\x00" * int(RATE * 0.55)
-    pcm = b""
+def make(page, lang, chunks):
+    """조각마다 원고 일치(받아쓰기)와 목소리 높낮이(첫 조각 기준)를 확인. 다 만든 조각은 저장해 두고 다시 쓰지 않음"""
+    import hashlib
+
+    gap = bytes(2 * int(RATE * 0.55))
+    work = WORK / page / lang
+    work.mkdir(parents=True, exist_ok=True)
+    pcm, ref = b"", None
     for i, text in enumerate(chunks):
-        best = None
-        for attempt in range(3):
-            piece = trim(normalize(soften(synth(text))))
-            score, heard = similarity(piece, text)
-            if best is None or (score or 0) > best[0]:
-                best = (score or 0, piece)
-            if score is None or score >= 0.95:
-                break
-            print(f"    조각 {i + 1}: 원고와 {score:.0%} 일치 → 다시 만듦", flush=True)
-        print(f"    조각 {i + 1}/{len(chunks)}: {'확인 못 함' if best[0] == 0 else f'{best[0]:.0%} 일치'}", flush=True)
-        pcm += (gap if pcm else b"") + best[1]
+        key = hashlib.sha1(f"{MODEL}|{VOICE}|{SEED}|{text}".encode()).hexdigest()[:12]
+        saved = work / f"{i + 1:02d}-{key}.pcm"
+        if saved.exists():
+            piece = saved.read_bytes()
+            print(f"    조각 {i + 1}/{len(chunks)}: 저장해 둔 것 사용", flush=True)
+        else:
+            best = None
+            for attempt in range(3):
+                piece = trim(normalize(soften(synth(text))))
+                score, heard = similarity(piece, text)
+                f0 = pitch(piece)
+                diff = abs(f0 / ref - 1) if (ref and f0) else 0
+                ok_voice = diff <= 0.10  # 음높이가 10% 넘게 다르면 다른 사람처럼 들림
+                rank = (ok_voice, score or 0, -diff)
+                if best is None or rank > best[0]:
+                    best = (rank, piece, score, f0)
+                if ok_voice and (score is None or score >= 0.95):
+                    break
+                why = [] if ok_voice else [f"목소리 높낮이 {diff:.0%} 다름"]
+                if score is not None and score < 0.95:
+                    why.append(f"원고와 {score:.0%} 일치")
+                print(f"    조각 {i + 1}: {', '.join(why)} → 다시 만듦", flush=True)
+            _, piece, score, f0 = best
+            saved.write_bytes(piece)
+            print(f"    조각 {i + 1}/{len(chunks)}: 원고 {'확인 못 함' if score is None else f'{score:.0%} 일치'}, 음높이 {f0 and round(f0)}Hz", flush=True)
+        if ref is None:
+            ref = pitch(piece)
+        pcm += (gap if pcm else b"") + piece
     return pcm
 
 
@@ -258,8 +330,16 @@ def main():
             if not src.exists():
                 continue
             print(f"{page} {lang} ({MODEL}, {VOICE})", flush=True)
-            pcm = make(lang, CHUNKS[page](lang))
+            chunks = CHUNKS[page](lang)
+            if "--whole" in args:  # 조각 이음새마다 목소리가 바뀌는 것을 피하려고 원고 전체를 한 번에
+                chunks = ["\n\n".join(chunks)]
+            pcm = make(page, lang, chunks)
             mp3 = to_mp3(pcm)
+            if "--draft" in args:
+                dest = OUT / "drafts" / f"{page}-{lang}-gemini.mp3"
+                dest.write_bytes(mp3)
+                print(f"  → 시험본 {dest.relative_to(ROOT)}: 약 {len(pcm) / 2 / RATE / 60:.1f}분", flush=True)
+                continue
             dest = OUT / page / f"{lang}.mp3"
             dest.parent.mkdir(parents=True, exist_ok=True)
             dest.write_bytes(mp3)
