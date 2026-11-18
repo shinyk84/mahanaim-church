@@ -1,5 +1,17 @@
 [
  {
+  "id": "p4-gzgHVSCU",
+  "date": "2026-11-18",
+  "cat": "dawn",
+  "title": "기능서밋 300% (창41:40-45)",
+  "shortChecked": true,
+  "preacher": "정명서 목사",
+  "yt": "[🔴LIVE] 2026년 11월 18일 📖 기능서밋 300% (창41:40-45) | 평일새벽 | 부천마하나임교회 | 정명서 목사",
+  "liveChecked": true,
+  "embedChecked": true,
+  "noembed": true
+ },
+ {
   "id": "xi2F2AS3aVg",
   "date": "2026-11-17",
   "cat": "dawn",
@@ -8,7 +20,8 @@
   "preacher": "정명서 목사",
   "yt": "[🔴LIVE] 2026년 11월 17일 📖 영적서밋 300% (창41:38) | 평일새벽 | 부천마하나임교회 | 정명서 목사",
   "embedChecked": true,
-  "noembed": true
+  "noembed": true,
+  "liveChecked": true
  },
  {
   "id": "-1RQpJD_AKY",
